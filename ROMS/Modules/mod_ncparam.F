@@ -1990,12 +1990,8 @@
 #  include <npzd_iron_var.h>
 # elif defined RED_TIDE
 #  include <red_tide_var.h>
-# elif defined SIMPLE_BGC
-#  include <simple_bgc_var.h>
-# elif defined SIMPLE_BGC_FULL
-#  include <simple_bgc_full_var.h>
-# elif defined DISSOLUTION
-#  include <dissolution_var.h>
+# elif defined REDUCED_BGC
+#  include <reduced_bgc_var.h>
 # endif
 #endif
 

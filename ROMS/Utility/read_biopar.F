@@ -29,12 +29,8 @@
 #  include <npzd_Powell_inp.h>
 # elif defined RED_TIDE
 #  include <red_tide_inp.h>
-# elif defined SIMPLE_BGC
-#  include <simple_bgc_inp.h>
-# elif defined SIMPLE_BGC_FULL
-#  include <simple_bgc_full_inp.h>
-# elif defined DISSOLUTION
-#  include <dissolution_inp.h>
+# elif defined REDUCED_BGC
+#  include <reduced_bgc_inp.h>
 # endif
 #else
       SUBROUTINE read_BioPar

@@ -518,7 +518,7 @@
 
 # ifdef DIAGNOSTICS_BIO
 #  if defined BIO_FENNEL || defined HYPOXIA_SRM || \
-      defined SIMPLE_BGC || defined SIMPLE_BGC_FULL
+      defined REDUCED_BGC
 !
 !  Define 2D biological diagnostic fields.
 !
@@ -541,7 +541,7 @@
           END IF
         END DO
 #  endif
-#  if defined BIO_FENNEL || defined DISSOLUTION
+#  if defined BIO_FENNEL 
 !
 !  Define 3D biological diagnostic fields.
 !
@@ -705,7 +705,7 @@
 # endif
 # ifdef DIAGNOSTICS_BIO
 #  if defined BIO_FENNEL || defined HYPOXIA_SRM || \
-      defined SIMPLE_BGC || defined SIMPLE_BGC_FULL
+      defined REDUCED_BGC
           DO ivar=1,NDbio2d
             ifield=iDbio2(ivar)
             IF (TRIM(var_name(i)).eq.TRIM(Vname(1,ifield))) THEN
@@ -714,7 +714,7 @@
             END IF
           END DO
 #  endif
-#  if defined BIO_FENNEL || defined DISSOLUTION
+#  if defined BIO_FENNEL
           DO ivar=1,NDbio3d
             ifield=iDbio3(ivar)
             IF (TRIM(var_name(i)).eq.TRIM(Vname(1,ifield))) THEN
@@ -800,7 +800,7 @@
 # endif
 # ifdef DIAGNOSTICS_BIO
 #  if defined BIO_FENNEL || defined HYPOXIA_SRM || \
-      defined SIMPLE_BGC || defined SIMPLE_BGC_FULL
+      defined REDUCED_BGC
         DO ivar=1,NDbio2d
           ifield=iDbio2(ivar)
           IF (.not.got_var(ifield).and.Dout(ifield,ng)) THEN
@@ -811,7 +811,7 @@
           END IF
         END DO
 #  endif
-#  if defined BIO_FENNEL || defined DISSOLUTION
+#  if defined BIO_FENNEL
         DO ivar=1,NDbio3d
           ifield=iDbio3(ivar)
           IF (.not.got_var(ifield).and.Dout(ifield,ng)) THEN

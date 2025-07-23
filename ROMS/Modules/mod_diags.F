@@ -54,10 +54,8 @@
           real(r8), pointer :: DiaFlt2d(:,:,:)
           real(r8), pointer :: DiaFlt3d(:,:,:,:)
 #   endif
-#  elif defined SIMPLE_BGC || defined SIMPLE_BGC_FULL
+#  elif defined REDUCED_BGC 
           real(r8), pointer :: DiaBio2d(:,:,:)
-#  elif defined DISSOLUTION
-          real(r8), pointer :: DiaBio3d(:,:,:,:)
 #  elif defined ECOSIM
           real(r8), pointer :: DiaBio3d(:,:,:,:)
           real(r8), pointer :: DiaBio4d(:,:,:,:,:)
@@ -151,16 +149,10 @@
         Dmem(ng)=Dmem(ng)+REAL(N(ng)*NDbio3d,r8)*size2d
       END IF
 #   endif
-#  elif defined SIMPLE_BGC || defined SIMPLE_BGC_FULL
+#  elif defined REDUCED_BGC 
       IF (NDbio2d.gt.0) THEN
         allocate ( DIAGS(ng) % DiaBio2d(LBi:UBi,LBj:UBj,NDbio2d) )
         Dmem(ng)=Dmem(ng)+REAL(NDbio2d,r8)*size2d
-      END IF
-#  elif defined DISSOLUTION
-      IF (NDbio3d.gt.0) THEN
-        allocate ( DIAGS(ng) % DiaBio3d(LBi:UBi,LBj:UBj,                &
-     &                                  NDbands,NDbio3d) )
-        Dmem(ng)=Dmem(ng)+REAL(NDbands*NDbio3d,r8)*size2d
       END IF
 #  elif defined ECOSIM
       IF (NDbio3d.gt.0) THEN
@@ -345,21 +337,11 @@
           END DO
         END IF
 #   endif
-#  elif defined SIMPLE_BGC || defined SIMPLE_BGC_FULL
+#  elif defined REDUCED_BGC
         IF (NDbio2d.gt.0) THEN
           DO idiag=1,NDbio2d
             DO i=Imin,Imax
               DIAGS(ng) % DiaBio2d(i,j,idiag) = IniVal
-            END DO
-          END DO
-        END IF
-#  elif defined DISSOLUTION
-        IF (NDbio3d.gt.0) THEN
-          DO idiag=1,NDbio3d
-            DO k=1,NDbands
-              DO i=Imin,Imax
-                DIAGS(ng) % DiaBio3d(i,j,k,idiag) = IniVal
-              END DO
             END DO
           END DO
         END IF

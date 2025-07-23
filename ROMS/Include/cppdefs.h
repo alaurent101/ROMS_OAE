@@ -462,8 +462,7 @@
 **                                                                           **
 ** Simple BGC model OPTIONS:                                                 **
 **                                                                           **
-** SIMPLE_BGC              if Simple BGC model                               **
-** SIMPLE_BGC_FULL         if Simple BGC model (full version)                **
+** REDUCED_BGC             if Simple Reduced BGC model                       **
 ** TEMP_RATES              if temperature-dependent water column respiration **
 ** CARBON                  to add carbon constituents                        **
 ** OCMIP_OXYGEN_SC         if O2 Schmidt number from Keeling et al. (1998)   **
@@ -472,19 +471,13 @@
 ** PCO2AIR_SECULAR         if pCO2 time-depedent evolution                   **
 ** PCO2AIR_MAUNALOA        if pCO2 time-depedent evolution (Mauna Loa)       **
 ** PCO2AIR_SABLEISLAND     if pCO2 time-depedent evolution (Sable Island)    **
-** PCO2AIR_SABLEISLAND_V2  if pCO2 time-depedent evolution (Sable Island)    **
 ** RW14_C02_SC             if CO2 Schmidt number from Wanninkhof (2014)      **
 ** RW14_OXYGEN_SC          if O2  Schmidt number from Wanninkhof (2014)      **
-** TA_BBOBS                if TA calculated for salt (Bedford Basin data)    **
-** TA_BBMOD                if TA calculated for salt (Bedford Basin model)   **
 ** TALK_ADDITION           if TA addition                                    **
 ** TALK_FILE               if TA added from river file                       **
 ** TALK_TRACERS            if Additional tracers for TA addition model       **
-** TALK_BBOBS              if TA = f(salt) Bedford Basin Monitoring station  **
-** TALK_BBMOD              if TA = f(salt) Bedford Basin Model               **
 ** SOC_HRM23               if parameterize SOC in online nested model        **
 ** SOC_H2                  if parameterize SOC in H2 grid                    **
-** SOC_RAKSHITETAL2023     if SOC from TIC vs depth relationship (C. Algar)  **
 ** SOC_ZVAR                if SOC from TIC vs depth relationship (C. Algar)  **
 ** SOC_OXYDEP              if SOC is O2 dependent when hypoxic               **
 ** PP_SS                   if parameterize PP on Scotian Shelf from model    **
@@ -494,9 +487,6 @@
 ** PP_HRM23                if parameterize PP in online nested model         **
 ** PP_H2                   if parameterize PP in H2 grid                     **
 **
-** Dissolution model OPTIONS                                                 **
-** DISSOLUTION             if Dissolution model                              **
-** 
 ** Hypoxia ecosysten model OPTIONS:                                          **
 **                                                                           **
 ** HYPOXIA_SRM             if Hypoxia Simple Respiration Model               **

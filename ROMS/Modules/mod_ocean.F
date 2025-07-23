@@ -38,10 +38,9 @@
 !                                                                      !
 !  Biology Variables.                                                  !
 !                                                                      !
-# if (defined BIO_FENNEL || defined SIMPLE_BGC || \
-      defined SIMPLE_BGC_FULL) && defined CARBON
+# if (defined BIO_FENNEL || defined REDUCED_BGC) && defined CARBON
 !  pH           Surface concentration of hydrogen ions.                !
-#  ifdef SIMPLE_BGC_FULL
+#  ifdef REDUCED_BGC
 !  pHc          Surface concentration of hydrogen ions (control).      !
 #    ifdef TALK_ADDITION
 !  pHa          Surface concentration of hydrogen ions (addition).     !
@@ -120,10 +119,9 @@
           real(r8), pointer :: u_stokes(:,:,:)
           real(r8), pointer :: v_stokes(:,:,:)
 # endif
-# if (defined BIO_FENNEL || defined SIMPLE_BGC || \
-      defined SIMPLE_BGC_FULL) && defined CARBON
+# if (defined BIO_FENNEL || defined REDUCED_BGC) && defined CARBON
           real(r8), pointer :: pH(:,:)
-#  ifdef SIMPLE_BGC_FULL
+#  ifdef REDUCED_BGC
           real(r8), pointer :: pHc(:,:)
 #    ifdef TALK_ADDITION
           real(r8), pointer :: pHa(:,:)
@@ -453,11 +451,10 @@
       Dmem(ng)=Dmem(ng)+REAL(N(ng),r8)*size2d
 # endif
 
-# if (defined BIO_FENNEL || defined SIMPLE_BGC || \
-      defined SIMPLE_BGC_FULL) && defined CARBON
+# if (defined BIO_FENNEL || defined REDUCED_BGC) && defined CARBON
       allocate ( OCEAN(ng) % pH(LBi:UBi,LBj:UBj) )
       Dmem(ng)=Dmem(ng)+size2d
-#  ifdef SIMPLE_BGC_FULL
+#  ifdef REDUCED_BGC
 
       allocate ( OCEAN(ng) % pHc(LBi:UBi,LBj:UBj) )
       Dmem(ng)=Dmem(ng)+size2d
@@ -963,10 +960,10 @@
             OCEAN(ng) % ubar_stokes(i,j) = IniVal
             OCEAN(ng) % vbar_stokes(i,j) = IniVal
 # endif
-# if (defined BIO_FENNEL || defined SIMPLE_BGC || \
-      defined SIMPLE_BGC_FULL) && defined CARBON && defined SOLVE3D
+# if (defined BIO_FENNEL || defined REDUCED_BGC) && \
+      defined CARBON && defined SOLVE3D
             OCEAN(ng) % pH(i,j) = 8.0_r8
-#  ifdef SIMPLE_BGC_FULL
+#  ifdef REDUCED_BGC
             OCEAN(ng) % pHc(i,j) = 8.0_r8
 #    ifdef TALK_ADDITION
             OCEAN(ng) % pHa(i,j) = 8.0_r8

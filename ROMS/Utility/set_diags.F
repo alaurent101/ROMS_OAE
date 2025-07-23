@@ -467,9 +467,9 @@
 # endif
 # ifdef DIAGNOSTICS_BIO
 #  if defined BIO_FENNEL || defined HYPOXIA_SRM || \ 
-      defined SIMPLE_BGC || defined SIMPLE_BGC_FULL
+      defined REDUCED_BGC
         DO idiag=1,NDbio2d
-#   ifdef SIMPLE_BGC_FULL
+#   ifdef REDUCED_BGC
 #    ifdef TALK_ADDITION
           IF ((idiag.ne.ipCO2c).and.(idiag.ne.ipCO2a)) THEN
 #    else
@@ -487,7 +487,7 @@
           END IF
         END DO
 #  endif
-#  if defined BIO_FENNEL || defined DISSOLUTION
+#  if defined BIO_FENNEL
         DO idiag=1,NDbio3d
           DO k=1,N(ng)
             DO j=JstrR,JendR
@@ -628,7 +628,7 @@
 #  endif
 #  ifdef DIAGNOSTICS_BIO
 #   if defined BIO_FENNEL || defined HYPOXIA_SRM || \
-       defined SIMPLE_BGC || defined SIMPLE_BGC_FULL
+       defined REDUCED_BGC 
 !
 !  Biological terms 2D diagnostics.
 !
@@ -643,23 +643,6 @@
      &                      NghostPoints,                               &
      &                      EWperiodic(ng), NSperiodic(ng),             &
      &                      DIAGS(ng)%DiaBio2d)
-#    endif
-#   endif
-#   if defined DISSOLUTION
-!
-!  Biological terms 3D diagnostics.
-!
-        DO idiag=1,NDbio3d
-          CALL bc_r3d_tile (ng, tile,                                   &
-     &                      LBi, UBi, LBj, UBj, 1, N(ng),               &
-     &                      DIAGS(ng)%DiaBio3d(:,:,:,idiag))
-        END DO
-#    ifdef DISTRIBUTE
-        CALL mp_exchange4d (ng, tile, iNLM, 1,                          &
-     &                      LBi, UBi, LBj, UBj, 1, N(ng), 1, NDbio3d,   &
-     &                      NghostPoints,                               &
-     &                      EWperiodic(ng), NSperiodic(ng),             &
-     &                      DIAGS(ng)%DiaBio3d)
 #    endif
 #   endif
 #   if defined BIO_FENNEL

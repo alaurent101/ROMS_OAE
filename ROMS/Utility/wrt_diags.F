@@ -229,7 +229,7 @@
 # endif
 # ifdef DIAGNOSTICS_BIO
 #  if defined BIO_FENNEL || defined HYPOXIA_SRM || \
-      defined SIMPLE_BGC || defined SIMPLE_BGC_FULL
+      defined REDUCED_BGC
 !
 !  Write out 2D biological diagnostic fields.
 !
@@ -238,7 +238,7 @@
       DO ivar=1,NDbio2d
         ifield=iDbio2(ivar)
         IF (Dout(ifield,ng)) THEN
-#   ifdef SIMPLE_BGC_FULL
+#   ifdef REDUCED_BGC
 #    ifdef TALK_ADDITION
           IF ((ivar.eq.ipCO2c).or.(ivar.eq.ipCO2a)) THEN
 #    else
@@ -272,7 +272,7 @@
         END IF
       END DO
 #  endif
-#  if defined BIO_FENNEL || defined DISSOLUTION
+#  if defined BIO_FENNEL
 !
 !  Write out 3D biological diagnostic fields.
 !

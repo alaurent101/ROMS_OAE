@@ -726,9 +726,7 @@
 */
 
 #if defined BIO_FENNEL      || \
-    defined SIMPLE_BGC      || \
-    defined SIMPLE_BGC_FULL || \
-    defined DISSOLUTION     || \
+    defined REDUCED_BGC     || \
     defined ECOSIM          || \
     defined HYPOXIA_SRM     || \
     defined NEMURO          || \
@@ -1036,9 +1034,7 @@
 
 #if defined DIAGNOSTICS_BIO && \
   !(defined BIO_FENNEL      || \
-    defined SIMPLE_BGC      || \
-    defined SIMPLE_BGC_FULL || \
-    defined DISSOLUTION     || \
+    defined REDUCED_BGC     || \
     defined ECOSIM          || \
     defined HYPOXIA_SRM)
 #  undef DIAGNOSTICS_BIO

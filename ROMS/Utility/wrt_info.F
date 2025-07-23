@@ -1295,12 +1295,8 @@
 #  include <npzd_Powell_wrt.h>
 # elif defined RED_TIDE
 #  include <red_tide_wrt.h>
-# elif defined SIMPLE_BGC
-#  include <simple_bgc_wrt.h>
-# elif defined SIMPLE_BGC_FULL
-#  include <simple_bgc_full_wrt.h>
-# elif defined DISSOLUTION
-#  include <dissolution_wrt.h>
+# elif defined REDUCED_BGC
+#  include <reduced_bgc_wrt.h>
 # endif
 #endif
 

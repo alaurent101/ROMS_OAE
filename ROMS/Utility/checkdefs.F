@@ -714,8 +714,7 @@
       is=LEN_TRIM(Coptions)+1
       Coptions(is:is+8)=' CANUTO_B,'
 #endif
-#if defined CARBON && (defined BIO_FENNEL || defined SIMPLE_BGC || \
-                       defined SIMPLE_BGC_FULL)
+#if defined CARBON && (defined BIO_FENNEL || defined REDUCED)
 !
       IF (Master) WRITE (stdout,20) 'CARBON',                           &
      &   'Add Carbon constituents'
@@ -909,8 +908,7 @@
       Coptions(is:is+17)=' DENITRIFICATION,'
 #endif
 #if defined DIAGNOSTICS_BIO && (defined BIO_FENNEL || \
-    defined SIMPLE_BGC || defined SIMPLE_BGC_FULL || \
-    defined DISSOLUTION)
+    defined REDUCED_BGC)
 !
       IF (Master) WRITE (stdout,20) 'DIAGNOSTICS_BIO',                  &
      &   'Computing and writing biological diagnostic terms'
@@ -1773,8 +1771,7 @@
       Coptions(is:is+18)=' OPT_PERTURBATION,'
       idriver=idriver+1
 #endif
-#if defined OXYGEN && (defined BIO_FENNEL || defined SIMPLE_BGC || \
-                       defined SIMPLE_BGC_FULL)
+#if defined OXYGEN && (defined BIO_FENNEL || defined REDUCED_BGC)
 # ifdef OCMIP_OXYGEN_SC
 !
       IF (Master) WRITE (stdout,20) 'OCMIP_OXYGEN_SC',                  &
@@ -1816,8 +1813,7 @@
       is=LEN_TRIM(Coptions)+1
       Coptions(is:is+13)=' PARALLEL_IO,'
 #endif
-#if defined CARBON && (defined BIO_FENNEL || defined SIMPLE_BGC || \
-                       defined SIMPLE_BGC_FULL)
+#if defined CARBON && (defined BIO_FENNEL || defined REDUCED_BGC)
 # if defined PC02AIR_DATA
 !
       IF (Master) WRITE (stdout,20) 'PCO2AIR_DATA',                     &
@@ -1986,8 +1982,7 @@
       Coptions(is:is+24)=' !RADIAL_ANGLE_CCW_EAST,'
 # endif
 #endif
-#if defined OXYGEN && (defined BIO_FENNEL || defined SIMPLE_BGC || \
-                       defined SIMPLE_BGC_FULL)
+#if defined OXYGEN && (defined BIO_FENNEL || defined REDUCED_BGC)
 # if defined OCMIP_OXYGEN_SC
 !
       IF (Master) WRITE (stdout,20) 'OCMIP_OXYGEN_SC',                  &
@@ -2370,26 +2365,12 @@
       Coptions(is:is+11)=' SG_LOGINT,'
 # endif
 #endif
-#ifdef SIMPLE_BGC
+#ifdef REDUCED_BGC 
 !
-      IF (Master) WRITE (stdout,20) 'SIMPLE_BGC',                       &
-     &   'Simple BGC model model'
+      IF (Master) WRITE (stdout,20) 'REDUCED_BGC',                      &
+     &   'Reduced BGC model'
       is=LEN_TRIM(Coptions)+1
-      Coptions(is:is+12)=' SIMPLE_BGC,'
-      ibiology=ibiology+1
-# ifdef TEMP_RATES
-      IF (Master) WRITE (stdout,20) 'TEMP_RATES',                       &
-     &   'Temperature dependent rates.'
-      is=LEN_TRIM(Coptions)+1
-      Coptions(is:is+12)=' TEMP_RATES,'
-# endif
-#endif
-#ifdef SIMPLE_BGC_FULL
-!
-      IF (Master) WRITE (stdout,20) 'SIMPLE_BGC_FULL',                  &
-     &   'Simple BGC model model (full version)'
-      is=LEN_TRIM(Coptions)+1
-      Coptions(is:is+17)=' SIMPLE_BGC_FULL,'
+      Coptions(is:is+17)=' REDUCED_BGC,'
       ibiology=ibiology+1
 # ifdef TEMP_RATES
       IF (Master) WRITE (stdout,20) 'TEMP_RATES',                       &
@@ -2516,13 +2497,6 @@
       is=LEN_TRIM(Coptions)+1
       Coptions(is:is+9)=' SOC_H23,'
 # endif
-# ifdef SOC_RAKSHITETAL2023
-!
-      IF (Master) WRITE (stdout,20) 'SOC_H3',                           &
-     &   'SOC following Rakshit et al (2023).'
-      is=LEN_TRIM(Coptions)+1
-      Coptions(is:is+21)=' SOC_RAKSHITETAL2023,'
-# endif
 # ifdef SOC_ZVAR
 !
       IF (Master) WRITE (stdout,20) 'SOC_ZVAR',                         &
@@ -2537,13 +2511,6 @@
       is=LEN_TRIM(Coptions)+1
       Coptions(is:is+12)=' SOC_OXYDEP,'
 # endif
-#endif
-#ifdef DISSOLUTION
-      IF (Master) WRITE (stdout,20) 'DISSOLUTION',                       &
-     &   'Dissolution model'
-      is=LEN_TRIM(Coptions)+1
-      Coptions(is:is+13)=' DISSOLUTION,'
-      ibiology=ibiology+1
 #endif
 #ifdef SINGLE_PRECISION
 !
@@ -2820,8 +2787,7 @@
       is=LEN_TRIM(Coptions)+1
       Coptions(is:is+15)=' SWAN_COUPLING,'
 #endif
-#if defined CARBON && (defined BIO_FENNEL || defined SIMPLE_BGC || \
-                       defined SIMPLE_BGC_FULL)
+#if defined CARBON && (defined BIO_FENNEL || defined REDUCED_BGC)
 # ifdef TALK_NONCONSERV
 !
       IF (Master) WRITE (stdout,20) 'TALK_NONCONSERV',                  &

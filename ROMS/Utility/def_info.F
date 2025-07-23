@@ -2859,12 +2859,8 @@
 #  include <npzd_Powell_def.h>
 # elif defined RED_TIDE
 #  include <red_tide_def.h>
-# elif defined SIMPLE_BGC
-#  include <simple_bgc_def.h>
-# elif defined SIMPLE_BGC_FULL
-#  include <simple_bgc_full_def.h>
-# elif defined DISSOLUTION
-#  include <dissolution_def.h>
+# elif defined REDUCED_BGC
+#  include <reduced_bgc_def.h>
 # endif
 #endif
 
