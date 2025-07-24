@@ -1838,12 +1838,6 @@
      &   'CO2 gas exchange time-dependent evolution (Sable Island)'
       is=LEN_TRIM(Coptions)+1
       Coptions(is:is+21)=' PCO2AIR_SABLEISLAND,'
-# elif defined PCO2AIR_SABLEISLAND_V2
-!
-      IF (Master) WRITE (stdout,20) 'PCO2AIR_SABLEISLAND_V2',           &
-     &   'CO2 gas exchange time-dependent evolution (Sable Island)'
-      is=LEN_TRIM(Coptions)+1
-      Coptions(is:is+24)=' PCO2AIR_SABLEISLAND_V2,'
 # endif
 #endif
 #ifdef PERFECT_RESTART

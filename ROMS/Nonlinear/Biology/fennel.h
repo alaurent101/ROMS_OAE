@@ -481,20 +481,8 @@
       real(r8), parameter :: D9 = 0.012976532_r8
       real(r8), parameter :: D10 = -50.053077642_r8
       real(r8), parameter :: D11 = 48569.391919959_r8
-# elif defined PCO2AIR_SABLEISLAND
-      real(r8), parameter :: D0 = 273.9904_r8             ! coefficients
-      real(r8), parameter :: D1 = 5.3132_r8               ! to calculate
-      real(r8), parameter :: D2 = 4.0601_r8               ! secular trend in
-      real(r8), parameter :: D3 =-0.5814_r8               ! atmospheric pCO2
-      real(r8), parameter :: D4 =-2.1740_r8               ! updated by KR 7-10-2015
-      real(r8), parameter :: D5 =-0.5009_r8               ! calculated from Sable Island
-      real(r8), parameter :: D6 = 0.5904_r8               ! atm pCO2 data
-      real(r8), parameter :: D7 = 1.9738_r8
-      real(r8), parameter :: D8 = 272.6021_r8
-      real(r8), parameter :: D9 = 5.3848_r8
-      real(r8), parameter :: D10 = 3.9580_r8
       real(r8), parameter :: D11 = 0.1665_r8
-# elif defined PCO2AIR_SABLEISLAND_V2
+# elif defined PCO2AIR_SABLEISLAND
       real(r8) :: fyear
       real(r8), parameter :: D0 = 72134.344240476_r8       ! coefficients to calculate
       real(r8), parameter :: D1 = -73.611517390_r8         ! secular trend with a
@@ -2283,13 +2271,9 @@
      &                      D9*fyear**2+D10*fyear+D11
             CO2_Flux=cff3*CO2_sol*(pCO2air_secular-pCO2(i))
 # elif defined PCO2AIR_SABLEISLAND
-            pCO2air_secular=D0+D1*COS(pi2*pmonth)+                      &
-     &                      D2*SIN(pi2*pmonth)+                         &
-     &                      D3*COS(2*pi2*pmonth)+                       &
-     &                      D4*SIN(2*pi2*pmonth)+                       &
-     &                      D5*COS(3*pi2*pmonth)+                       &
-     &                      D6*SIN(3*pi2*pmonth)+                       &
-     &                      D7*pmonth
+            fyear=year+MIN((yday-1.0_r8)/365.0_r8,1.0_r8)
+            pCO2air_secular=D0+D1*fyear+D2*fyear**2+                    &
+     &                      D3*1.25_r8*LOG(SIN(pi2*fyear+D4)+D5)
             CO2_Flux=cff3*CO2_sol*(pCO2air_secular-pCO2(i))
 # else
             CO2_Flux=cff3*CO2_sol*(pCO2air(ng)-pCO2(i))
