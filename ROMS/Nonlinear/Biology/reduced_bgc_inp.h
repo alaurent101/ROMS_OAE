@@ -619,7 +619,7 @@
             WRITE (out,80) P2Dratio(ng), 'P2Dratio',                    &
      &            'ratio of particles in alkalinity load.'
             WRITE (out,80) sedloss(ng), 'sedloss',                      &
-     &            'fraction of particle1 lost to the sediment.'
+     &            'fraction of TAp lost to the sediment.'
 #endif
             WRITE (out,80) PhyNC(ng), 'PhyNC',                          &
      &            'Phytoplankton Nitrogen:Carbon ratio (mol_N/mol_C).'

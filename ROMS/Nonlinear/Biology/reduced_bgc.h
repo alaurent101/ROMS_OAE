@@ -617,7 +617,7 @@
 !
 !  Set vertical sinking indentification.
 !
-      idsink(1)=iParticle1
+      idsink(1)=iTAp
 
 !
 !  Set vertical sinking velocity vector in the same order as the
@@ -968,23 +968,23 @@
 !
 !-----------------------------------------------------------------------
 !  Compute dissolution of particles (Implicit formulation)
-!  dParticle1_dt = -K*Particle1
-!         dTA_dt =  K*Particle1
+!  dTAp_dt = -K*TAp
+!         dTA_dt =  K*TAp
 !-----------------------------------------------------------------------
 !
-               fac1=MAX(Bio(i,k,iParticle1),0.0_r8)
+               fac1=MAX(Bio(i,k,iTAp),0.0_r8)
                cff4=dtdays*dissTAp(ng)
                IF (k.eq.1) THEN
                  cff5=1.0_r8-sedloss(ng)
                ELSE
                  cff5=1.0_r8
                END IF
-               Bio(i,k,iParticle1)=fac1/(1+cff4)
+               Bio(i,k,iTAp)=fac1/(1+cff4)
                Bio(i,k,idTA)=Bio(i,k,idTA)+cff4*cff5*                   &
-     &                                     Bio(i,k,iParticle1)
+     &                                     Bio(i,k,iTAp)
 # ifdef TALK_TRACERS
                Bio(i,k,iTArm)=Bio(i,k,iTArm)+cff4*cff5*                 &
-     &                                       Bio(i,k,iParticle1)
+     &                                       Bio(i,k,iTAp)
 # endif
 !
 !-----------------------------------------------------------------------
@@ -1015,20 +1015,13 @@
                  cff1=alkalinity_load(ng)
                END IF
 # endif
-! WARNING: REMOVE!
-!          print "(3i5)",k
-!          print "(f12.3)",cff1
-!          print "(f12.3)",Hz(i,j,k)
-!          print "(f12.3)",(Hadd**2)
-!          print "(f12.3)",Hz(i,j,k)/(Hadd**2)
-!                 cff2=cff1*dtdays*Hz(i,j,k)/(Hadd**2)
                  cff2=cff1*dtdays/Hadd
                  cff3=(1-P2Dratio(ng))*cff2
                  Bio(i,k,idTA)=Bio(i,k,idTA)+cff3
 # ifdef TALK_TRACERS
                  Bio(i,k,iTAin)=Bio(i,k,iTAin)+cff3
 # endif
-                 Bio(i,k,iParticle1)=Bio(i,k,iParticle1)+               &
+                 Bio(i,k,iTAp)=Bio(i,k,iTAp)+               &
      &             P2Dratio(ng)*cff2
                END IF
 #endif
@@ -1575,10 +1568,10 @@
 !  Particles reaching the seafloor stay at the bottom. Without this
 !  module, particles falls out of the system. 
 !
-            IF (ibio.eq.iParticle1) THEN
+            IF (ibio.eq.iTAp) THEN
               DO i=Istr,Iend
                 cff1=FC(i,0)*Hz_inv(i,1)
-                Bio(i,1,iParticle1)=Bio(i,1,iParticle1)+cff1
+                Bio(i,1,iTAp)=Bio(i,1,iTAp)+cff1
               END DO
             END IF
           END DO SINK_LOOP

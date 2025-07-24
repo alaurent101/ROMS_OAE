@@ -26,8 +26,8 @@
             CASE ('idTvar(iTAlk)')
               idTvar(iTAlk)=varid
 # ifdef TALK_ADDITION
-            CASE ('idTvar(iParticle1)')
-              idTvar(iParticle1)=varid
+            CASE ('idTvar(iTAp)')
+              idTvar(iTAp)=varid
             CASE ('idTvar(idTIC)')
               idTvar(idTIC)=varid
             CASE ('idTvar(idTA)')
@@ -58,8 +58,8 @@
             CASE ('idTads(iTAlk)')
               idTads(iTAlk)=varid
 #  ifdef TALK_ADDITION
-            CASE ('idTads(iParticle1)')
-              idTads(iParticle1)=varid
+            CASE ('idTads(iTAp)')
+              idTads(iTAp)=varid
             CASE ('idTads(idTIC)')
               idTads(idTIC)=varid
             CASE ('idTads(idTA')
@@ -102,14 +102,14 @@
               idTbry(inorth,iTAlk)=varid
 
 # ifdef TALK_ADDITION
-            CASE ('idTbry(iwest,iParticle1)')
-              idTbry(iwest,iParticle1)=varid
-            CASE ('idTbry(ieast,iParticle1)')
-              idTbry(ieast,iParticle1)=varid
-            CASE ('idTbry(isouth,iParticle1)')
-              idTbry(isouth,iParticle1)=varid
-            CASE ('idTbry(inorth,iParticle1)')
-              idTbry(inorth,iParticle1)=varid
+            CASE ('idTbry(iwest,iTAp)')
+              idTbry(iwest,iTAp)=varid
+            CASE ('idTbry(ieast,iTAp)')
+              idTbry(ieast,iTAp)=varid
+            CASE ('idTbry(isouth,iTAp)')
+              idTbry(isouth,iTAp)=varid
+            CASE ('idTbry(inorth,iTAp)')
+              idTbry(inorth,iTAp)=varid
 
             CASE ('idTbry(iwest,idTIC)')
               idTbry(iwest,idTIC)=varid
@@ -172,8 +172,8 @@
             CASE ('idRtrc(iTAlk)')
               idRtrc(iTAlk)=varid
 # ifdef TALK_ADDITION
-            CASE ('idRtrc(iParticle1)')
-              idRtrc(iParticle1)=varid
+            CASE ('idRtrc(iTAp)')
+              idRtrc(iTAp)=varid
             CASE ('idRtrc(idTIC)')
               idRtrc(idTIC)=varid
             CASE ('idRtrc(idTA)')

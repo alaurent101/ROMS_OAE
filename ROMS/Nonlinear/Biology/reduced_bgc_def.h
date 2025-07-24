@@ -154,7 +154,7 @@
       IF (FoundError(exit_flag, NoError, __LINE__, MyFile)) RETURN
 
       Vinfo( 1)='dissTAp'
-      Vinfo( 2)='dissolution rate of particle1'
+      Vinfo( 2)='dissolution rate of TAp'
       Vinfo( 3)='day-1'
       status=def_var(ng, model, ncid, varid, NF_TYPE,                   &
      &               1, (/0/), Aval, Vinfo, ncname,                     &
@@ -177,7 +177,7 @@
       IF (FoundError(exit_flag, NoError, __LINE__, MyFile)) RETURN
 
       Vinfo( 1)='sedloss'
-      Vinfo( 2)='fraction of particle1 lost to the sediment'
+      Vinfo( 2)='fraction of TAp lost to the sediment'
       status=def_var(ng, model, ncid, varid, NF_TYPE,                   &
      &               1, (/0/), Aval, Vinfo, ncname,                     &
      &               SetParAccess = .FALSE.)

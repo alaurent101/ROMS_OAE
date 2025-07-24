@@ -27,7 +27,7 @@
 !   PhyNC    Phytoplankton Nitrogen:Carbon ratio [mol_N/mol_C].        !
 !   pCO2air  CO2 partial pressure in the air [ppmv].                   !
 #ifdef TALK_ADDITION
-!   dissTAp   dissolution rate of particle1 [day-1].                   !
+!   dissTAp   dissolution rate of TAp [day-1].                   !
 !   iloc_alkalinity   longitude (i) index of the model grid cell where !
 !                     alkalinity is added                              !
 !   jloc_alkalinity   latitude (j) index of the model grid cell where  !
@@ -43,7 +43,7 @@
 !   wTAp              sinking velocity for particulate feedstock (TAp) !
 !                     [meter day-1].                                   !
 !   P2Dratio   ratio of particles in added alkalinity.                 !
-!   sedloss    fraction of particle1 lost to the sediment              !
+!   sedloss    fraction of TAp lost to the sediment              !
 !                                                                      !
 #endif
 !                                                                      !
@@ -64,7 +64,7 @@
       integer :: iOxyg                  ! Dissolved oxygen concentration
 #endif
 #ifdef TALK_ADDITION
-      integer :: iParticle1              ! particle1
+      integer :: iTAp              ! TAp
       integer :: idTIC                   ! delta TIC
       integer :: idTA                    ! delta TA
 # ifdef TALK_TRACERS
@@ -336,7 +336,7 @@
       iTAlk=ic+2
       ic=ic+2
 # ifdef TALK_ADDITION
-      iParticle1=ic+1
+      iTAp=ic+1
       idTIC=ic+2
       idTA=ic+3
       ic=ic+3
