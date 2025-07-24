@@ -973,7 +973,7 @@
 !-----------------------------------------------------------------------
 !
                fac1=MAX(Bio(i,k,iParticle1),0.0_r8)
-               cff4=dtdays*disso1(ng)
+               cff4=dtdays*dissTAp(ng)
                IF (k.eq.1) THEN
                  cff5=1.0_r8-sedloss(ng)
                ELSE

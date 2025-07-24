@@ -153,7 +153,7 @@
      &               SetParAccess = .FALSE.)
       IF (FoundError(exit_flag, NoError, __LINE__, MyFile)) RETURN
 
-      Vinfo( 1)='disso1'
+      Vinfo( 1)='dissTAp'
       Vinfo( 2)='dissolution rate of particle1'
       Vinfo( 3)='day-1'
       status=def_var(ng, model, ncid, varid, NF_TYPE,                   &

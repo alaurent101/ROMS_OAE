@@ -107,8 +107,8 @@
               Npts=load_r(Nval, Rval, Ngrids, alkalinity_startload)
             CASE ('alkalinity_endload')
               Npts=load_r(Nval, Rval, Ngrids, alkalinity_endload)
-            CASE ('disso1')
-              Npts=load_r(Nval, Rval, Ngrids, disso1)
+            CASE ('dissTAp')
+              Npts=load_r(Nval, Rval, Ngrids, dissTAp)
             CASE ('wPar1')
               Npts=load_r(Nval, Rval, Ngrids, wPar1)
             CASE ('P2Dratio')
@@ -612,7 +612,7 @@
            WRITE (out,80) alkalinity_endload(ng),                       &
      &            'alkalinity_endload',                                 &
      &            'ending time of alkalinity addition'
-            WRITE (out,80) disso1(ng), 'disso1',                        &
+            WRITE (out,80) dissTAp(ng), 'dissTAp',                      &
      &            'dissolution rate for particle1 (day-1).'
             WRITE (out,80) wPar1(ng), 'wPar1',                          &
      &            'vertical sinking velocity for particle1 (m day-1).'

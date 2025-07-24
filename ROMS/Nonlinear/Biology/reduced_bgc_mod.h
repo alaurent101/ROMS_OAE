@@ -27,7 +27,7 @@
 !   PhyNC    Phytoplankton Nitrogen:Carbon ratio [mol_N/mol_C].        !
 !   pCO2air  CO2 partial pressure in the air [ppmv].                   !
 #ifdef TALK_ADDITION
-!   disso1   dissolution rate of particle1 [day-1].                    !
+!   dissTAp   dissolution rate of particle1 [day-1].                   !
 !   iloc_alkalinity   longitude (i) index of the model grid cell where !
 !                     alkalinity is added                              !
 !   jloc_alkalinity   latitude (j) index of the model grid cell where  !
@@ -120,7 +120,7 @@
       real(r8), allocatable :: alkalinity_load(:)
       real(r8), allocatable :: alkalinity_startload(:)
       real(r8), allocatable :: alkalinity_endload(:)
-      real(r8), allocatable :: disso1(:)               ! 1/day               
+      real(r8), allocatable :: dissTAp(:)              ! 1/day               
       real(r8), allocatable :: wPar1(:)                ! m/day
       real(r8), allocatable :: P2Dratio(:)
       real(r8), allocatable :: sedloss(:)
@@ -291,8 +291,8 @@
         allocate ( wPar1(Ngrids) )
         Dmem(1)=Dmem(1)+REAL(Ngrids,r8)
       END IF
-      IF (.not.allocated(disso1)) THEN
-        allocate ( disso1(Ngrids) )
+      IF (.not.allocated(dissTAp)) THEN
+        allocate ( dissTAp(Ngrids) )
         Dmem(1)=Dmem(1)+REAL(Ngrids,r8)
       END IF
       IF (.not.allocated(P2Dratio)) THEN
