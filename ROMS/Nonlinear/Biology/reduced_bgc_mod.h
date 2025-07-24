@@ -40,7 +40,7 @@
 !                     [unit of alkalinity/m2/day].                     !
 !   alkalinity_startload   starting day of alkalinity load             !
 !   alkalinity_endload     ending day of alkalinity load               !
-!   wPar1             vertical sinking velocity for particle1          !
+!   wTAp              sinking velocity for particulate feedstock (TAp) !
 !                     [meter day-1].                                   !
 !   P2Dratio   ratio of particles in added alkalinity.                 !
 !   sedloss    fraction of particle1 lost to the sediment              !
@@ -121,7 +121,7 @@
       real(r8), allocatable :: alkalinity_startload(:)
       real(r8), allocatable :: alkalinity_endload(:)
       real(r8), allocatable :: dissTAp(:)              ! 1/day               
-      real(r8), allocatable :: wPar1(:)                ! m/day
+      real(r8), allocatable :: wTAp(:)                 ! m/day
       real(r8), allocatable :: P2Dratio(:)
       real(r8), allocatable :: sedloss(:)
 #endif
@@ -287,8 +287,8 @@
         allocate ( alkalinity_endload(Ngrids) )
         Dmem(1)=Dmem(1)+REAL(Ngrids,r8)
       END IF
-      IF (.not.allocated(wPar1)) THEN
-        allocate ( wPar1(Ngrids) )
+      IF (.not.allocated(wTAp)) THEN
+        allocate ( wTAp(Ngrids) )
         Dmem(1)=Dmem(1)+REAL(Ngrids,r8)
       END IF
       IF (.not.allocated(dissTAp)) THEN

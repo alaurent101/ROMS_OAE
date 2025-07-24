@@ -161,8 +161,8 @@
      &               SetParAccess = .FALSE.)
       IF (FoundError(exit_flag, NoError, __LINE__, MyFile)) RETURN
 
-      Vinfo( 1)='wPar1'
-      Vinfo( 2)='vertical sinking velocity for particle1'
+      Vinfo( 1)='wTAp'
+      Vinfo( 2)='sinking velocity for particulate feedstock (TAp)'
       Vinfo( 3)='meter day-1' 
       status=def_var(ng, model, ncid, varid, NF_TYPE,                   &
      &               1, (/0/), Aval, Vinfo, ncname,                     &

@@ -107,18 +107,18 @@
      &                      ncid = ncid)
       IF (FoundError(exit_flag, NoError, __LINE__, MyFile)) RETURN
 
-      CALL netcdf_put_fvar (ng, model, ncname, 'dissTAp',               &
-     &                      dissTAp(ng), (/0/), (/0/),                  &
+      CALL netcdf_put_fvar (ng, model, ncname, 'dissTAp',                &
+     &                      dissTAp(ng), (/0/), (/0/),                   &
      &                      ncid = ncid)
       IF (FoundError(exit_flag, NoError, __LINE__, MyFile)) RETURN
       
-      CALL netcdf_put_fvar (ng, model, ncname, 'wPar1',                 &  
-     &                      wPar1(ng), (/0/), (/0/),                    &
+      CALL netcdf_put_fvar (ng, model, ncname, 'wTAp',                   &  
+     &                      wTAp(ng), (/0/), (/0/),                      &
      &                      ncid = ncid)
       IF (FoundError(exit_flag, NoError, __LINE__, MyFile)) RETURN
 
-      CALL netcdf_put_fvar (ng, model, ncname, 'P2Dratio',                 &  
-     &                      P2Dratio(ng), (/0/), (/0/),                    &
+      CALL netcdf_put_fvar (ng, model, ncname, 'P2Dratio',               &  
+     &                      P2Dratio(ng), (/0/), (/0/),                  &
      &                      ncid = ncid)
       IF (FoundError(exit_flag, NoError, __LINE__, MyFile)) RETURN
 

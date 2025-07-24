@@ -623,7 +623,7 @@
 !  Set vertical sinking velocity vector in the same order as the
 !  identification vector, IDSINK.
 !
-      Wbio(1)=wPar1(ng)                ! sinking velocity of particle1
+      Wbio(1)=wTAp(ng)       ! sinking velocity of particulate feedstock (TAp)
 # endif
 
 !
