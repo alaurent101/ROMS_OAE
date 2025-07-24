@@ -153,7 +153,7 @@
       NBT=6
 #  endif
 # else
-      NBT=5
+      NBT=3
 # endif
 #elif defined CARBON && !defined OXYGEN
 # ifdef TALK_ADDITION
@@ -201,8 +201,6 @@
 #  else
       iCfxc=ic+1
       ipCO2c=ic+2
-!      iCOfx=ic+1
-!      ipCO2=ic+2
       ic=ic+2
 #  endif
 # endif

@@ -460,7 +460,7 @@
 ** RIVER_DON               if DON non-sinking source from rivers             **
 ** TALK_NONCONSERV         if nonconservative computation of alkalinity      **
 **                                                                           **
-** Simple BGC model OPTIONS:                                                 **
+** Reduced BGC model (Laurent et al., 2025) OPTIONS:                         **
 **                                                                           **
 ** REDUCED_BGC             if Simple Reduced BGC model                       **
 ** TEMP_RATES              if temperature-dependent water column respiration **

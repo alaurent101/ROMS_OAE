@@ -15,7 +15,7 @@
 !                                                                      !
 !  The simulation of  inorganic carbon and dissolved oxygen can be     !
 !  activated independently with the options "CARBON" and "OXYGEN",     !
-!  respectively. One of the two options in mandatory.                  !
+!  respectively. One of the two options is mandatory.                  !
 !                                                                      !
 !  If the "pCO2_RZ" options is activated, in addition to "CARBON",     !
 !  the carbonate system  routines by Zeebe and Wolf-Gladrow (2001)     !

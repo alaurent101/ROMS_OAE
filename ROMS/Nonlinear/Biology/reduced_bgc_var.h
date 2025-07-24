@@ -207,11 +207,6 @@
               iDbio2(iCfxa)=varid
             CASE ('iDbio2(ipCO2a)')
               iDbio2(ipCO2a)=varid
-!#  else
-!            CASE ('iDbio2(iCOfx)')
-!              iDbio2(iCOfx)=varid
-!            CASE ('iDbio2(ipCO2)')
-!              iDbio2(ipCO2)=varid
 #  endif
 # endif
 # ifdef OXYGEN

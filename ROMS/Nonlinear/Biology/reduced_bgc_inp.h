@@ -538,29 +538,6 @@
               DO ng=1,Ngrids
                 Dout(i,ng)=Lbio(ng)
               END DO
-!#  else
-!            CASE ('Dout(iCOfx)')
-!              IF (iDbio2(iCOfx).eq.0) THEN
-!                IF (Master) WRITE (out,40) 'iDbio2(iCOfx)'
-!                exit_flag=5
-!                RETURN
-!              END IF
-!              Npts=load_l(Nval, Cval, Ngrids, Lbio)
-!              i=iDbio2(iCOfx)
-!              DO ng=1,Ngrids
-!                Dout(i,ng)=Lbio(ng)
-!              END DO
-!            CASE ('Dout(ipCO2)')
-!              IF (iDbio2(ipCO2).eq.0) THEN
-!                IF (Master) WRITE (out,40) 'iDbio2(ipCO2)'
-!                exit_flag=5
-!                RETURN
-!              END IF
-!              Npts=load_l(Nval, Cval, Ngrids, Lbio)
-!              i=iDbio2(ipCO2)
-!              DO ng=1,Ngrids
-!                Dout(i,ng)=Lbio(ng)
-!              END DO
 #  endif
 # endif
 # ifdef OXYGEN
