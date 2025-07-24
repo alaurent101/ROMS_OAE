@@ -759,10 +759,6 @@
           IF (j.eq.jloc_alkalinity(ng)) THEN
             Hadd=SUM(Hz(iloc_alkalinity(ng),jloc_alkalinity(ng),        &
      &                kloc_alkalinity_min(ng):kloc_alkalinity_max(ng)))
-! WARNING: REMOVE!
-!          print "(a27)", "Thickness of addition layer"
-!          print "(f12.3)",Hadd
-!          print "(a20)", "   individual layers"
           END IF
 #endif
 
@@ -1093,16 +1089,8 @@
 !
 !  Alkalinity is treated as a diagnostic variable. TAlk = f(S[PSU])
 !
-#  ifdef TALK_BBOBS
-!  Relationship based on data from the Bedford Basin Monitoring station.
-              Bio(i,k,iTAlk)=230.4447_r8+63.0133_r8*Bio(i,k,isalt)
-#  elif TALK_BBMOD
-!  Relationship based on data from the Bedford Basin model.
-              Bio(i,k,iTAlk)=231.0147_r8+61.5883_r8*Bio(i,k,isalt)
-#  else
 !  Relationship from Brewer et al. (1986).
               Bio(i,k,iTAlk)=587.05_r8+50.56_r8*Bio(i,k,isalt)
-#  endif
 # endif
             END DO
           END DO
@@ -1294,10 +1282,7 @@
 # else
             IF ((ng .eq. 0)) THEN
 # endif
-# ifdef SOC_RAKSHITETAL2023
-              cff2=Bio(i,1,iOxyg)*0.0430936069_r8+5.4811216296_r8
-              cff1=cff2*Hz_inv(i,1)*dtdays
-# elif defined SOC_ZVAR
+# ifdef SOC_ZVAR
 !             Based on DIC vs depth relationship from Chris Algar
               cff2=3.37_r8*EXP(0.033*cff5)*1.0_r8 ! warning, multiplier
               cff1=cff2*Hz_inv(i,1)*dtdays
@@ -1357,10 +1342,7 @@
             END IF
             cff1=cff2*Hz_inv(i,1)*dtdays
 #else
-# ifdef SOC_RAKSHITETAL2023
-            cff2=Bio(i,1,iOxyg)*0.0430936069_r8+5.4811216296_r8
-            cff1=cff2*Hz_inv(i,1)*dtdays
-# elif defined SOC_ZVAR
+#ifdef SOC_ZVAR
             cff2=3.37_r8*EXP(0.033*cff5)*1.0_r8 ! warning, multiplier
             cff1=cff2*Hz_inv(i,1)*dtdays
 # else
