@@ -55,14 +55,26 @@ PCO2AIR_SABLEISLAND  /* Atmospheric pCO2 parameterization for Scotian Shelf (Sab
 ```
 Note: primary production, water column and sediment respiration are hard coded (with the options above). To relocate the model new rates (parameterizations) need to be provided, otherwise they will be set to zero.
 
+## Model BGC tracers
+
+alkalinity, TIC and oxygen are the 3 tracers of the reduced BGC model. The addition model includes the additional tracers listed below.
+
+* TAp      _Particulate phase of the feedstock_
+* dTA      _Dissolved phase of the feedstock + dissolved TAp. This tracer represents the added alkalinity_
+* dTIC     _Additional TIC (from net CO2 uptake)_
+* TAin     _Optional tracer to record added feedstock (TALK_TRACERS)_
+* TArm     _Optional tracer to record dissolved TAp (TALK_TRACERS)_
+
 ## River file
+
+The alkalinity addition
 
 ## Test forcing files
 
-The model can be run for testing using the Halifax Harbour set up in July 2017 (constant addition from July 2). A set of forcing files are available here:
+The model can be run for a 1 month test using the Halifax Harbour set up in July 2017 (constant addition from July 2). The forcing files are available from Zenodo and the setup provided in the files listed above.
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.16423337.svg)](https://doi.org/10.5281/zenodo.16423337)
 
-                
 ## References
 
 * Ohashi, K., Laurent, A., Renkl, C., Sheng, J., Fennel, K., & Oliver, E. (2024). DalROMS-NWA12 v1.0, a coupled circulation–ice–biogeochemistry modelling system for the northwest Atlantic Ocean: development and validation. Geoscientific Model Development, 17(23), 8697–8733. [https://doi.org/10.5194/gmd-17-8697-2024](https://doi.org/10.5194/gmd-17-8697-2024)
