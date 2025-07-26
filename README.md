@@ -53,25 +53,31 @@ SOC_OXYDEP  /* O2 dependency on SOC */
 PCO2AIR_MAUNALOA     /* Atmospheric pCO2 parameterization for Mauna Loa time series */
 PCO2AIR_SABLEISLAND  /* Atmospheric pCO2 parameterization for Scotian Shelf (Sable Island observations) */
 ```
-Note: primary production, water column and sediment respiration are hard coded (with the options above). To relocate the model new rates (parameterizations) need to be provided, otherwise they will be set to zero.
+> [!NOTE]
+> primary production, water column and sediment respiration are parameterized for Halifax Harbour (with the options above). To relocate the model new rates (parameterizations) need to be provided, otherwise they will be set to zero. The parameterization can be modified in the main ROMS source file ```./ROMS/Nonlinear/Biology/reduced_bgc.h```
 
 ## Model BGC tracers
 
 alkalinity, TIC and oxygen are the 3 tracers of the reduced BGC model. The addition model includes the additional tracers listed below.
 
-* TAp      _Particulate phase of the feedstock_
-* dTA      _Dissolved phase of the feedstock + dissolved TAp. This tracer represents the added alkalinity_
-* dTIC     _Additional TIC (from net CO2 uptake)_
-* TAin     _Optional tracer to record added feedstock (TALK_TRACERS)_
-* TArm     _Optional tracer to record dissolved TAp (TALK_TRACERS)_
+The action of every agent <br />
+  into the world <br />
+starts <br />
+  from their physical selves. <br />
+  
+* TAp      _Particulate phase of the feedstock_
+* dTA      _Dissolved phase of the feedstock + dissolved TAp. This tracer represents the added alkalinity_
+* dTIC     _Additional TIC (from net CO2 uptake)_
+* TAin     _Optional tracer to record added feedstock (TALK_TRACERS)_
+* TArm     _Optional tracer to record dissolved TAp (TALK_TRACERS)_
 
 ## River file
 
-The alkalinity addition
+The alkalinity addition is set with a time series and is added as an extra river in the river forcing file (the last one). The i/j indices of the extra river are also set in the input file ```./User/External/reduced_bgc.in``` along with the vertical layers where release occurs.
 
 ## Test forcing files
 
-The model can be run for a 1 month test using the Halifax Harbour set up in July 2017 (constant addition from July 2). The forcing files are available from Zenodo and the setup provided in the files listed above.
+The model can be run for a 1 month test using the Halifax Harbour set up in July 2017 (constant addition from July 2). The forcing files are available from Zenodo and the setup provided in the files listed above. In this example feedstock is released from Tufts Cove in the Halifax Harbour.
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.16423337.svg)](https://doi.org/10.5281/zenodo.16423337)
 
