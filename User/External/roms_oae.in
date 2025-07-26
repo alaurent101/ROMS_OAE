@@ -916,8 +916,8 @@ Dout(iTnudg) == F F     ! temp_nudg, ...     nudging effect
 
 ! Input NetCDF file names, [1:Ngrids].
 
-     GRDNAME == /scratch/alaurent/HRM/OUTPUT/ROMS_OAE_TEST/h2_LaurentEtAl2025.nc
-     ININAME == /scratch/alaurent/HRM/OUTPUT/ROMS_OAE_TEST/h2_LaurentEtAl2025_ini.nc
+     GRDNAME == h2_LaurentEtAl2025.nc
+     ININAME == h2_LaurentEtAl2025_ini.nc
      ITLNAME == roms_itl.nc
      IRPNAME == roms_irp.nc
      IADNAME == roms_iad.nc
@@ -959,10 +959,10 @@ Dout(iTnudg) == F F     ! temp_nudg, ...     nudging effect
 
     NBCFILES == 4                          ! number of boundary files
 
-     BRYNAME == /scratch/alaurent/HRM/INPUT/bc_H2_LaurentEtAl2025_PHY_201707.nc \
-                /scratch/alaurent/HRM/INPUT/bc_H2_LaurentEtAl2025_PHY_201707_TAfromS.nc \
-                /scratch/alaurent/HRM/INPUT/bc_H2_LaurentEtAl2025_PHY_201707_TICeq.nc \
-                /scratch/alaurent/HRM/INPUT/bc_H2_LaurentEtAl2025_BGC_201707.nc
+     BRYNAME == bc_H2_LaurentEtAl2025_PHY_201707.nc         \
+                bc_H2_LaurentEtAl2025_PHY_201707_TAfromS.nc \
+                bc_H2_LaurentEtAl2025_PHY_201707_TICeq.nc   \
+                bc_H2_LaurentEtAl2025_BGC_201707.nc
 
 ! Input climatology file names. The USER has the option to separate the
 ! climatology variables into individual NetCDF files (NCLMFILES > 1),
@@ -987,7 +987,7 @@ Dout(iTnudg) == F F     ! temp_nudg, ...     nudging effect
 
 ! Input Sources/Sinks forcing (like river runoff) file name.
 
-     SSFNAME == /scratch/alaurent/HRM/INPUT/river_LaurentEtAl2025_201707_H2_JulAug2017_TC.nc
+     SSFNAME == river_LaurentEtAl2025_201707_H2_JulAug2017_TC.nc
 
 ! Input tidal forcing file name.
 
@@ -1013,28 +1013,28 @@ Dout(iTnudg) == F F     ! temp_nudg, ...     nudging effect
 
      NFFILES == 8                          ! number of unique forcing files
 
-     FRCNAME == /scratch/alaurent/alaurent/HRM/INPUT/ERA5_Pair_201707.nc \
-                /scratch/alaurent/HRM/INPUT/ERA5_Uwind_201707.nc         \
-                /scratch/alaurent/HRM/INPUT/ERA5_Vwind_201707.nc         \
-                /scratch/alaurent/HRM/INPUT/ERA5_Tair_201707.nc          \
-                /scratch/alaurent/HRM/INPUT/ERA5_Qair_201707.nc          \
-                /scratch/alaurent/HRM/INPUT/ERA5_swrad_201707.nc         \
-                /scratch/alaurent/HRM/INPUT/ERA5_lwrad_down_201707.nc    \
-                /scratch/alaurent/HRM/INPUT/ERA5_rain_201707.nc
+     FRCNAME == ERA5_Pair_201707.nc          \
+                ERA5_Uwind_201707.nc         \
+                ERA5_Vwind_201707.nc         \
+                ERA5_Tair_201707.nc          \
+                ERA5_Qair_201707.nc          \
+                ERA5_swrad_201707.nc         \
+                ERA5_lwrad_down_201707.nc    \
+                ERA5_rain_201707.nc
 
 ! Output NetCDF file names, [1:Ngrids].
 
      DAINAME == roms_dai.nc
      GSTNAME == roms_gst.nc
-     RSTNAME == /scratch/alaurent/HRM/OUTPUT/OAE_TEST/LaurentEtAl2025_201707_rst_1.nc 
-     HISNAME == /scratch/alaurent/HRM/OUTPUT/OAE_TEST/LaurentEtAl2025_201707_his.nc
-     QCKNAME == /scratch/alaurent/HRM/OUTPUT/OAE_TEST/LaurentEtAl2025_201707_qck.nc
+     RSTNAME == LaurentEtAl2025_201707_rst_1.nc 
+     HISNAME == LaurentEtAl2025_201707_his.nc
+     QCKNAME == LaurentEtAl2025_201707_qck.nc
      TLMNAME == roms_tlm.nc
      TLFNAME == roms_tlf.nc
      ADJNAME == roms_adj.nc
-     AVGNAME == /scratch/alaurent/HRM/OUTPUT/OAE_TEST/LaurentEtAl2025_201707_avg.nc
+     AVGNAME == LaurentEtAl2025_201707_avg.nc
      HARNAME == roms_har.nc
-     DIANAME == /scratch/alaurent/HRM/OUTPUT/OAE_TEST/LaurentEtAl2025_201707_dia.nc
+     DIANAME == LaurentEtAl2025_201707_dia.nc
      STANAME == roms_sta.nc
      FLTNAME == roms_flt.nc
 
