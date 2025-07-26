@@ -60,11 +60,6 @@ PCO2AIR_SABLEISLAND  /* Atmospheric pCO2 parameterization for Scotian Shelf (Sab
 
 alkalinity, TIC and oxygen are the 3 tracers of the reduced BGC model. The addition model includes the additional tracers listed below.
 
-The action of every agent <br />
-  into the world <br />
-starts <br />
-  from their physical selves. <br />
-  
 * TAp      _Particulate phase of the feedstock_
 * dTA      _Dissolved phase of the feedstock + dissolved TAp. This tracer represents the added alkalinity_
 * dTIC     _Additional TIC (from net CO2 uptake)_
