@@ -5,7 +5,7 @@ This repository is based on the [official ROMS Version 3.9](https://www.myroms.o
 The original code was modified for the DalROMS-NWA12 model (Ohashi et al., 2024) to include the following model developments:
 
 * Calculation of wind stress using the [Large and Pond (1981)](https://doi.org/10.1175/1520-0485(1981)011<0324:OOMFMI>2.0.CO;2) scheme
-* Calculation of net longwave radiation using specific specific humidity
+* Calculation of net longwave radiation using specific humidity
 * Nudging in sponge layer along open boundaries
 * Riverine freshwater input scheme of [Ji et al. (2012)](https://doi.org/10.1080/07055900.2011.580165)
 * Spectral nudging ([Thompson et al., 2006](https://doi.org/10.1016/j.ocemod.2005.11.003))
@@ -15,9 +15,9 @@ The original code was modified for the DalROMS-NWA12 model (Ohashi et al., 2024)
 
 ## BGC + OAE module
 
-The model was further developed to add a reduced complexity biogeochemical model with a capability for ocean alkalinity enhancement (OAE) (Laurent et al., 2025).
+The version of Oshashi et al. (2024) was further developed to add a reduced complexity biogeochemical model with a capability for ocean alkalinity enhancement (OAE) (Laurent et al., 2025, [preprint](https://doi.org/10.5194/egusphere-2025-3361)).
 
-The model configuration files to run the OAE simulations are here in the ROMS source directory:
+The model configuration files to run the OAE simulations are in the ROMS source directory:
 
 ```
 ./User/Include/oae.h
@@ -54,11 +54,11 @@ PCO2AIR_MAUNALOA     /* Atmospheric pCO2 parameterization for Mauna Loa time ser
 PCO2AIR_SABLEISLAND  /* Atmospheric pCO2 parameterization for Scotian Shelf (Sable Island observations) */
 ```
 > [!NOTE]
-> primary production, water column and sediment respiration are parameterized for Halifax Harbour (with the options above). To relocate the model new rates (parameterizations) need to be provided, otherwise they will be set to zero. The parameterization can be modified in the main ROMS source file ```./ROMS/Nonlinear/Biology/reduced_bgc.h```
+> primary production, water column and sediment respiration are parameterized for Halifax Harbour (with the options above). To relocate the model, new rates (parameterizations) need to be provided, otherwise they will be set to zero. The parameterization can be modified in the main ROMS source file ```./ROMS/Nonlinear/Biology/reduced_bgc.h```
 
 ## Model BGC tracers
 
-alkalinity, TIC and oxygen are the 3 tracers of the reduced BGC model. The addition model includes the additional tracers listed below.
+The reduced BGC model has 3 tracers: alkalinity, TIC and oxygen. The addition model includes the additional tracers listed below.
 
 * TAp      _Particulate phase of the feedstock_
 * dTA      _Dissolved phase of the feedstock + dissolved TAp. This tracer represents the added alkalinity_
@@ -68,11 +68,11 @@ alkalinity, TIC and oxygen are the 3 tracers of the reduced BGC model. The addit
 
 ## River file
 
-The alkalinity addition is set with a time series and is added as an extra river in the river forcing file (the last one). The i/j indices of the extra river are also set in the input file ```./User/External/reduced_bgc.in``` along with the vertical layers where release occurs.
+The alkalinity addition is set with a time series and is added as an extra river in the river forcing file (the last one). The i/j indices of the extra river are also set in the input file ```./User/External/reduced_bgc.in``` along with the vertical layers where the release occurs.
 
 ## Test forcing files
 
-The model can be run for a 1 month test using the Halifax Harbour set up in July 2017 (constant addition from July 2). The forcing files are available from Zenodo and the setup provided in the files listed above. In this example feedstock is released from Tufts Cove in the Halifax Harbour.
+The model can be run for a 1-month test using the Halifax Harbour set up in July 2017 (constant addition from July 2). The forcing files are available from Zenodo and the setup is provided in the files listed above. In this example feedstock is released from Tufts Cove in the Halifax Harbour.
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.16423337.svg)](https://doi.org/10.5281/zenodo.16423337)
 
