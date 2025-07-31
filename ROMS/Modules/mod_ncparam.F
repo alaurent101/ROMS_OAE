@@ -2466,8 +2466,8 @@
                   WRITE (Vname(5,varid),'(a)')                          &
      &                  TRIM(ADJUSTL(Vinfo(5)))
                 END DO
-            END SELECT
 # endif
+            END SELECT
 #endif
 #if defined SOLVE3D && (defined AVERAGES || defined AD_AVERAGES)
 !
