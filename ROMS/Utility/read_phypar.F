@@ -1058,6 +1058,21 @@
 # endif
               END DO
 #endif
+#if defined TALK_ADDITION && defined TALK_FILE
+            CASE ('LtracerAdd')
+              Npts=load_l(Nval, Cval, NAT+NPT, Ngrids, Ltracer)
+              DO ng=1,Ngrids
+                DO itrc=1,NAT
+                  LtracerAdd(itrc,ng)=Ltracer(itrc,ng)
+                END DO
+# ifdef T_PASSIVE
+                DO i=1,NPT
+                  itrc=inert(i)
+                  LtracerAdd(itrc,ng)=Ltracer(NAT+i,ng)
+                END DO
+# endif
+              END DO
+#endif
             CASE ('LsshCLM')
               Npts=load_l(Nval, Cval, Ngrids, LsshCLM)
             CASE ('Lm2CLM')
@@ -3443,6 +3458,12 @@
               label='SSF - Sources/Sinks forcing fields'
               Npts=load_s1d(Nval, Cval, Cdim, line, label, igrid,       &
      &                      Ngrids, Nfiles, SSF)
+# if defined TALK_ADDITION && defined TALK_FILE
+            CASE ('TAFNAME')
+              label='TAF - Tracers addition forcing fields'
+              Npts=load_s1d(Nval, Cval, Cdim, line, label, igrid,       &
+     &                      Ngrids, Nfiles, TAF)
+# endif
 # if defined SSH_TIDES || defined UV_TIDES
             CASE ('TIDENAME')
               label='TIDE - Tidal forcing fields'
@@ -4769,6 +4790,33 @@
             ELSE
               WRITE (out,185) LtracerSrc(itrc,ng), 'LtracerSrc', itrc,  &
      &            'Turning OFF  point Sources/Sinks on tracer ', itrc,  &
+     &            TRIM(Vname(1,idTvar(itrc)))
+            END IF
+          END DO
+# endif
+#endif
+#if defined TALK_ADDITION && defined TALK_FILE
+          DO itrc=1,NAT
+            IF (LtracerAdd(itrc,ng)) THEN
+              WRITE (out,185) LtracerAdd(itrc,ng), 'LtracerAdd', itrc,  &
+     &            'Turning ON  tracers addition ', itrc,                &
+     &            TRIM(Vname(1,idTvar(itrc)))
+            ELSE
+              WRITE (out,185) LtracerAdd(itrc,ng), 'LtracerAdd', itrc,  &
+     &            'Turning OFF tracers addition ', itrc,                &
+     &            TRIM(Vname(1,idTvar(itrc)))
+            END IF
+          END DO
+# ifdef T_PASSIVE
+          DO i=1,NPT
+            itrc=inert(i)
+            IF (LtracerAdd(itrc,ng)) THEN
+              WRITE (out,185) LtracerAdd(itrc,ng), 'LtracerAdd', itrc,  &
+     &            'Turning ON  tracers addition ', itrc,                &
+     &            TRIM(Vname(1,idTvar(itrc)))
+            ELSE
+              WRITE (out,185) LtracerAdd(itrc,ng), 'LtracerAdd', itrc,  &
+     &            'Turning OFF  tracers addition ', itrc,               &
      &            TRIM(Vname(1,idTvar(itrc)))
             END IF
           END DO
@@ -6440,6 +6488,18 @@
      &                      TRIM(fname)
           END IF
 # endif
+# if defined TALK_ADDITION && defined TALK_FILE
+           WRITE(*,*) 'read_phypar'
+           WRITE(*,*) 'LtracerAdd(:,ng)'
+           WRITE(*,*) LtracerAdd(:,ng)
+! WARNING, IF STATEMENT WAS TURNED OFF
+!          IF (ANY(LtracerAdd(:,ng))) THEN
+            fname=TAF(ng)%name
+            IF (.not.find_file(ng, fname, 'TAFNAME')) GO TO 30
+            WRITE (out,230) '           Tracers addition File:  ',      &
+     &                      TRIM(fname)
+!          END IF
+# endif
 # if defined SSH_TIDES || defined UV_TIDES
           IF (ng.eq.1) THEN               ! only tidal forcing on grid 1
             fname=TIDE(ng)%name
@@ -6478,7 +6538,7 @@
           END DO
 
 ! Added 2020/11/23
-#ifdef NUDGE_BDRY
+# ifdef NUDGE_BDRY
           DO i=1,nREAfiles(ng)
             DO ifile=1,REA(i,ng)%Nfiles
               fname=REA(i,ng)%files(ifile)
@@ -6491,7 +6551,7 @@
               END IF
             END DO
           END DO
-#endif
+# endif
 
 # ifndef ANA_NUDGCOEF
           IF (LnudgeM2CLM(ng).or.LnudgeM3CLM(ng).or.                    &

@@ -161,6 +161,25 @@
 #  endif
       END IF
 # endif
+# if defined TALK_ADDITION && defined TALK_FILE
+!
+!=======================================================================
+!  Set tracers addition (OAE).
+!=======================================================================
+!
+      IF (DOMAIN(ng)%SouthWest_Test(tile)) THEN
+        DO itrc=1,NT(ng)
+          IF (LtracerAdd(itrc,ng)) THEN
+            CALL set_ngfld (ng, iNLM, idAtrc(itrc), 1, Ntaf(ng), 1,     &
+     &                      1, Ntaf(ng), 1,                             &
+     &                      SOURCES(ng) % TtafG(:,:,itrc),              &
+     &                      SOURCES(ng) % Ttaf(:,itrc),                 &
+     &                      update)
+            IF (FoundError(exit_flag, NoError, __LINE__, MyFile)) RETURN
+          END IF
+        END DO
+      END IF
+# endif
 !
 !=======================================================================
 !  Set forcing data.

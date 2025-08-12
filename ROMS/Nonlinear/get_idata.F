@@ -537,6 +537,36 @@
       END IF
 #endif
 
+#if defined TALK_ADDITION && defined TALK_FILE
+!
+!-----------------------------------------------------------------------
+!  Read in tracer addition position.
+!-----------------------------------------------------------------------
+!
+      IF ((iic(ng).eq.0).and.                                           &
+     &    (ANY(LtracerAdd(:,ng)))) THEN
+        CALL get_ngfld (ng, iNLM, idAxpo, TAF(ng)%ncid,                 &
+     &                  1, TAF(ng), update(1),                          &
+     &                  1, Ntaf(ng), 1, 1, 1, Ntaf(ng), 1,              &
+     &                  SOURCES(ng) % Xtaf)
+        IF (FoundError(exit_flag, NoError, __LINE__, MyFile)) RETURN
+
+        CALL get_ngfld (ng, iNLM, idAepo, TAF(ng)%ncid,                 &
+     &                  1, TAF(ng), update(1),                          &
+     &                  1, Ntaf(ng), 1, 1, 1, Ntaf(ng), 1,              &
+     &                  SOURCES(ng) % Ytaf)
+        IF (FoundError(exit_flag, NoError, __LINE__, MyFile)) RETURN
+
+        DO is=1,Ntaf(ng)
+          SOURCES(ng)%Itaf(is)=                                         &
+     &                MAX(1,MIN(NINT(SOURCES(ng)%Xtaf(is)),Lm(ng)+1))
+          SOURCES(ng)%Jtaf(is)=                                         &
+     &                MAX(1,MIN(NINT(SOURCES(ng)%Ytaf(is)),Mm(ng)+1))
+        END DO
+
+      END IF
+#endif
+
 #ifdef RED_TIDE
 !
 !-----------------------------------------------------------------------

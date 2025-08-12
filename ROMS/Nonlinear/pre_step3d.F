@@ -157,9 +157,9 @@
       USE mod_param
       USE mod_scalars
       USE mod_sources
-# if defined TALK_ADDITION && defined TALK_FILE
-      USE mod_biology
-# endif
+!# if defined TALK_ADDITION && defined TALK_FILE
+!      USE mod_biology
+!# endif
 !
       USE exchange_3d_mod, ONLY : exchange_r3d_tile
 # ifdef DISTRIBUTE
@@ -534,16 +534,16 @@
               Isrc=SOURCES(ng)%Isrc(is)
               Jsrc=SOURCES(ng)%Jsrc(is)
 
-
-#  if defined TALK_ADDITION && defined TALK_FILE
-              IF (((Istr.le.Isrc).and.(Isrc.le.Iend+1)).and.            &
-     &            ((Jstr.le.Jsrc).and.(Jsrc.le.Jend+1)).and.            &
-     &            ((Isrc.ne.iloc_alkalinity(ng)).and.                   &
-     &             (Jsrc.ne.jloc_alkalinity(ng)))) THEN
-#  else
+!
+!#  if defined TALK_ADDITION && defined TALK_FILE
+!              IF (((Istr.le.Isrc).and.(Isrc.le.Iend+1)).and.            &
+!     &            ((Jstr.le.Jsrc).and.(Jsrc.le.Jend+1)).and.            &
+!     &            ((Isrc.ne.iloc_alkalinity(ng)).and.                   &
+!     &             (Jsrc.ne.jloc_alkalinity(ng)))) THEN
+!#  else
               IF (((Istr.le.Isrc).and.(Isrc.le.Iend+1)).and.            &
      &            ((Jstr.le.Jsrc).and.(Jsrc.le.Jend+1))) THEN
-#  endif
+!#  endif
                 IF (INT(SOURCES(ng)%Dsrc(is)).eq.0) THEN
                   IF (LtracerSrc(itrc,ng)) THEN
                     FX(Isrc,Jsrc)=Huon(Isrc,Jsrc,k)*                    &

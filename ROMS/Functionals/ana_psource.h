@@ -447,6 +447,10 @@
 !
       TRACERS : IF (ANY(LtracerSrc(:,ng))) THEN
         SOURCES(ng)%Tsrc=0.0_r8                      ! initialize
+# if defined TALK_ADDITION && defined TALK_FILE
+      TRACERS : IF (ANY(LtracerAdd(:,ng))) THEN
+        SOURCES(ng)%Ttaf=0.0_r8                      ! initialize
+# endif
 !
 !  Set-up tracer (tracer units) point Sources/Sinks.
 !

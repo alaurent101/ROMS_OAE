@@ -193,6 +193,14 @@
 !  Read in time coordinate and scale it to day units.
 !
           IF (Tid.ge.0) THEN
+            WRITE(*,*) ' '
+            WRITE(*,*) 'get_2dfld'
+            WRITE(*,*) 'ncfile'
+            WRITE(*,*) ncfile
+            WRITE(*,*) 'Tname(ifield)'
+            WRITE(*,*) Tname(ifield)
+            WRITE(*,*) 'ncid'
+            WRITE(*,*) ncid
             CALL netcdf_get_time (ng, model, ncfile, Tname(ifield),     &
      &                            Rclock%DateNumber, Tval,              &
      &                            ncid = ncid,                          &

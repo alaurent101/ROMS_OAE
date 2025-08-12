@@ -311,9 +311,16 @@
 !  Open file for reading.
 !
       IF (.not.PRESENT(ncid)) THEN
+         WRITE(*,*) 'mod_netcdf'
+         WRITE(*,*) 'IF (.not.PRESENT(ncid)) THEN'
+         WRITE(*,*) 'TRIM(ncname)'
+         WRITE(*,*) TRIM(ncname)
          CALL netcdf_open (ng, model, TRIM(ncname), 0, my_ncid)
          IF (FoundError(exit_flag, NoError, __LINE__, MyFile)) RETURN
       ELSE
+         WRITE(*,*) 'mod_netcdf'
+         WRITE(*,*) 'ELSE'
+         WRITE(*,*) ncid
         my_ncid=ncid
       END IF
 !

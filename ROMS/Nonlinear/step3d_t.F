@@ -146,9 +146,9 @@
 # endif
       USE mod_scalars
       USE mod_sources
-# if defined TALK_ADDITION && defined TALK_FILE
-      USE mod_biology
-# endif
+!# if defined TALK_ADDITION && defined TALK_FILE
+!      USE mod_biology
+!# endif
 !
       USE exchange_3d_mod, ONLY : exchange_r3d_tile
 # ifdef DISTRIBUTE
@@ -767,10 +767,10 @@
             DO is=1,Nsrc(ng)
               Isrc=SOURCES(ng)%Isrc(is)
               Jsrc=SOURCES(ng)%Jsrc(is)
-#  if defined TALK_ADDITION && defined TALK_FILE
-             IF ((Isrc.ne.iloc_alkalinity(ng)).and.                     &
-     &         (Jsrc.ne.jloc_alkalinity(ng))) THEN
-#  endif
+!#  if defined TALK_ADDITION && defined TALK_FILE
+!             IF ((Isrc.ne.iloc_alkalinity(ng)).and.                     &
+!     &         (Jsrc.ne.jloc_alkalinity(ng))) THEN
+!#  endif
               IF (INT(SOURCES(ng)%Dsrc(is)).eq.0) THEN
                 IF ((Hadvection(itrc,ng)%MPDATA).or.                    &
      &              (Hadvection(itrc,ng)%HSIMT)) THEN
@@ -834,9 +834,9 @@
                   END IF
                 END IF
               END IF
-#  if defined TALK_ADDITION && defined TALK_FILE
-             END IF
-#  endif
+!#  if defined TALK_ADDITION && defined TALK_FILE
+!             END IF
+!#  endif
             END DO
           END IF
 # endif
@@ -1176,19 +1176,16 @@
               DO is=1,Nsrc(ng)
                 Isrc=SOURCES(ng)%Isrc(is)
                 Jsrc=SOURCES(ng)%Jsrc(is)
-
-
-
-#  if defined TALK_ADDITION && defined TALK_FILE
-                IF (((Istr.le.Isrc).and.(Isrc.le.Iend+1)).and.          &
-     &               ((Jstr.le.Jsrc).and.(Jsrc.le.Jend+1)).and.         &
-     &               (j.eq.Jsrc).and.((Isrc.ne.iloc_alkalinity(ng)).and.&
-     &               (Jsrc.ne.jloc_alkalinity(ng)))) THEN
-#  else
+!#  if defined TALK_ADDITION && defined TALK_FILE
+!                IF (((Istr.le.Isrc).and.(Isrc.le.Iend+1)).and.          &
+!     &               ((Jstr.le.Jsrc).and.(Jsrc.le.Jend+1)).and.         &
+!     &               (j.eq.Jsrc).and.((Isrc.ne.iloc_alkalinity(ng)).and.&
+!     &               (Jsrc.ne.jloc_alkalinity(ng)))) THEN
+!#  else
                 IF (((Istr.le.Isrc).and.(Isrc.le.Iend+1)).and.          &
      &               ((Jstr.le.Jsrc).and.(Jsrc.le.Jend+1)).and.         &
      &               (j.eq.Jsrc)) THEN
-#  endif
+!#  endif
                   DO k=1,N(ng)
                     cff=dt(ng)*pm(Isrc,Jsrc)*pn(Isrc,Jsrc)
                     IF (LtracerSrc(itrc,ng)) THEN
@@ -1423,19 +1420,15 @@
             DO is=1,Nsrc(ng)
               Isrc=SOURCES(ng)%Isrc(is)
               Jsrc=SOURCES(ng)%Jsrc(is)
-
-
-
-
-#  if defined TALK_ADDITION && defined TALK_FILE
-              IF (((Istr.le.Isrc).and.(Isrc.le.Iend+1)).and.            &
-     &            ((Jstr.le.Jsrc).and.(Jsrc.le.Jend+1)).and.            &
-     &            ((Isrc.ne.iloc_alkalinity(ng)).and.                   &
-     &             (Jsrc.ne.jloc_alkalinity(ng)))) THEN
-#  else
+!#  if defined TALK_ADDITION && defined TALK_FILE
+!              IF (((Istr.le.Isrc).and.(Isrc.le.Iend+1)).and.            &
+!     &            ((Jstr.le.Jsrc).and.(Jsrc.le.Jend+1)).and.            &
+!     &            ((Isrc.ne.iloc_alkalinity(ng)).and.                   &
+!     &             (Jsrc.ne.jloc_alkalinity(ng)))) THEN
+!#  else
               IF (((Istr.le.Isrc).and.(Isrc.le.Iend+1)).and.            &
      &            ((Jstr.le.Jsrc).and.(Jsrc.le.Jend+1))) THEN
-#  endif
+!#  endif
                 DO k=1,N(ng)
                   cff=dt(ng)*pm(Isrc,Jsrc)*pn(Isrc,Jsrc)
 # ifdef SPLINES_VDIFF

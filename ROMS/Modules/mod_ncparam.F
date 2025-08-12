@@ -259,6 +259,10 @@
         integer  :: idRmepo       ! river mouth ETA-positions
         integer  :: idRmxpo       ! river mouth XI-positions
 #endif
+#if defined TALK_ADDITION && defined TALK_FILE
+        integer  :: idAepo       ! tracers addition ETA-positions
+        integer  :: idAxpo       ! tracers addition XI-positions
+#endif
         integer  :: idRtra        ! river runoff mass transport
         integer  :: idRuct        ! RHS of U-momentum coupling term
         integer  :: idRu2d        ! RHS of 2D U-momentum
@@ -411,6 +415,9 @@
 !  Input/output identification tracer indices.
 !
         integer, allocatable :: idRtrc(:)    ! river runoff for tracers
+#if defined TALK_ADDITION && defined TALK_FILE
+        integer, allocatable :: idAtrc(:)    ! tracers addition
+#endif
         integer, allocatable :: idsurT(:)    ! model surface tracers
         integer, allocatable :: idTads(:)    ! tracers adjoint sentivity
         integer, allocatable :: idTbot(:)    ! bottom flux for tracers
@@ -733,6 +740,12 @@
         allocate ( idRtrc(MT) )
         Dmem(1)=Dmem(1)+REAL(MT,r8)
       END IF
+#if defined TALK_ADDITION && defined TALK_FILE
+      IF (.not.allocated(idAtrc)) THEN
+        allocate ( idAtrc(MT) )
+        Dmem(1)=Dmem(1)+REAL(MT,r8)
+      END IF
+#endif
       IF (.not.allocated(idsurT)) THEN
         allocate ( idsurT(MT) )
         Dmem(1)=Dmem(1)+REAL(MT,r8)
@@ -1519,6 +1532,12 @@
               idRxpo=varid
             CASE ('idRepo')
               idRepo=varid
+#if defined TALK_ADDITION && defined TALK_FILE
+            CASE ('idAxpo')
+              idAxpo=varid
+            CASE ('idAepo')
+              idAepo=varid
+#endif
 ! Added idRmxpo and idRmepo 2021/2/15
 #ifdef RIVER_JI
             CASE ('idRmxpo')
@@ -1539,6 +1558,14 @@
 #ifdef SALINITY
             CASE ('idRtrc(isalt)')
               idRtrc(isalt)=varid
+#endif
+#if defined TALK_ADDITION && defined TALK_FILE
+            CASE ('idAtrc(itemp)')
+              idAtrc(itemp)=varid
+# ifdef SALINITY
+            CASE ('idAtrc(isalt)')
+              idAtrc(isalt)=varid
+# endif
 #endif
             CASE ('idHsbl')
               idHsbl=varid
@@ -1718,6 +1745,10 @@
               load=.TRUE.
             CASE ('idRtrc(inert(i))')
               load=.TRUE.
+# if defined TALK_ADDITION && defined TALK_FILE
+            CASE ('idAtrc(inert(i))')
+              load=.TRUE.
+# endif
 #endif
             CASE ('id2dPV')
               id2dPV=varid

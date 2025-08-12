@@ -195,9 +195,9 @@
 # if defined SEDIMENT && defined SED_MORPH
       USE mod_sediment
 # endif
-# if defined TALK_ADDITION && defined TALK_FILE
-      USE mod_biology
-# endif
+!# if defined TALK_ADDITION && defined TALK_FILE
+!      USE mod_biology
+!# endif
       USE mod_sources
 !
       USE exchange_2d_mod
@@ -880,15 +880,15 @@
         DO is=1,Nsrc(ng)
           i=SOURCES(ng)%Isrc(is)
           j=SOURCES(ng)%Jsrc(is)
-#  if defined TALK_ADDITION && defined TALK_FILE
-          IF (((IstrR.le.i).and.(i.le.IendR)).and.                      &
-     &        ((JstrR.le.j).and.(j.le.JendR)).and.                      &
-     &            ((i.ne.iloc_alkalinity(ng)).and.                      &
-     &             (j.ne.jloc_alkalinity(ng)))) THEN
-#  else
+!#  if defined TALK_ADDITION && defined TALK_FILE
+!          IF (((IstrR.le.i).and.(i.le.IendR)).and.                      &
+!     &        ((JstrR.le.j).and.(j.le.JendR)).and.                      &
+!     &            ((i.ne.iloc_alkalinity(ng)).and.                      &
+!     &             (j.ne.jloc_alkalinity(ng)))) THEN
+!#  else
           IF (((IstrR.le.i).and.(i.le.IendR)).and.                      &
      &        ((JstrR.le.j).and.(j.le.JendR))) THEN
-#  endif
+!#  endif
             zeta(i,j,knew)=zeta(i,j,knew)+                              &
      &                     SOURCES(ng)%Qbar(is)*                        &
      &                     pm(i,j)*pn(i,j)*dtfast(ng)
@@ -2500,15 +2500,15 @@
         DO is=1,Nsrc(ng)
           i=SOURCES(ng)%Isrc(is)
           j=SOURCES(ng)%Jsrc(is)
-#  if defined TALK_ADDITION && defined TALK_FILE
-              IF (((IstrR.le.i).and.(i.le.IendR)).and.                  &
-     &            ((JstrR.le.j).and.(j.le.JendR)).and.                  &
-     &            ((i.ne.iloc_alkalinity(ng)).and.                      &
-     &             (j.ne.jloc_alkalinity(ng)))) THEN
-#  else
+!#  if defined TALK_ADDITION && defined TALK_FILE
+!              IF (((IstrR.le.i).and.(i.le.IendR)).and.                  &
+!     &            ((JstrR.le.j).and.(j.le.JendR)).and.                  &
+!     &            ((i.ne.iloc_alkalinity(ng)).and.                      &
+!     &             (j.ne.jloc_alkalinity(ng)))) THEN
+!#  else
           IF (((IstrR.le.i).and.(i.le.IendR)).and.                      &
      &        ((JstrR.le.j).and.(j.le.JendR))) THEN
-#  endif
+!#  endif
             IF (INT(SOURCES(ng)%Dsrc(is)).eq.0) THEN
               cff=1.0_r8/(on_u(i,j)*                                    &
      &                    0.5_r8*(zeta(i-1,j,knew)+h(i-1,j)+            &

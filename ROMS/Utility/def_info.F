@@ -2089,6 +2089,20 @@
      &               SetParAccess = .FALSE.)
       IF (FoundError(exit_flag, NoError, __LINE__, MyFile)) RETURN
 #endif
+#if defined TALK_ADDITION && defined TALK_FILE
+!
+!  Logical switches indicating which tracer variables are processed
+!  during tracer addition.
+!
+      Vinfo( 1)='LtracerAdd'
+      Vinfo( 2)='tracer addition activation switch'
+      Vinfo( 9)='.FALSE.'
+      Vinfo(10)='.TRUE.'
+      status=def_var(ng, model, ncid, varid, nf90_int,                  &
+     &               1, (/trcdim/), Aval, Vinfo, ncname,                &
+     &               SetParAccess = .FALSE.)
+      IF (FoundError(exit_flag, NoError, __LINE__, MyFile)) RETURN
+#endif
 !
 !  Logical switches to process climatology fields.
 !

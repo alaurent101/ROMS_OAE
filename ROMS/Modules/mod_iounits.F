@@ -71,6 +71,9 @@
 !    SPT       Output tangent Arnoldi state vector file                !
 #endif
 !    SSF       Input Sources/Sinks forcing (river runoff)              !
+#if defined TALK_ADDITION && defined TALK_FILE
+!    TAF       Tracers addition forcing (OAE)                          !
+#endif
 !    STA       Output station data                                     !
 !    STD       Input error covariance standard deviations              !
 !                STD(1,ng)  initial conditions                         !
@@ -168,6 +171,9 @@
       TYPE(T_IO), allocatable :: SPT(:)     ! TLM Arnoldi state vector
 #endif
       TYPE(T_IO), allocatable :: SSF(:)     ! Sources/Sinks forcing
+#if defined TALK_ADDITION && defined TALK_FILE
+      TYPE(T_IO), allocatable :: TAF(:)     ! Tracers addition forcing
+#endif
       TYPE(T_IO), allocatable :: STA(:)     ! stations data
       TYPE(T_IO), allocatable :: STD(:,:)   ! standard deviation
       TYPE(T_IO), allocatable :: TIDE(:)    ! tidal forcing
@@ -375,6 +381,11 @@
       IF (.not.allocated(SSF)) THEN
         allocate ( SSF(Ngrids) )
       END IF
+#if defined TALK_ADDITION && defined TALK_FILE
+      IF (.not.allocated(TAF)) THEN
+        allocate ( TAF(Ngrids) )
+      END IF
+#endif
       IF (.not.allocated(STA)) THEN
         allocate ( STA(Ngrids) )
       END IF
@@ -456,6 +467,9 @@
         QCK(ng)%ncid=-1
         RST(ng)%ncid=-1
         SSF(ng)%ncid=-1
+#if defined TALK_ADDITION && defined TALK_FILE
+        TAF(ng)%ncid=-1
+#endif
         STA(ng)%ncid=-1
         TLF(ng)%ncid=-1
         TLM(ng)%ncid=-1
@@ -612,6 +626,12 @@
           SSF(ng)%head(i:i)=blank
           SSF(ng)%base(i:i)=blank
           SSF(ng)%name(i:i)=blank
+#if defined TALK_ADDITION && defined TALK_FILE
+
+          TAF(ng)%head(i:i)=blank
+          TAF(ng)%base(i:i)=blank
+          TAF(ng)%name(i:i)=blank
+#endif
 
           STA(ng)%head(i:i)=blank
           STA(ng)%base(i:i)=blank

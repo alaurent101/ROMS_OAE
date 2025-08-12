@@ -143,9 +143,9 @@
       USE mod_ncparam
       USE mod_scalars
       USE mod_sources
-# if defined TALK_ADDITION && defined TALK_FILE
-      USE mod_biology
-# endif
+!# if defined TALK_ADDITION && defined TALK_FILE
+!      USE mod_biology
+!# endif
 !
       USE exchange_2d_mod
       USE exchange_3d_mod
@@ -977,15 +977,15 @@
         DO is=1,Nsrc(ng)
           i=SOURCES(ng)%Isrc(is)
           j=SOURCES(ng)%Jsrc(is)
-#  if defined TALK_ADDITION && defined TALK_FILE
-          IF (((IstrR.le.i).and.(i.le.IendR)).and.                      &
-     &        ((JstrR.le.j).and.(j.le.JendR)).and.                      &
-     &        ((i.ne.iloc_alkalinity(ng)).and.                          &
-     &         (j.ne.jloc_alkalinity(ng)))) THEN
-#  else
+!#  if defined TALK_ADDITION && defined TALK_FILE
+!          IF (((IstrR.le.i).and.(i.le.IendR)).and.                      &
+!     &        ((JstrR.le.j).and.(j.le.JendR)).and.                      &
+!     &        ((i.ne.iloc_alkalinity(ng)).and.                          &
+!     &         (j.ne.jloc_alkalinity(ng)))) THEN
+!#  else
           IF (((IstrR.le.i).and.(i.le.IendR)).and.                      &
      &        ((JstrR.le.j).and.(j.le.JendR))) THEN
-#  endif
+!#  endif
             IF (INT(SOURCES(ng)%Dsrc(is)).eq.0) THEN
               DO k=1,N(ng)
                 cff1=1.0_r8/(on_u(i,j)*                                 &

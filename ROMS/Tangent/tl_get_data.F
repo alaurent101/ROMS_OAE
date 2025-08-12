@@ -139,7 +139,7 @@
      &                FORCES(ng) % UwindG)
       IF (FoundError(exit_flag, NoError, __LINE__, MyFile)) RETURN
 !
-      CALL get_2dfld (ng , iTLM, idVair, ncFRCid(idVair,ng),            &
+      CALL get_2dfld (ng, iTLM, idVair, ncFRCid(idVair,ng),             &
      &                nFfiles(ng), FRC(1,ng), update(1),                &
      &                LBi, UBi, LBj, UBj, 2, 1,                         &
 #  ifdef MASKING
