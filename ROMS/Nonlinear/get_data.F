@@ -120,7 +120,7 @@
 # endif
 #endif
 !
-#if defined TALK_ADDITION && defined TALK_FILE
+#if defined ITALK_ADDITION && defined TALK_FILE
 !
 !=======================================================================
 !  Tracers addition time dependent data.
@@ -139,6 +139,28 @@
         END IF
       END DO
 # endif
+#endif
+
+#if defined TALK_ADDITION && defined TALK_FILE
+! ADDED BY AL
+!
+!=======================================================================
+!  Tracers addition time dependent data.
+!=======================================================================
+!
+!  Tracer addition.
+!
+      ic=0
+      DO i=1,NT(ng)
+        IF (LtracerAdd(i,ng)) THEN
+          ic=ic+1
+          CALL get_ngfld (ng, iNLM, idAtrc(i), ncFRCid(idAtrc,ng),      &
+     &                    1, FRC(1,ng), update(1),                      &
+     &                    1, Ntaf(ng), 1, 2, 1, Ntaf(ng), 1,            &
+     &                    SOURCES(ng) % TtafG(:,:,ic))
+          IF (FoundError(exit_flag, NoError, __LINE__, MyFile)) RETURN
+        END IF
+      END DO
 #endif
 !
 ! Copied continental runoff from roms-kate_svn version 2021/3/22

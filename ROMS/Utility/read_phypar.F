@@ -3458,7 +3458,7 @@
               label='SSF - Sources/Sinks forcing fields'
               Npts=load_s1d(Nval, Cval, Cdim, line, label, igrid,       &
      &                      Ngrids, Nfiles, SSF)
-# if defined TALK_ADDITION && defined TALK_FILE
+# if defined ITALK_ADDITION && defined TALK_FILE
             CASE ('TAFNAME')
               label='TAF - Tracers addition forcing fields'
               Npts=load_s1d(Nval, Cval, Cdim, line, label, igrid,       &
@@ -6488,7 +6488,7 @@
      &                      TRIM(fname)
           END IF
 # endif
-# if defined TALK_ADDITION && defined TALK_FILE
+# if defined ITALK_ADDITION && defined TALK_FILE
            WRITE(*,*) 'read_phypar'
            WRITE(*,*) 'LtracerAdd(:,ng)'
            WRITE(*,*) LtracerAdd(:,ng)

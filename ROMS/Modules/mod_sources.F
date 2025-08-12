@@ -232,6 +232,8 @@
       IF (ng.eq.1) THEN
         DO mg=1,Ngrids
           foundit=.FALSE.
+          WRITE(*,*) 'TAF(mg)%name'
+          WRITE(*,*) TAF(mg)%name
           IF (ANY(LtracerAdd(:,mg))) THEN
             CALL netcdf_inq_var (ng, iNLM, TAF(mg)%name,                &
      &                           MyVarName = TRIM(Vname(1,idAxpo)),     &
