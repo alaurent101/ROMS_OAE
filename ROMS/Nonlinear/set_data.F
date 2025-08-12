@@ -181,7 +181,7 @@
       END IF
 # endif
 
-# if defined TALK_ADDITION && defined TALK_FILE
+# if defined ITALK_ADDITION && defined TALK_FILE
 ! ADDED BY AL
       IF (DOMAIN(ng)%SouthWest_Test(tile)) THEN
         ic=0

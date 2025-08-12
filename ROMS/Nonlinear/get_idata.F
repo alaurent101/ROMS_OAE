@@ -537,7 +537,7 @@
       END IF
 #endif
 
-#if defined TALK_ADDITION && defined TALK_FILE
+#if defined ITALK_ADDITION && defined TALK_FILE
 !
 !-----------------------------------------------------------------------
 !  Read in tracer addition position.

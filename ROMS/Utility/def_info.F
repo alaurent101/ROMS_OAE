@@ -2089,7 +2089,7 @@
      &               SetParAccess = .FALSE.)
       IF (FoundError(exit_flag, NoError, __LINE__, MyFile)) RETURN
 #endif
-#if defined TALK_ADDITION && defined TALK_FILE
+#if defined ITALK_ADDITION && defined TALK_FILE
 !
 !  Logical switches indicating which tracer variables are processed
 !  during tracer addition.

@@ -259,9 +259,12 @@
         integer  :: idRmepo       ! river mouth ETA-positions
         integer  :: idRmxpo       ! river mouth XI-positions
 #endif
-#if defined TALK_ADDITION && defined TALK_FILE
+#if defined ITALK_ADDITION && defined TALK_FILE
         integer  :: idAepo       ! tracers addition ETA-positions
         integer  :: idAxpo       ! tracers addition XI-positions
+#endif
+#if defined TALK_ADDITION && defined TALK_FILE
+        integer  :: idAtrc       ! alkalinity addition rate
 #endif
         integer  :: idRtra        ! river runoff mass transport
         integer  :: idRuct        ! RHS of U-momentum coupling term
@@ -415,7 +418,7 @@
 !  Input/output identification tracer indices.
 !
         integer, allocatable :: idRtrc(:)    ! river runoff for tracers
-#if defined TALK_ADDITION && defined TALK_FILE
+#if defined ITALK_ADDITION && defined TALK_FILE
         integer, allocatable :: idAtrc(:)    ! tracers addition
 #endif
         integer, allocatable :: idsurT(:)    ! model surface tracers
@@ -740,7 +743,7 @@
         allocate ( idRtrc(MT) )
         Dmem(1)=Dmem(1)+REAL(MT,r8)
       END IF
-#if defined TALK_ADDITION && defined TALK_FILE
+#if defined ITALK_ADDITION && defined TALK_FILE
       IF (.not.allocated(idAtrc)) THEN
         allocate ( idAtrc(MT) )
         Dmem(1)=Dmem(1)+REAL(MT,r8)
@@ -1532,7 +1535,7 @@
               idRxpo=varid
             CASE ('idRepo')
               idRepo=varid
-#if defined TALK_ADDITION && defined TALK_FILE
+#if defined ITALK_ADDITION && defined TALK_FILE
             CASE ('idAxpo')
               idAxpo=varid
             CASE ('idAepo')
@@ -1559,7 +1562,7 @@
             CASE ('idRtrc(isalt)')
               idRtrc(isalt)=varid
 #endif
-#if defined TALK_ADDITION && defined TALK_FILE
+#if defined ITALK_ADDITION && defined TALK_FILE
             CASE ('idAtrc(itemp)')
               idAtrc(itemp)=varid
 # ifdef SALINITY
@@ -1745,7 +1748,7 @@
               load=.TRUE.
             CASE ('idRtrc(inert(i))')
               load=.TRUE.
-# if defined TALK_ADDITION && defined TALK_FILE
+# if defined ITALK_ADDITION && defined TALK_FILE
             CASE ('idAtrc(inert(i))')
               load=.TRUE.
 # endif
@@ -1769,6 +1772,10 @@
 #if defined RUNOFF || defined RUNOFF_SSH
             CASE ('idRunoff')
               idRunoff=varid
+#endif
+#if defined TALK_ADDITION && defined TALK_FILE
+            CASE ('idAtrc')
+              idAtrc=varid
 #endif
 #ifdef DIAGNOSTICS_UV
             CASE ('idDu2d(M2pgrd)')

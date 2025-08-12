@@ -284,7 +284,7 @@
                   LnudgeTREA(i,ng)=Ltrc(itrc,ng)
                 END DO
               END DO
-#if defined TALK_ADDITION && defined TALK_FILE
+#if defined ITALK_ADDITION && defined TALK_FILE
             CASE ('LtracerAdd')
               Npts=load_l(Nval, Cval, NBT, Ngrids, Ltrc)
               DO ng=1,Ngrids
@@ -723,7 +723,7 @@
               END IF
             END DO
 
-#if defined TALK_ADDITION && defined TALK_FILE
+#if defined ITALK_ADDITION && defined TALK_FILE
             DO itrc=1,NBT
               i=idbio(itrc)
               IF (LtracerAdd(i,ng)) THEN

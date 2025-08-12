@@ -173,30 +173,13 @@
 !  Open NetCDF file for reading.
 !
         IF (S(ifile)%ncid.eq.-1) THEN
-          WRITE(*,*) '     '
-          WRITE(*,*) 'Fname'
-          WRITE(*,*) Fname
-!          WRITE(*,*) 'my_ncid'
-!          WRITE(*,*) my_ncid
           CALL netcdf_open (ng, model, Fname, 0, my_ncid)
-          WRITE(*,*) 'inquiry'
-          WRITE(*,*) 'IF (S(ifile)%ncid.eq.-1) THEN'
-          WRITE(*,*) 'S(ifile)%name'
-          WRITE(*,*) S(ifile)%name
-          WRITE(*,*) 'netcdf_open: S(ifile)%ncid'
-          WRITE(*,*) S(ifile)%ncid
           IF (FoundError(exit_flag, NoError, __LINE__, MyFile)) THEN
             IF (Master) WRITE (stdout,60) TRIM(Fname)
             RETURN
           END IF
-          WRITE(*,*) 'inquiry'
-          WRITE(*,*) 'Issue with netcdf_open, closing file'
           CloseFile=.TRUE.
         ELSE
-          WRITE(*,*) '     '
-          WRITE(*,*) 'ELSE'
-          WRITE(*,*) 'S(ifile)%ncid'
-          WRITE(*,*) S(ifile)%ncid
           my_ncid=S(ifile)%ncid
           CloseFile=.FALSE.
         END IF
@@ -484,11 +467,6 @@
      &        (FRCids(ifile,ng).ne.-1).and.                             &
      &        (ncid.ne.FRCids(ifile,ng))) THEN
             ncid=FRCids(ifile,ng)
-            WRITE(*,*) 'ncid=FRCids(ifile,ng)'
-            WRITE(*,*) 'TRIM(ncfile)'
-            WRITE(*,*) TRIM(ncfile)
-            WRITE(*,*) 'ncid'
-            WRITE(*,*) ncid
             EXIT
           END IF
         END DO
@@ -541,18 +519,9 @@
 !
       IF (label(1:3).eq.'FRC') THEN
         DO ifile=1,nfiles
-          WRITE(*,*) 'TRIM(ncfile)'
-          WRITE(*,*) TRIM(ncfile)
-          WRITE(*,*) 'TRIM(S(ifile)%name'
-          WRITE(*,*) TRIM(S(ifile)%name)
           IF (TRIM(ncfile).eq.TRIM(S(ifile)%name)) THEN
-            WRITE(*,*) 'ncid'
-            WRITE(*,*) ncid
             FRCids(ifile,ng)=ncid
             S(ifile)%ncid=ncid
-            WRITE(*,*) 'FRCids(ifile,ng)'
-            WRITE(*,*) FRCids(ifile,ng)
-            WRITE(*,*) 'FRCids(ifile,ng)=ncid'
             EXIT
           END IF
         END DO

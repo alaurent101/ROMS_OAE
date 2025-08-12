@@ -1058,7 +1058,7 @@
 # endif
               END DO
 #endif
-#if defined TALK_ADDITION && defined TALK_FILE
+#if defined ITALK_ADDITION && defined TALK_FILE
             CASE ('LtracerAdd')
               Npts=load_l(Nval, Cval, NAT+NPT, Ngrids, Ltracer)
               DO ng=1,Ngrids
@@ -4795,7 +4795,7 @@
           END DO
 # endif
 #endif
-#if defined TALK_ADDITION && defined TALK_FILE
+#if defined ITALK_ADDITION && defined TALK_FILE
           DO itrc=1,NAT
             IF (LtracerAdd(itrc,ng)) THEN
               WRITE (out,185) LtracerAdd(itrc,ng), 'LtracerAdd', itrc,  &
@@ -6489,9 +6489,6 @@
           END IF
 # endif
 # if defined ITALK_ADDITION && defined TALK_FILE
-           WRITE(*,*) 'read_phypar'
-           WRITE(*,*) 'LtracerAdd(:,ng)'
-           WRITE(*,*) LtracerAdd(:,ng)
 ! WARNING, IF STATEMENT WAS TURNED OFF
 !          IF (ANY(LtracerAdd(:,ng))) THEN
             fname=TAF(ng)%name

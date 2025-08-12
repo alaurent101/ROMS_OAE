@@ -194,7 +194,7 @@
 /*
 **  Biological tracers addition (OAE).
 */
-#if defined TALK_ADDITION && defined TALK_FILE
+#if defined ITALK_ADDITION && defined TALK_FILE
 # ifdef CARBON
             CASE ('idAtrc(iTIC_)')
               idAtrc(iTIC_)=varid

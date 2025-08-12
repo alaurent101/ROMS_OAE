@@ -496,7 +496,7 @@
         logical, allocatable :: LuvSrc(:)            ! momentum
         logical, allocatable :: LwSrc(:)             ! mass
         logical, allocatable :: LtracerSrc(:,:)      ! tracers
-#if defined TALK_ADDITION && defined TALK_FILE
+#if defined ITALK_ADDITION && defined TALK_FILE
 !
 !  Switches to activate itracers addition in an application:
 !
@@ -2183,7 +2183,7 @@
         allocate ( LtracerSrc(MT,Ngrids) )
         Dmem(1)=Dmem(1)+REAL(MT*Ngrids,r8)
       END IF
-#if defined TALK_ADDITION && defined TALK_FILE
+#if defined ITALK_ADDITION && defined TALK_FILE
 
       IF (.not.allocated(LtracerAdd)) THEN
         allocate ( LtracerAdd(MT,Ngrids) )
@@ -3560,7 +3560,7 @@
 ! Added LnudgeREA 2020/11/22, changed to LnudgeTREA 2021/9/25
           LnudgeTREA(itrc,ng)=.FALSE.
           LtracerSrc(itrc,ng)=.FALSE.
-#if defined TALK_ADDITION && defined TALK_FILE
+#if defined ITALK_ADDITION && defined TALK_FILE
           LtracerAdd(itrc,ng)=.FALSE.
 #endif
           LtracerSponge(itrc,ng)=.FALSE.

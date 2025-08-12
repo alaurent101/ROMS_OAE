@@ -46,7 +46,7 @@
 !               point Sources/Sinks.                                   !
 !  Added Tmpm 2021/6/24                                                !
 !  Tmpm       SST near river mouth, used at river heads                !
-#if defined TALK_ADDITION && defined TALK_FILE
+#if defined ITALK_ADDITION && defined TALK_FILE
 !  Mtaf       Maximum number of analytical tracers addition points.    !
 !  Ntaf       Number of tracers addition points.                       !
 !  Itaf       I-grid location of tracers addition points,              !
@@ -66,7 +66,7 @@
 !
         integer, allocatable :: Msrc(:)
         integer, allocatable :: Nsrc(:)
-#if defined TALK_ADDITION && defined TALK_FILE
+#if defined ITALK_ADDITION && defined TALK_FILE
         integer, allocatable :: Mtaf(:)
         integer, allocatable :: Ntaf(:)
 #endif
@@ -75,7 +75,7 @@
 
           integer, pointer :: Isrc(:)
           integer, pointer :: Jsrc(:)
-#if defined TALK_ADDITION && defined TALK_FILE
+#if defined ITALK_ADDITION && defined TALK_FILE
           integer, pointer :: Itaf(:)
           integer, pointer :: Jtaf(:)
 #endif
@@ -92,7 +92,7 @@
           real(r8), pointer :: Tsrc(:,:,:)
           real(r8), pointer :: Xsrc(:)
           real(r8), pointer :: Ysrc(:)
-#if defined TALK_ADDITION && defined TALK_FILE
+#if defined ITALK_ADDITION && defined TALK_FILE
           real(r8), pointer :: Ttaf(:,:)
           real(r8), pointer :: Xtaf(:)
           real(r8), pointer :: Ytaf(:)
@@ -106,7 +106,7 @@
           real(r8), pointer :: QbarG(:,:)
           real(r8), pointer :: TsrcG(:,:,:,:)
 #endif
-#if defined TALK_ADDITION && defined TALK_FILE
+#if defined ITALK_ADDITION && defined TALK_FILE
           real(r8), pointer :: TtafG(:,:,:)
 #endif
 
@@ -183,7 +183,7 @@
         allocate ( Nsrc(Ngrids) )
       END IF
 
-#if defined TALK_ADDITION && defined TALK_FILE
+#if defined ITALK_ADDITION && defined TALK_FILE
       IF (.not.allocated(Mtaf)) THEN
         allocate ( Mtaf(Ngrids) )
       END IF
@@ -225,15 +225,13 @@
       Nsrc(ng)=Msrc(ng)
 #endif
 
-#if defined TALK_ADDITION && defined TALK_FILE
+#if defined ITALK_ADDITION && defined TALK_FILE
 
 !  Inquire about the number of point source addition locations.
 !
       IF (ng.eq.1) THEN
         DO mg=1,Ngrids
           foundit=.FALSE.
-          WRITE(*,*) 'TAF(mg)%name'
-          WRITE(*,*) TAF(mg)%name
           IF (ANY(LtracerAdd(:,mg))) THEN
             CALL netcdf_inq_var (ng, iNLM, TAF(mg)%name,                &
      &                           MyVarName = TRIM(Vname(1,idAxpo)),     &
@@ -274,7 +272,7 @@
       Dmem(ng)=Dmem(ng)+REAL(Nsrc(ng),r8)
 #endif
 
-#if defined TALK_ADDITION && defined TALK_FILE
+#if defined ITALK_ADDITION && defined TALK_FILE
       allocate ( SOURCES(ng) % Itaf(Ntaf(ng)) )
       Dmem(ng)=Dmem(ng)+REAL(Ntaf(ng),r8)
 
@@ -306,7 +304,7 @@
       allocate ( SOURCES(ng) % Ysrc(Nsrc(ng)) )
       Dmem(ng)=Dmem(ng)+REAL(Nsrc(ng),r8)
 
-#if defined TALK_ADDITION && defined TALK_FILE
+#if defined ITALK_ADDITION && defined TALK_FILE
       allocate ( SOURCES(ng) % Ttaf(Ntaf(ng),NT(ng)) )
       Dmem(ng)=Dmem(ng)+REAL(Ntaf(ng)*NT(ng),r8)
 
@@ -334,7 +332,7 @@
       Dmem(ng)=Dmem(ng)+2.0_r8*REAL(Nsrc(ng)*N(ng)*NT(ng),r8)
 #endif
 
-#if defined TALK_ADDITION && defined TALK_FILE
+#if defined ITALK_ADDITION && defined TALK_FILE
       allocate ( SOURCES(ng) % TtafG(Nsrc(ng),2,NT(ng)) )
       Dmem(ng)=Dmem(ng)+2.0_r8*REAL(Nsrc(ng)*NT(ng),r8)
 #endif
@@ -375,7 +373,7 @@
       DO is=1,Nsrc(ng)
         SOURCES(ng) % Isrc(is) = 0
         SOURCES(ng) % Jsrc(is) = 0
-#if defined TALK_ADDITION && defined TALK_FILE
+#if defined ITALK_ADDITION && defined TALK_FILE
         SOURCES(ng) % Itaf(is) = 0
         SOURCES(ng) % Jtaf(is) = 0
 #endif
@@ -388,7 +386,7 @@
         SOURCES(ng) % Fsrc(is) = IniVal
         SOURCES(ng) % Xsrc(is) = IniVal
         SOURCES(ng) % Ysrc(is) = IniVal
-#if defined TALK_ADDITION && defined TALK_FILE
+#if defined ITALK_ADDITION && defined TALK_FILE
         SOURCES(ng) % Xtaf(is) = IniVal
         SOURCES(ng) % Ytaf(is) = IniVal
 #endif
@@ -442,7 +440,7 @@
           END DO
         END DO
       END DO
-#if defined TALK_ADDITION && defined TALK_FILE
+#if defined ITALK_ADDITION && defined TALK_FILE
       DO itrc=1,NT(ng)
         DO is=1,Ntaf(ng)
             SOURCES(ng) % Ttaf(is,itrc) = IniVal
