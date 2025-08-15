@@ -2256,6 +2256,12 @@
       is=LEN_TRIM(Coptions)+1
       Coptions(is:is+12)=' RUNOFF_SSH,'
 #endif
+#if defined TALK_ADDITION && defined TALK_FILE
+      IF (Master) WRITE (stdout,20) 'TA_FLUX',                          &
+     &   'alkalinity addition flux.'
+      is=LEN_TRIM(Coptions)+1
+      Coptions(is:is+9)=' TA_FLUX,'
+#endif
 #if defined R4DVAR && !defined SPLIT_R4DVAR
 !
       IF (Master) WRITE (stdout,20) 'R4DVAR',                           &

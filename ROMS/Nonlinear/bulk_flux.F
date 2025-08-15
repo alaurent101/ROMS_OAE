@@ -190,7 +190,7 @@
 # endif
      &                           rain, lhflx, lrflx, shflx, srflx,      &
 # ifdef CICE_COUPLING
-     &                           LW_down, SW_down, aice,                 &
+     &                           LW_down, SW_down, aice,                &
 # endif
 # ifdef SHORTWAVE_IN
      &                           albedo,                                &

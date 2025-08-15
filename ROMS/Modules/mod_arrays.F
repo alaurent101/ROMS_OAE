@@ -139,12 +139,7 @@
 #if defined SSH_TIDES || defined UV_TIDES
           CALL allocate_tides (ng, LBi, UBi, LBj, UBj)
 #endif
-#if defined ITALK_ADDITION && defined TALK_FILE
-          IF (LuvSrc(ng).or.LwSrc(ng).or.ANY(LtracerSrc(:,ng)).or.      &
-     &        ANY(LtracerAdd(:,ng))) THEN
-#else
           IF (LuvSrc(ng).or.LwSrc(ng).or.ANY(LtracerSrc(:,ng))) THEN
-#endif
             CALL allocate_sources (ng)
           END IF
           CALL allocate_ice (ng, LBi, UBi, LBj, UBj)

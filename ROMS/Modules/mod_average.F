@@ -69,6 +69,9 @@
 #  ifdef RUNOFF
 !  avgRunoff  Runoff added as second rain field.                       !
 #  endif
+#  if defined TALK_ADDITION && defined TALK_FILE
+!  avgTAflx  Alkalinity addition flux.                                !
+#  endif
 !  avgstf     Surface net heat flux (W/m2).                            !
 !  avgswf     Surface net freshwater flux (kg/m2/s).                   !
 #  ifdef SHORTWAVE
@@ -205,6 +208,9 @@
 !  Copied RUNOFF & RUNOFF_SSH from roms-kate_svn version 2021/3/21
 #  if defined RUNOFF
           real(r8), pointer :: avgRunoff(:,:)
+#  endif
+#  if defined TALK_ADDITION && defined TALK_FILE
+          real(r8), pointer :: avgTAflx(:,:)
 #  endif
 #  if defined BULK_FLUXES || defined ECOSIM || defined ATM_PRESS
           real(r8), pointer :: avgPair(:,:)
@@ -469,6 +475,11 @@
 #  if defined RUNOFF
       IF (Aout(idRunoff,ng)) THEN
         allocate ( AVERAGE(ng) % avgRunoff(LBi:UBi,LBj:UBj) )
+      END IF
+#  endif
+#  if defined TALK_ADDITION && defined TALK_FILE
+      IF (Aout(idAtrc,ng)) THEN
+        allocate ( AVERAGE(ng) % avgTAflx(LBi:UBi,LBj:UBj) )
       END IF
 #  endif
 #  if defined BULK_FLUXES || defined ECOSIM || defined ATM_PRESS
@@ -1010,6 +1021,15 @@
         DO j=Jmin,Jmax
           DO i=Imin,Imax
             AVERAGE(ng) % avgRunoff(i,j) = IniVal
+          END DO
+        END DO
+      END IF
+#  endif
+#  if defined TALK_ADDITION && defined TALK_FILE
+      IF (Aout(idAtrc,ng)) THEN
+        DO j=Jmin,Jmax
+          DO i=Imin,Imax
+            AVERAGE(ng) % avgTAflx(i,j) = IniVal
           END DO
         END DO
       END IF

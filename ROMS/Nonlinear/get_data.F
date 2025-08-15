@@ -120,47 +120,21 @@
 # endif
 #endif
 !
-#if defined ITALK_ADDITION && defined TALK_FILE
+#if defined TALK_ADDITION && defined TALK_FILE
 !
 !=======================================================================
 !  Tracers addition time dependent data.
 !=======================================================================
-# ifdef SOLVE3D
 !
-!  Tracer addition.
-!
-      DO i=1,NT(ng)
-        IF (LtracerAdd(i,ng)) THEN
-          CALL get_ngfld (ng, iNLM, idAtrc(i), TAF(ng)%ncid,            &
-     &                    1, TAF(ng), update(1),                        &
-     &                    1, Ntaf(ng), 1, 2, 1, Ntaf(ng), 1,            &
-     &                    SOURCES(ng) % TtafG(:,:,i))
-          IF (FoundError(exit_flag, NoError, __LINE__, MyFile)) RETURN
-        END IF
-      END DO
+      CALL get_2dfld (ng, iNLM, idAtrc, ncFRCid(idAtrc,ng),             &
+     &                nFfiles(ng), FRC(1,ng), update(1),                &
+     &                LBi, UBi, LBj, UBj, 2, 1,                         &
+# ifdef MASKING
+     &                GRID(ng) % rmask,                                 &
 # endif
-#endif
-
-#if defined ITALK_ADDITION && defined TALK_FILE
-! ADDED BY AL
-!
-!=======================================================================
-!  Tracers addition time dependent data.
-!=======================================================================
-!
-!  Tracer addition.
-!
-      ic=0
-      DO i=1,NT(ng)
-        IF (LtracerAdd(i,ng)) THEN
-          ic=ic+1
-          CALL get_ngfld (ng, iNLM, idAtrc(i), ncFRCid(idAtrc,ng),      &
-     &                    1, FRC(1,ng), update(1),                      &
-     &                    1, Ntaf(ng), 1, 2, 1, Ntaf(ng), 1,            &
-     &                    SOURCES(ng) % TtafG(:,:,ic))
-          IF (FoundError(exit_flag, NoError, __LINE__, MyFile)) RETURN
-        END IF
-      END DO
+     &                FORCES(ng) % taflxG)
+          IF (FoundError(exit_flag, NoError, __LINE__,                  &
+     &                   __FILE__)) RETURN
 #endif
 !
 ! Copied continental runoff from roms-kate_svn version 2021/3/22
@@ -210,16 +184,6 @@
 !  Surface wind components.
 !
       IF (Lprocess) THEN
-        WRITE(*,*) '    '
-        WRITE(*,*) 'get_data' 
-        WRITE(*,*) 'ncFRCid(idUair,ng)'
-        WRITE(*,*) ncFRCid(idUair,ng)
-        WRITE(*,*) 'idUair'
-        WRITE(*,*) idUair
-        WRITE(*,*) 'idVair'
-        WRITE(*,*) idVair
-        WRITE(*,*) 'idPair'
-        WRITE(*,*) idPair
         CALL get_2dfld (ng, iNLM, idUair, ncFRCid(idUair,ng),           &
      &                  nFfiles(ng), FRC(1,ng), update(1),              &
      &                  LBi, UBi, LBj, UBj, 2, 1,                       &

@@ -46,16 +46,6 @@
 !               point Sources/Sinks.                                   !
 !  Added Tmpm 2021/6/24                                                !
 !  Tmpm       SST near river mouth, used at river heads                !
-#if defined ITALK_ADDITION && defined TALK_FILE
-!  Mtaf       Maximum number of analytical tracers addition points.    !
-!  Ntaf       Number of tracers addition points.                       !
-!  Itaf       I-grid location of tracers addition points,              !
-!               1 =< Itaf =< Lm(ng).                                   !
-!  Jtaf       J-grid location of tracers addition points,              !
-!               1 =< Jtaf =< Mm(ng).                                   !
-!  Ttaf       Tracer (tracer units) tracers addition data.             !
-!  TtafG      Latest two-time snapshots of tracer (tracer units)       !
-#endif
 !                                                                      !
 !=======================================================================
 !
@@ -66,19 +56,11 @@
 !
         integer, allocatable :: Msrc(:)
         integer, allocatable :: Nsrc(:)
-#if defined ITALK_ADDITION && defined TALK_FILE
-        integer, allocatable :: Mtaf(:)
-        integer, allocatable :: Ntaf(:)
-#endif
 !
         TYPE T_SOURCES
 
           integer, pointer :: Isrc(:)
           integer, pointer :: Jsrc(:)
-#if defined ITALK_ADDITION && defined TALK_FILE
-          integer, pointer :: Itaf(:)
-          integer, pointer :: Jtaf(:)
-#endif
 !  Added Imsrc & Jmsrc 2021/2/15
 #ifdef RIVER_JI
           integer, pointer :: Imsrc(:)
@@ -92,11 +74,6 @@
           real(r8), pointer :: Tsrc(:,:,:)
           real(r8), pointer :: Xsrc(:)
           real(r8), pointer :: Ysrc(:)
-#if defined ITALK_ADDITION && defined TALK_FILE
-          real(r8), pointer :: Ttaf(:,:)
-          real(r8), pointer :: Xtaf(:)
-          real(r8), pointer :: Ytaf(:)
-#endif
 !  Added Xmsrc & Ymsrc 2021/2/15
 #ifdef RIVER_JI
           real(r8), pointer :: Xmsrc(:)
@@ -105,9 +82,6 @@
 #ifndef ANA_PSOURCE
           real(r8), pointer :: QbarG(:,:)
           real(r8), pointer :: TsrcG(:,:,:,:)
-#endif
-#if defined ITALK_ADDITION && defined TALK_FILE
-          real(r8), pointer :: TtafG(:,:,:)
 #endif
 
 ! Added Tmpm 2021/6/24
@@ -183,16 +157,6 @@
         allocate ( Nsrc(Ngrids) )
       END IF
 
-#if defined ITALK_ADDITION && defined TALK_FILE
-      IF (.not.allocated(Mtaf)) THEN
-        allocate ( Mtaf(Ngrids) )
-      END IF
-
-      IF (.not.allocated(Ntaf)) THEN
-        allocate ( Ntaf(Ngrids) )
-      END IF
-#endif
-
 #ifndef ANA_PSOURCE
 !
 !  Inquire about the number of point sources.
@@ -225,31 +189,6 @@
       Nsrc(ng)=Msrc(ng)
 #endif
 
-#if defined ITALK_ADDITION && defined TALK_FILE
-
-!  Inquire about the number of point source addition locations.
-!
-      IF (ng.eq.1) THEN
-        DO mg=1,Ngrids
-          foundit=.FALSE.
-          IF (ANY(LtracerAdd(:,mg))) THEN
-            CALL netcdf_inq_var (ng, iNLM, TAF(mg)%name,                &
-     &                           MyVarName = TRIM(Vname(1,idAxpo)),     &
-     &                           SearchVar = foundit,                   &
-     &                           VarID = Vid,                           &
-     &                           nVardim = nvdim,                       &
-     &                           nVarAtt = nvatt)
-            IF (FoundError(exit_flag, NoError, __LINE__, MyFile)) RETURN
-
-            IF (foundit) THEN
-              Ntaf(mg)=var_Dsize(1)         ! first dimension
-              Mtaf(mg)=Ntaf(mg)
-            END IF
-          END IF
-        END DO
-      END IF
-#endif
-
 !
 !  Allocate structure.
 !
@@ -270,14 +209,6 @@
 
       allocate ( SOURCES(ng) % Jmsrc(Nsrc(ng)) )
       Dmem(ng)=Dmem(ng)+REAL(Nsrc(ng),r8)
-#endif
-
-#if defined ITALK_ADDITION && defined TALK_FILE
-      allocate ( SOURCES(ng) % Itaf(Ntaf(ng)) )
-      Dmem(ng)=Dmem(ng)+REAL(Ntaf(ng),r8)
-
-      allocate ( SOURCES(ng) % Jtaf(Nsrc(ng)) )
-      Dmem(ng)=Dmem(ng)+REAL(Ntaf(ng),r8)
 #endif
 
       allocate ( SOURCES(ng) % Dsrc(Nsrc(ng)) )
@@ -304,17 +235,6 @@
       allocate ( SOURCES(ng) % Ysrc(Nsrc(ng)) )
       Dmem(ng)=Dmem(ng)+REAL(Nsrc(ng),r8)
 
-#if defined ITALK_ADDITION && defined TALK_FILE
-      allocate ( SOURCES(ng) % Ttaf(Ntaf(ng),NT(ng)) )
-      Dmem(ng)=Dmem(ng)+REAL(Ntaf(ng)*NT(ng),r8)
-
-      allocate ( SOURCES(ng) % Xtaf(Ntaf(ng)) )
-      Dmem(ng)=Dmem(ng)+REAL(Ntaf(ng),r8)
-
-      allocate ( SOURCES(ng) % Ytaf(Ntaf(ng)) )
-      Dmem(ng)=Dmem(ng)+REAL(Ntaf(ng),r8)
-#endif
-
 !  Added Xmsrc & Ymsrc 2021/2/15
 #ifdef RIVER_JI
       allocate ( SOURCES(ng) % Xmsrc(Nsrc(ng)) )
@@ -330,11 +250,6 @@
 
       allocate ( SOURCES(ng) % TsrcG(Nsrc(ng),N(ng),2,NT(ng)) )
       Dmem(ng)=Dmem(ng)+2.0_r8*REAL(Nsrc(ng)*N(ng)*NT(ng),r8)
-#endif
-
-#if defined ITALK_ADDITION && defined TALK_FILE
-      allocate ( SOURCES(ng) % TtafG(Nsrc(ng),2,NT(ng)) )
-      Dmem(ng)=Dmem(ng)+2.0_r8*REAL(Nsrc(ng)*NT(ng),r8)
 #endif
 
 !  Added Tmpm 2021/6/24
@@ -373,10 +288,6 @@
       DO is=1,Nsrc(ng)
         SOURCES(ng) % Isrc(is) = 0
         SOURCES(ng) % Jsrc(is) = 0
-#if defined ITALK_ADDITION && defined TALK_FILE
-        SOURCES(ng) % Itaf(is) = 0
-        SOURCES(ng) % Jtaf(is) = 0
-#endif
 !  Added Imsrc & Jmsrc 2021/2/15
 #ifdef RIVER_JI
         SOURCES(ng) % Imsrc(is) = 0
@@ -386,10 +297,6 @@
         SOURCES(ng) % Fsrc(is) = IniVal
         SOURCES(ng) % Xsrc(is) = IniVal
         SOURCES(ng) % Ysrc(is) = IniVal
-#if defined ITALK_ADDITION && defined TALK_FILE
-        SOURCES(ng) % Xtaf(is) = IniVal
-        SOURCES(ng) % Ytaf(is) = IniVal
-#endif
 !  Added Xmsrc & Ymsrc 2021/2/15
 #ifdef RIVER_JI
         SOURCES(ng) % Xmsrc(is) = IniVal
@@ -440,15 +347,6 @@
           END DO
         END DO
       END DO
-#if defined ITALK_ADDITION && defined TALK_FILE
-      DO itrc=1,NT(ng)
-        DO is=1,Ntaf(ng)
-            SOURCES(ng) % Ttaf(is,itrc) = IniVal
-            SOURCES(ng) % TtafG(is,1,itrc) = IniVal
-            SOURCES(ng) % TtafG(is,2,itrc) = IniVal
-        END DO
-      END DO
-#endif
 !
       RETURN
       END SUBROUTINE allocate_sources

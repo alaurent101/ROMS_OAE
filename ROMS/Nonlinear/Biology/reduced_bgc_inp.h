@@ -284,16 +284,6 @@
                   LnudgeTREA(i,ng)=Ltrc(itrc,ng)
                 END DO
               END DO
-#if defined ITALK_ADDITION && defined TALK_FILE
-            CASE ('LtracerAdd')
-              Npts=load_l(Nval, Cval, NBT, Ngrids, Ltrc)
-              DO ng=1,Ngrids
-                DO itrc=1,NBT
-                  i=idbio(itrc)
-                  LtracerAdd(i,ng)=Ltrc(itrc,ng)
-                END DO
-              END DO
-#endif
             CASE ('Hout(idTvar)')
               Npts=load_l(Nval, Cval, NBT, Ngrids, Ltrc)
               DO ng=1,Ngrids
@@ -722,22 +712,6 @@
      &              TRIM(Vname(1,idTvar(i)))
               END IF
             END DO
-
-#if defined ITALK_ADDITION && defined TALK_FILE
-            DO itrc=1,NBT
-              i=idbio(itrc)
-              IF (LtracerAdd(i,ng)) THEN
-                WRITE (out,110) LtracerAdd(i,ng), 'LtracerAdd',         &
-     &              i, 'Turning ON  addition on tracer ', i,            &
-     &              TRIM(Vname(1,idTvar(i)))
-              ELSE
-                WRITE (out,110) LtracerAdd(i,ng), 'LtracerAdd',         &
-     &              i, 'Turning OFF addition on tracer ', i,            &
-     &              TRIM(Vname(1,idTvar(i)))
-              END IF
-            END DO
-#endif
-
             DO itrc=1,NBT
               i=idbio(itrc)
               IF (LtracerCLM(i,ng)) THEN

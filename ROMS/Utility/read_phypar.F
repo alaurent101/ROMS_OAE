@@ -1058,21 +1058,6 @@
 # endif
               END DO
 #endif
-#if defined ITALK_ADDITION && defined TALK_FILE
-            CASE ('LtracerAdd')
-              Npts=load_l(Nval, Cval, NAT+NPT, Ngrids, Ltracer)
-              DO ng=1,Ngrids
-                DO itrc=1,NAT
-                  LtracerAdd(itrc,ng)=Ltracer(itrc,ng)
-                END DO
-# ifdef T_PASSIVE
-                DO i=1,NPT
-                  itrc=inert(i)
-                  LtracerAdd(itrc,ng)=Ltracer(NAT+i,ng)
-                END DO
-# endif
-              END DO
-#endif
             CASE ('LsshCLM')
               Npts=load_l(Nval, Cval, Ngrids, LsshCLM)
             CASE ('Lm2CLM')
@@ -1829,6 +1814,16 @@
               Npts=load_l(Nval, Cval, Ngrids, Hout(idRunoff,:))
               Hout(idRunoff,1:Ngrids)=Lswitch(1:Ngrids)
 # endif
+# if defined TALK_ADDITION && defined TALK_FILE
+            CASE ('Hout(idAtrc)')
+              IF (idAtrc.eq.0) THEN
+                IF (Master) WRITE (out,280) 'idAtrc'
+                exit_flag=5
+                RETURN
+              END IF
+              Npts=load_l(Nval, Cval, Ngrids, Hout(idAtrc,:))
+              Hout(idAtrc,1:Ngrids)=Lswitch(1:Ngrids)
+# endif
 # if defined BULK_FLUXES || defined ECOSIM || defined ATM_PRESS
             CASE ('Hout(idPair)')
               IF (idPair.eq.0) THEN
@@ -2249,6 +2244,11 @@
               Npts=load_l(Nval, Cval, Ngrids, Lswitch)
               Qout(idTair,1:Ngrids)=Lswitch(1:Ngrids)
 # endif
+# if defined TALK_ADDITION && defined TALK_FILE
+            CASE ('Qout(idAtrc)')
+              Npts=load_l(Nval, Cval, Ngrids, Lswitch)
+              Qout(idAtrc,1:Ngrids)=Lswitch(1:Ngrids)
+# endif
 ! Added BULK_FLUX_WIND 2021/1/24
 # if defined BULK_FLUXES || defined ECOSIM || defined BULK_FLUX_WIND
             CASE ('Qout(idUair)')
@@ -2445,6 +2445,11 @@
               Npts=load_l(Nval, Cval, Ngrids, Lswitch)
               Aout(idRunoff,1:Ngrids)=Lswitch(1:Ngrids)
 #  endif
+# if defined TALK_ADDITION && defined TALK_FILE
+            CASE ('Aout(idAtrc)')
+              Npts=load_l(Nval, Cval, Ngrids, Lswitch)
+              Aout(idAtrc,1:Ngrids)=Lswitch(1:Ngrids)
+# endif
 #  if defined BULK_FLUXES || defined ECOSIM || defined ATM_PRESS
             CASE ('Aout(idPair)')
               Npts=load_l(Nval, Cval, Ngrids, Lswitch)
@@ -3458,12 +3463,6 @@
               label='SSF - Sources/Sinks forcing fields'
               Npts=load_s1d(Nval, Cval, Cdim, line, label, igrid,       &
      &                      Ngrids, Nfiles, SSF)
-# if defined ITALK_ADDITION && defined TALK_FILE
-            CASE ('TAFNAME')
-              label='TAF - Tracers addition forcing fields'
-              Npts=load_s1d(Nval, Cval, Cdim, line, label, igrid,       &
-     &                      Ngrids, Nfiles, TAF)
-# endif
 # if defined SSH_TIDES || defined UV_TIDES
             CASE ('TIDENAME')
               label='TIDE - Tidal forcing fields'
@@ -4795,33 +4794,6 @@
           END DO
 # endif
 #endif
-#if defined ITALK_ADDITION && defined TALK_FILE
-          DO itrc=1,NAT
-            IF (LtracerAdd(itrc,ng)) THEN
-              WRITE (out,185) LtracerAdd(itrc,ng), 'LtracerAdd', itrc,  &
-     &            'Turning ON  tracers addition ', itrc,                &
-     &            TRIM(Vname(1,idTvar(itrc)))
-            ELSE
-              WRITE (out,185) LtracerAdd(itrc,ng), 'LtracerAdd', itrc,  &
-     &            'Turning OFF tracers addition ', itrc,                &
-     &            TRIM(Vname(1,idTvar(itrc)))
-            END IF
-          END DO
-# ifdef T_PASSIVE
-          DO i=1,NPT
-            itrc=inert(i)
-            IF (LtracerAdd(itrc,ng)) THEN
-              WRITE (out,185) LtracerAdd(itrc,ng), 'LtracerAdd', itrc,  &
-     &            'Turning ON  tracers addition ', itrc,                &
-     &            TRIM(Vname(1,idTvar(itrc)))
-            ELSE
-              WRITE (out,185) LtracerAdd(itrc,ng), 'LtracerAdd', itrc,  &
-     &            'Turning OFF  tracers addition ', itrc,               &
-     &            TRIM(Vname(1,idTvar(itrc)))
-            END IF
-          END DO
-# endif
-#endif
           IF (LsshCLM(ng)) THEN
             WRITE (out,170) LsshCLM(ng), 'LsshCLM',                     &
      &          'Turning ON  processing of SSH climatology.'
@@ -5337,6 +5309,11 @@
           IF (Hout(idRunoff,ng)) WRITE (out,170) Hout(idRunoff,ng),     &
      &       'Hout(idRunoff)',                                          &
      &       'Write out continental runoff.'
+# endif
+# if defined TALK_ADDITION && defined TALK_FILE
+          IF (Hout(idAtrc,ng)) WRITE (out,170) Hout(idAtrc,ng),         &
+     &       'Hout(idAtrc)',                                            &
+     &       'Write out alkalinity addition.'
 # endif
 # if defined BULK_FLUXES || defined ECOSIM || defined ATM_PRESS
             IF (Hout(idPair,ng)) WRITE (out,170) Hout(idPair,ng),       &
@@ -5870,6 +5847,11 @@
      &       'Aout(idRunoff)',                                          &
      &       'Write out averaged continental runoff.'
 #  endif
+# if defined TALK_ADDITION && defined TALK_FILE
+          IF (Aout(idAtrc,ng)) WRITE (out,170) Aout(idAtrc,ng),         &
+     &       'Aout(idAtrc)',                                            &
+     &       'Write out averaged alkalinity addition.'
+# endif
 #  if defined BULK_FLUXES || defined ECOSIM || defined ATM_PRESS
             IF (Aout(idPair,ng)) WRITE (out,170) Aout(idPair,ng),       &
      &         'Aout(idPair)',                                          &
@@ -6487,15 +6469,6 @@
             WRITE (out,230) '        Input Sources/Sinks File:  ',      &
      &                      TRIM(fname)
           END IF
-# endif
-# if defined ITALK_ADDITION && defined TALK_FILE
-! WARNING, IF STATEMENT WAS TURNED OFF
-!          IF (ANY(LtracerAdd(:,ng))) THEN
-            fname=TAF(ng)%name
-            IF (.not.find_file(ng, fname, 'TAFNAME')) GO TO 30
-            WRITE (out,230) '           Tracers addition File:  ',      &
-     &                      TRIM(fname)
-!          END IF
 # endif
 # if defined SSH_TIDES || defined UV_TIDES
           IF (ng.eq.1) THEN               ! only tidal forcing on grid 1

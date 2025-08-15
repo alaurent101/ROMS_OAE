@@ -161,43 +161,6 @@
 #  endif
       END IF
 # endif
-# if defined ITALK_ADDITION && defined TALK_FILE
-!
-!=======================================================================
-!  Set tracers addition (OAE).
-!=======================================================================
-!
-      IF (DOMAIN(ng)%SouthWest_Test(tile)) THEN
-        DO itrc=1,NT(ng)
-          IF (LtracerAdd(itrc,ng)) THEN
-            CALL set_ngfld (ng, iNLM, idAtrc(itrc), 1, Ntaf(ng), 1,     &
-     &                      1, Ntaf(ng), 1,                             &
-     &                      SOURCES(ng) % TtafG(:,:,itrc),              &
-     &                      SOURCES(ng) % Ttaf(:,itrc),                 &
-     &                      update)
-            IF (FoundError(exit_flag, NoError, __LINE__, MyFile)) RETURN
-          END IF
-        END DO
-      END IF
-# endif
-
-# if defined ITALK_ADDITION && defined TALK_FILE
-! ADDED BY AL
-      IF (DOMAIN(ng)%SouthWest_Test(tile)) THEN
-        ic=0
-        DO itrc=1,NT(ng)
-          IF (LtracerAdd(itrc,ng)) THEN
-            ic=ic+1
-            CALL set_ngfld (ng, iNLM, idAtrc(itrc), 1, Ntaf(ng), 1,     &
-     &                      1, Ntaf(ng), 1,                             &
-     &                      SOURCES(ng) % TtafG(:,:,ic),                &
-     &                      SOURCES(ng) % Ttaf(:,ic),                   &
-     &                      update)
-            IF (FoundError(exit_flag, NoError, __LINE__, MyFile)) RETURN
-          END IF
-        END DO
-      END IF
-# endif
 !
 !=======================================================================
 !  Set forcing data.
@@ -495,6 +458,19 @@
         IF (FoundError(exit_flag, NoError, __LINE__,                    &
      &                 __FILE__)) RETURN
 #   endif
+#  endif
+
+#  if defined TALK_ADDITION && defined TALK_FILE
+!
+! Alkalinity addition (mol/s).
+!
+      CALL set_2dfld_tile (ng, tile, iNLM, idAtrc,                      &
+     &                     LBi, UBi, LBj, UBj,                          &
+     &                     FORCES(ng)%taflxG,                           &
+     &                     FORCES(ng)%taflx,                            &
+     &                     update)
+        IF (FoundError(exit_flag, NoError, __LINE__,                    &
+     &                 __FILE__)) RETURN
 #  endif
 
 #  ifndef BULK_FLUXES

@@ -43,7 +43,7 @@
 !   wTAp              sinking velocity for particulate feedstock (TAp) !
 !                     [meter day-1].                                   !
 !   P2Dratio   ratio of particles in added alkalinity.                 !
-!   sedloss    fraction of TAp lost to the sediment              !
+!   sedloss    fraction of TAp lost to the sediment                    !
 !                                                                      !
 #endif
 !                                                                      !
@@ -64,7 +64,7 @@
       integer :: iOxyg                  ! Dissolved oxygen concentration
 #endif
 #ifdef TALK_ADDITION
-      integer :: iTAp              ! TAp
+      integer :: iTAp                    ! TAp
       integer :: idTIC                   ! delta TIC
       integer :: idTA                    ! delta TA
 # ifdef TALK_TRACERS

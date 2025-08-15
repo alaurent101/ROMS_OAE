@@ -191,36 +191,6 @@
               idRtrc(iOxyg)=varid
 #endif
 
-/*
-**  Biological tracers addition (OAE).
-*/
-#if defined ITALK_ADDITION && defined TALK_FILE
-# ifdef CARBON
-            CASE ('idAtrc(iTIC_)')
-              idAtrc(iTIC_)=varid
-            CASE ('idAtrc(iTAlk)')
-              idAtrc(iTAlk)=varid
-#  ifdef TALK_ADDITION
-            CASE ('idAtrc(iTAp)')
-              idAtrc(iTAp)=varid
-            CASE ('idAtrc(idTIC)')
-              idAtrc(idTIC)=varid
-            CASE ('idAtrc(idTA)')
-              idAtrc(idTA)=varid
-#   ifdef TALK_TRACERS
-            CASE ('idAtrc(iTAin)')
-              idAtrc(iTAin)=varid
-            CASE ('idAtrc(iTArm)')
-              idAtrc(iTArm)=varid
-#   endif
-#  endif
-# endif
-# ifdef OXYGEN
-            CASE ('idAtrc(iOxyg)')
-              idAtrc(iOxyg)=varid
-# endif
-#endif
-
 #ifdef DIAGNOSTICS_BIO
 
 /*

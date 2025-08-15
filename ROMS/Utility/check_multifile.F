@@ -187,17 +187,6 @@
       END IF
 #endif
 
-#if defined ITALK_ADDITION && defined TALK_FILE
-!
-!-----------------------------------------------------------------------
-!  Addition data (OAE).
-!-----------------------------------------------------------------------
-!
-        file_type='Addition Data'
-        CALL multifile_info_s1d (ng, model, file_type, TAF)
-        IF (FoundError(exit_flag, NoError, __LINE__, MyFile)) RETURN
-#endif
-
 #ifdef FRC_FILE
 !
 !-----------------------------------------------------------------------

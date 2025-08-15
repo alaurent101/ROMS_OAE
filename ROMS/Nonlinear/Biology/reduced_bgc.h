@@ -142,7 +142,13 @@
      &                   GRID(ng) % z_w,                                &
      &                   GRID(ng) % lonr,                               &
      &                   GRID(ng) % latr,                               &
-     &                   FORCES(ng) % srflx,                            &
+#if defined TALK_ADDITION
+     &                   GRID(ng) % pm,                                 &
+     &                   GRID(ng) % pn,                                 &
+# ifdef TALK_FILE
+     &                   FORCES(ng) % taflx,                            &
+# endif
+#endif
 #if defined CARBON || defined OXYGEN
 # ifdef BULK_FLUXES
      &                   FORCES(ng) % Uwind,                            &
@@ -185,8 +191,14 @@
 #  endif
 # endif
 #endif
-     &                         Hz, z_r, z_w, srflx,                     &
+     &                         Hz, z_r, z_w,                            &
      &                         lonr, latr,                              &
+# ifdef TALK_ADDITION
+     &                         pm, pn,                                  &
+#  ifdef TALK_FILE
+     &                         taflx,                                   &
+#  endif
+# endif
 #if defined CARBON || defined OXYGEN
 # ifdef BULK_FLUXES
      &                         Uwind, Vwind,                            &
@@ -210,9 +222,9 @@
       USE mod_biology
       USE mod_ncparam
       USE mod_scalars
-#ifdef TALK_FILE
-      USE mod_sources
-#endif
+!#if defined TALK_ADDITION && defined TALK_FILE
+!      USE mod_forces
+!#endif
 !
       USE dateclock_mod, ONLY : caldate
 !
@@ -236,7 +248,6 @@
       real(r8), intent(in) :: Hz(LBi:,LBj:,:)
       real(r8), intent(in) :: z_r(LBi:,LBj:,:)
       real(r8), intent(in) :: z_w(LBi:,LBj:,0:)
-      real(r8), intent(in) :: srflx(LBi:,LBj:)
       real(r8), intent(in) :: lonr(LBi:,LBj:)
       real(r8), intent(in) :: latr(LBi:,LBj:)
 # if defined CARBON || defined OXYGEN
@@ -250,9 +261,14 @@
 # endif
 # ifdef CARBON
       real(r8), intent(inout) :: pH(LBi:,LBj:)
-      real(r8), intent(inout) :: pHc(LBi:UBi,LBj:UBj)
+      real(r8), intent(inout) :: pHc(LBi:,LBj:)
 #  ifdef TALK_ADDITION
-      real(r8), intent(inout) :: pHa(LBi:UBi,LBj:UBj)
+      real(r8), intent(inout) :: pHa(LBi:,LBj:)
+      real(r8), intent(in) :: pm(LBi:,LBj:)
+      real(r8), intent(in) :: pn(LBi:,LBj:)
+#   ifdef TALK_FILE
+      real(r8), intent(in) :: taflx(LBi:,LBj:)
+#   endif
 #  endif
 # endif
 # ifdef DIAGNOSTICS_BIO
@@ -272,7 +288,6 @@
       real(r8), intent(in) :: Hz(LBi:UBi,LBj:UBj,UBk)
       real(r8), intent(in) :: z_r(LBi:UBi,LBj:UBj,UBk)
       real(r8), intent(in) :: z_w(LBi:UBi,LBj:UBj,0:UBk)
-      real(r8), intent(in) :: srflx(LBi:UBi,LBj:UBj)
 # if defined CARBON || defined OXYGEN
 #  ifdef BULK_FLUXES
       real(r8), intent(in) :: Uwind(LBi:UBi,LBj:UBj)
@@ -287,6 +302,11 @@
       real(r8), intent(inout) :: pHc(LBi:UBi,LBj:UBj)
 #  ifdef TALK_ADDITION
       real(r8), intent(inout) :: pHa(LBi:UBi,LBj:UBj)
+      real(r8), intent(in) :: pm(LBi:UBi,LBj:UBj)
+      real(r8), intent(in) :: pn(LBi:UBi,LBj:UBj)
+#   ifdef TALK_FILE
+      real(r8), intent(in) :: taflx(LBi:UBi,LBj:UBj)
+#   endif
 #  endif
 # endif
 # ifdef DIAGNOSTICS_BIO
@@ -415,10 +435,10 @@
       integer, parameter :: Nsink = 1
       integer, dimension(Nsink) :: idsink
       real(r8), dimension(Nsink) :: Wbio
-#  if defined TALK_FILE
-      integer :: Isrc, Jsrc
-      integer :: is
-#  endif
+!#  if defined TALK_FILE
+!      integer :: Isrc, Jsrc
+!      integer :: is
+!#  endif
 # endif
 
 # if defined RW14_CO2_SC
@@ -516,6 +536,7 @@
       real(r8), dimension(IminS:ImaxS) :: pCO2c
 # ifdef TALK_ADDITION
       real(r8), dimension(IminS:ImaxS) :: pCO2a
+      real(r8) :: dtsec
 # endif
 #endif
 
@@ -577,6 +598,7 @@
 !  Set time-stepping according to the number of iterations.
 !
       dtdays=dt(ng)*sec2day/REAL(BioIter(ng),r8)
+      dtsec=dt(ng)/REAL(BioIter(ng),r8)
 #ifdef DIAGNOSTICS_BIO
 !
 !  A factor to account for the number of iterations in accumulating
@@ -756,10 +778,12 @@
 !-----------------------------------------------------------------------
 !  Get thickness of addition layer
 !-----------------------------------------------------------------------
+# if !defined TALK_FILE
           IF (j.eq.jloc_alkalinity(ng)) THEN
             Hadd=SUM(Hz(iloc_alkalinity(ng),jloc_alkalinity(ng),        &
      &                kloc_alkalinity_min(ng):kloc_alkalinity_max(ng)))
           END IF
+# endif
 #endif
 
           DO k=1,N(ng)
@@ -984,42 +1008,62 @@
 # endif
 !
 !-----------------------------------------------------------------------
-!  Compute external source of alkalinity (Tracer unit/m2/day)
+!  Compute external source of alkalinity (mol/second)
 !-----------------------------------------------------------------------
 !
-               IF (i.eq.iloc_alkalinity(ng)                             &
-     &          .and. j.eq.jloc_alkalinity(ng)                          &
-     &          .and. k.ge.kloc_alkalinity_min(ng)                      &
-     &          .and. k.le.kloc_alkalinity_max(ng)) THEN
 # ifdef TALK_FILE
 ! Add Alkalinity from river file
-                 DO is=1,Nsrc(ng)
-                   Isrc=SOURCES(ng)%Isrc(is)
-                   Jsrc=SOURCES(ng)%Jsrc(is)
-                   IF ((Isrc.eq.iloc_alkalinity(ng)).and.               &
-     &                 (Jsrc.eq.jloc_alkalinity(ng))) THEN
-                     cff1=SOURCES(ng)%Tsrc(is,k,iTAlk)
-                   END IF
-                 END DO
+               cff1=0.0_r8
+               cff=pm(i,j)*pn(i,j)
+!              WRITE(*,*) 'reduced bgc'
+!              WRITE(*,*) Uwind
+              IF ((taflx(i,j).gt.0.0_r8)                               &
+     &          .and. k.ge.kloc_alkalinity_min(ng)                      &
+     &          .and. k.le.kloc_alkalinity_max(ng)) THEN
+               cff=pm(i,j)*pn(i,j)
+               Hadd=SUM(Hz(i,j,                                         &
+     &              kloc_alkalinity_min(ng):kloc_alkalinity_max(ng)))
+               cff1=taflx(i,j)
+!               WRITE(*,*) 'taflx(i,j)'
+!               WRITE(*,*) taflx(i,j)
+!               WRITE(*,*) 'i'
+!               WRITE(*,*) i
+!               WRITE(*,*) 'j'
+!               WRITE(*,*) j
+!               WRITE(*,*) 'cff'
+!               WRITE(*,*) cff
+!               WRITE(*,*) 'Hadd'
+!               WRITE(*,*) Hadd
+!               WRITE(*,*) 'Hz(i,j,k)'
+!               WRITE(*,*) Hz(i,j,k)
+!               WRITE(*,*) 'cff1=taflx(i,j)'
+!               WRITE(*,*) cff1
 # else
-               IF (i.eq.iloc_alkalinity(ng)                             &
+! Alkalinity flux (constant) is defined in reduced_bgc.in
+              IF (i.eq.iloc_alkalinity(ng)                              &
      &          .and. j.eq.jloc_alkalinity(ng)                          &
      &          .and. k.ge.kloc_alkalinity_min(ng)                      &
      &          .and. k.le.kloc_alkalinity_max(ng)                      &
      &          .and. tdays(ng) .ge. alkalinity_startload(ng)           &
      &          .and. tdays(ng) .le. alkalinity_endload(ng)) THEN
                  cff1=alkalinity_load(ng)
-               END IF
 # endif
-                 cff2=cff1*dtdays/Hadd
-                 cff3=(1-P2Dratio(ng))*cff2
-                 Bio(i,k,idTA)=Bio(i,k,idTA)+cff3
+               cff2=cff1*1000.0_r8*dtsec*cff/Hadd !*Hz(i,j,k)/Hadd
+               cff3=(1-P2Dratio(ng))*cff2
+               Bio(i,k,idTA)=Bio(i,k,idTA)+cff3
+!               WRITE(*,*) 'cff2'
+!               WRITE(*,*) cff2
+!               WRITE(*,*) 'dtsec'
+!               WRITE(*,*) dtsec
+!               WRITE(*,*) ' '
+!               WRITE(*,*) 'cff2=cff1*dtsec*cff*Hz(i,j,k)/Hadd '
+!               WRITE(*,*) ' '
+!               WRITE(*,*) ' '
 # ifdef TALK_TRACERS
-                 Bio(i,k,iTAin)=Bio(i,k,iTAin)+cff3
+               Bio(i,k,iTAin)=Bio(i,k,iTAin)+cff3
 # endif
-                 Bio(i,k,iTAp)=Bio(i,k,iTAp)+               &
-     &             P2Dratio(ng)*cff2
-               END IF
+               Bio(i,k,iTAp)=Bio(i,k,iTAp)+P2Dratio(ng)*cff2
+              END IF
 #endif
             END DO
           END DO
@@ -1043,6 +1087,12 @@
 !  Compute O2 transfer velocity : u10squared (u10 in m/s)
 !
 # ifdef BULK_FLUXES
+!              WRITE(*,*) 'Uwind'
+!              WRITE(*,*) Uwind(i,j)
+!              WRITE(*,*) 'Vwind'
+!              WRITE(*,*) Vwind(i,j)
+!              WRITE(*,*) 'taflx'
+!              WRITE(*,*) taflx(i,j)
             u10squ=Uwind(i,j)*Uwind(i,j)+Vwind(i,j)*Vwind(i,j)
 # else
             u10squ=cff1*SQRT((0.5_r8*(sustr(i,j)+sustr(i+1,j)))**2+     &

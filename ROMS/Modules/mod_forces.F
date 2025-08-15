@@ -117,6 +117,10 @@
 !  Copied runoff from roms-kate_svn version 2021/3/21                  !
 !  runoff       Runoff as a second rain field.                         !
 !                                                                      !
+#if defined TALK_ADDITION && defined TALK_FILE
+!  taflx       Alkalinity addition flux                                !
+!  taflxG      Latest two-time snapshots of alkalinity addition flux   !
+#endif
 !  Surface tracer fluxes.                                              !
 !                                                                      !
 !  stflux       Forcing surface flux of tracer type variables from     !
@@ -350,6 +354,11 @@
           real(r8), pointer :: runoff(:,:)
           real(r8), pointer :: runoffG(:,:,:)
 # endif
+
+#if defined TALK_ADDITION && defined TALK_FILE
+          real(r8), pointer :: taflx(:,:)
+          real(r8), pointer :: taflxG(:,:,:)
+#endif
 
           real(r8), pointer :: stflux(:,:,:)
 # if !defined ANA_STFLUX || !defined ANA_SSFLUX || \
@@ -771,6 +780,11 @@
       allocate ( FORCES(ng) % runoff(LBi:UBi,LBj:UBj) )
       allocate ( FORCES(ng) % runoffG(LBi:UBi,LBj:UBj,2) )
 # endif
+
+#if defined TALK_ADDITION && defined TALK_FILE
+      allocate ( FORCES(ng) % taflx(LBi:UBi,LBj:UBj) )
+      allocate ( FORCES(ng) % taflxG(LBi:UBi,LBj:UBj,2) )
+#endif
 
       allocate ( FORCES(ng) % stflux(LBi:UBi,LBj:UBj,NT(ng)) )
       Dmem(ng)=Dmem(ng)+REAL(NT(ng),r8)*size2d
@@ -1220,6 +1234,12 @@
             FORCES(ng) % runoffG(i,j,1) = IniVal
             FORCES(ng) % runoffG(i,j,2) = IniVal
 # endif
+
+#if defined TALK_ADDITION && defined TALK_FILE
+            FORCES(ng) % taflx(i,j) = IniVal
+            FORCES(ng) % taflxG(i,j,1) = IniVal
+            FORCES(ng) % taflxG(i,j,2) = IniVal
+#endif
 
 # if !defined LONGWAVE && defined BULK_FLUXES
             FORCES(ng) % lrflxG(i,j,1) = IniVal

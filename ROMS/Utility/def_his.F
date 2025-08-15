@@ -1370,6 +1370,26 @@
           IF (FoundError(exit_flag, NoError, __LINE__, MyFile)) RETURN
         END IF
 # endif
+# if defined TALK_ADDITION && defined TALK_FILE
+!
+!  Define alkalinity addition.
+!
+        IF (Hout(idAtrc,ng)) THEN
+          Vinfo( 1)=Vname(1,idAtrc)
+          Vinfo( 2)=Vname(2,idAtrc)
+          Vinfo( 3)=Vname(3,idAtrc)
+          Vinfo(14)=Vname(4,idAtrc)
+          Vinfo(16)=Vname(1,idtime)
+#  if defined WRITE_WATER && defined MASKING
+          Vinfo(20)='mask_rho'
+#  endif
+          Vinfo(22)='coordinates'
+          Aval(5)=REAL(Iinfo(1,idAtrc,ng),r8)
+          status=def_var(ng, iNLM, HIS(ng)%ncid, HIS(ng)%Vid(idAtrc), &
+     &                   NF_FOUT, nvd3, t2dgrd, Aval, Vinfo, ncname)
+          IF (FoundError(exit_flag, NoError, __LINE__, MyFile)) RETURN
+        END IF
+# endif
 # if defined BULK_FLUXES || defined ECOSIM || defined ATM_PRESS
 !
 !  Define surface air pressure.
@@ -2674,6 +2694,11 @@
             got_var(idRunoff)=.TRUE.
             HIS(ng)%Vid(idRunoff)=var_id(i)
 # endif
+# if defined TALK_ADDITION && defined TALK_FILE
+          ELSE IF (TRIM(var_name(i)).eq.TRIM(Vname(1,idAtrc))) THEN
+            got_var(idAtrc)=.TRUE.
+            HIS(ng)%Vid(idAtrc)=var_id(i)
+# endif
 # if defined BULK_FLUXES || defined ECOSIM || defined ATM_PRESS
           ELSE IF (TRIM(var_name(i)).eq.TRIM(Vname(1,idPair))) THEN
             got_var(idPair)=.TRUE.
@@ -3149,6 +3174,14 @@
 # if defined RUNOFF
         IF (.not.got_var(idRunoff).and.Hout(idRunoff,ng)) THEN
           IF (Master) WRITE (stdout,70) TRIM(Vname(1,idRunoff)),        &
+     &                                  TRIM(ncname)
+          exit_flag=3
+          RETURN
+        END IF
+# endif
+# if defined TALK_ADDITION && defined TALK_FILE
+        IF (.not.got_var(idAtrc).and.Hout(idAtrc,ng)) THEN
+          IF (Master) WRITE (stdout,70) TRIM(Vname(1,idAtrc)),          &
      &                                  TRIM(ncname)
           exit_flag=3
           RETURN
