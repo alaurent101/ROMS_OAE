@@ -67,8 +67,7 @@
       integer :: iTAp                    ! TAp
       integer :: idTIC                   ! delta TIC
       integer :: idTA                    ! delta TA
-# ifdef TALK_TRACERS
-      integer :: iTAin                   ! TA input
+# ifdef TALK_DIAG_DISS
       integer :: iTArm                   ! remineralized TA
 # endif
 #endif
@@ -147,8 +146,8 @@
 !
 #if defined CARBON && defined OXYGEN
 # ifdef TALK_ADDITION
-#  ifdef TALK_TRACERS
-      NBT=8
+#  ifdef TALK_DIAG_DISS
+      NBT=7
 #  else
       NBT=6
 #  endif
@@ -157,8 +156,8 @@
 # endif
 #elif defined CARBON && !defined OXYGEN
 # ifdef TALK_ADDITION
-#  ifdef TALK_TRACERS
-      NBT=7
+#  ifdef TALK_DIAG_DISS
+      NBT=6
 #  else
       NBT=5
 #  endif
@@ -340,10 +339,9 @@
       idTIC=ic+2
       idTA=ic+3
       ic=ic+3
-#  ifdef TALK_TRACERS
-      iTAin=ic+1
-      iTArm=ic+2
-      ic=ic+2
+#  ifdef TALK_DIAG_DISS
+      iTArm=ic+1
+      ic=ic+1
 #  endif
 # endif
 #endif

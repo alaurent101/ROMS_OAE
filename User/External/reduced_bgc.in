@@ -326,8 +326,8 @@ Dout(iO2fx) == T        ! O2_airsea          air-sea O2 flux
 ! idbio( 3)     TAp               Added alkalinity (particulate)       if TALK_ADDITION
 ! idbio( 4)     dTIC              additional TIC (OAE)                 if TALK_ADDITION
 ! idbio( 5)     dTA               Additional TA (OAE)                  if TALK_ADDITION
-! idbio( 6)     TAin              Added alkalinity (dissolved)         if TALK_TRACERS
-! idbio( 7)     TArm              Remineralized particulate alkalinity if TALK_TRACERS
+! idbio( 6)     TAin              Added alkalinity (dissolved)         if TALK_DIAG_DISS
+! idbio( 7)     TArm              Remineralized particulate alkalinity if TALK_DIAG_DISS
 ! idbio( 8)     oxygen            Oxygen concentration                 if OXYGEN
 !------------------------------------------------------------------------------
 !

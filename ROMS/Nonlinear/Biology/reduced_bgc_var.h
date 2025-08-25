@@ -32,9 +32,7 @@
               idTvar(idTIC)=varid
             CASE ('idTvar(idTA)')
               idTvar(idTA)=varid
-#  ifdef TALK_TRACERS
-            CASE ('idTvar(iTAin)')
-              idTvar(iTAin)=varid
+#  ifdef TALK_DIAG_DISS
             CASE ('idTvar(iTArm)')
               idTvar(iTArm)=varid
 #  endif
@@ -64,9 +62,7 @@
               idTads(idTIC)=varid
             CASE ('idTads(idTA')
               idTads(idTA)=varid
-#   ifdef TALK_TRACERS
-            CASE ('idTads(iTAin)')
-              idTads(iTAin)=varid
+#   ifdef TALK_DIAG_DISS
             CASE ('idTads(iTArm)')
               idTads(iTArm)=varid
 #   endif
@@ -128,16 +124,7 @@
               idTbry(isouth,idTA)=varid
             CASE ('idTbry(inorth,idTA)')
               idTbry(inorth,idTA)=varid
-#  ifdef TALK_TRACERS
-
-            CASE ('idTbry(iwest,iTAin)')
-              idTbry(iwest,iTAin)=varid
-            CASE ('idTbry(ieast,iTAin)')
-              idTbry(ieast,iTAin)=varid
-            CASE ('idTbry(isouth,iTAin)')
-              idTbry(isouth,iTAin)=varid
-            CASE ('idTbry(inorth,iTAin)')
-              idTbry(inorth,iTAin)=varid
+#  ifdef TALK_DIAG_DISS
 
             CASE ('idTbry(iwest,iTArm)')
               idTbry(iwest,iTArm)=varid
@@ -178,9 +165,7 @@
               idRtrc(idTIC)=varid
             CASE ('idRtrc(idTA)')
               idRtrc(idTA)=varid
-#  ifdef TALK_TRACERS
-            CASE ('idRtrc(iTAin)')
-              idRtrc(iTAin)=varid
+#  ifdef TALK_DIAG_DISS
             CASE ('idRtrc(iTArm)')
               idRtrc(iTArm)=varid
 #  endif

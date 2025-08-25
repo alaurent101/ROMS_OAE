@@ -36,7 +36,9 @@ P_PRODUCTION    /* Sources and sinks from primary production */
 TALK_BGC        /* BGC feedback on alkalinity */
 TALK_ADDITION   /* Turn on alkalinity addition module */
 TALK_FILE       /* Use the modified river file to add alkalinity feedstock */
-TALK_TRACERS    /* Additional alkalinity addition tracers */
+TALK_DIAG_DISS    /* Additional alkalinity addition diagnostic tracer to follow dissolved feedstock */
+TALK_TWO_FEED    /* Additional alkalinity addition tracer to allow 2 feedstocks */
+TALK_THREE_FEED  /* Additional alkalinity addition tracer to allow 3 feedstocks */
 TALK_NONCONSERV /* Background alkalinity is non conservative (not imposed from salinity) */
 RW14_OXYGEN_SC  /* Oxygen air-sea gas exchange based on Wanninkhof (2014) */
 RW14_CO2_SC     /* CO2 air-sea gas exchange based on Wanninkhof (2014) */
@@ -63,8 +65,9 @@ The reduced BGC model has 3 tracers: alkalinity, TIC and oxygen. The addition mo
 * TAp      _Particulate phase of the feedstock_
 * dTA      _Dissolved phase of the feedstock + dissolved TAp. This tracer represents the added alkalinity_
 * dTIC     _Additional TIC (from net CO2 uptake)_
-* TAin     _Optional tracer to record added feedstock (TALK_TRACERS)_
-* TArm     _Optional tracer to record dissolved TAp (TALK_TRACERS)_
+* TArm     _Optional tracer to record dissolved TAp (TALK_DIAG_DISS)_
+* TAp2     _Optional Particulate phase of second feedstock (TALK_TWO_FEED)_
+* TAp3     _Optional Particulate phase of third feedstock (TALK_THREE_FEED)_
 
 ## River file
 

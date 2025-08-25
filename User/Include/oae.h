@@ -135,7 +135,7 @@
 #  define PCO2AIR_SABLEISLAND
 #  define TALK_ADDITION
 #  define TALK_FILE
-#  define TALK_TRACERS
+#  define TALK_DIAG_DISS
 #  define TALK_NONCONSERV
 # endif
 # define DIAGNOSTICS_BIO

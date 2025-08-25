@@ -475,7 +475,9 @@
 ** RW14_OXYGEN_SC          if O2  Schmidt number from Wanninkhof (2014)      **
 ** TALK_ADDITION           if TA addition                                    **
 ** TALK_FILE               if TA added from river file                       **
-** TALK_TRACERS            if Additional tracers for TA addition model       **
+** TALK_DIAG_DISS          if Additional tracer for TA addition model        **
+** TALK_TWO_FEED           if Two alkalinity feedstocks                      **
+** TALK_THREE_FEED         if Three alkalinity feedstocks                    **
 ** SOC_HRM23               if parameterize SOC in online nested model        **
 ** SOC_H2                  if parameterize SOC in H2 grid                    **
 ** SOC_ZVAR                if SOC from TIC vs depth relationship (C. Algar)  **

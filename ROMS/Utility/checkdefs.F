@@ -2433,13 +2433,38 @@
       is=LEN_TRIM(Coptions)+1
       Coptions(is:is+11)=' TALK_FILE,'
 #  endif
-#  ifdef TALK_TRACERS
+#  ifdef TALK_DIAG_DISS
 !
-      IF (Master) WRITE (stdout,20) 'TALK_TRACERS',                     &
-     &   'Additional tracers for addition module.'
+      IF (Master) WRITE (stdout,20) 'TALK_DIAG_DISS',                   &
+     &   'Additional tracer for addition module.'
       is=LEN_TRIM(Coptions)+1
-      Coptions(is:is+14)=' TALK_TRACERS,'
+      Coptions(is:is+17)=' TALK_DIAG_DISS,'
 #  endif
+#  ifdef TALK_TWO_FEED
+!
+      IF (Master) WRITE (stdout,20) 'TALK_TWO_FEED',                    &
+     &   'Two feedstocks for addition module.'
+      is=LEN_TRIM(Coptions)+1
+      Coptions(is:is+15)=' TALK_TWO_FEED,'
+#  endif
+#  ifdef TALK_THREE_FEED
+!
+      IF (Master) WRITE (stdout,20) 'TALK_THREE_FEED',                  &
+     &   'Three feedstocks for addition module.'
+      is=LEN_TRIM(Coptions)+1
+      Coptions(is:is+17)=' TALK_THREE_FEED,'
+#  endif
+# endif
+# if defined TALK_TWO_FEED && defined TALK_THREE_FEED
+!
+!  Stop if using more than one multi feedstock option.
+!
+      IF (Master) THEN
+        WRITE (stdout,100)
+ 100    FORMAT (/,' CHECKDEFS - More than one multi feedstock',         &
+     &            ' option selected for addition model.')
+        exit_flag=5
+      END IF
 # endif
 # ifdef WOC_H2 
 !

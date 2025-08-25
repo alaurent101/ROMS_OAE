@@ -1002,7 +1002,7 @@
                Bio(i,k,iTAp)=fac1/(1+cff4)
                Bio(i,k,idTA)=Bio(i,k,idTA)+cff4*cff5*                   &
      &                                     Bio(i,k,iTAp)
-# ifdef TALK_TRACERS
+# ifdef TALK_DIAG_DISS
                Bio(i,k,iTArm)=Bio(i,k,iTArm)+cff4*cff5*                 &
      &                                       Bio(i,k,iTAp)
 # endif
@@ -1015,8 +1015,6 @@
 ! Add Alkalinity from river file
                cff1=0.0_r8
                cff=pm(i,j)*pn(i,j)
-!              WRITE(*,*) 'reduced bgc'
-!              WRITE(*,*) Uwind
               IF ((taflx(i,j).gt.0.0_r8)                               &
      &          .and. k.ge.kloc_alkalinity_min(ng)                      &
      &          .and. k.le.kloc_alkalinity_max(ng)) THEN
@@ -1024,20 +1022,6 @@
                Hadd=SUM(Hz(i,j,                                         &
      &              kloc_alkalinity_min(ng):kloc_alkalinity_max(ng)))
                cff1=taflx(i,j)
-!               WRITE(*,*) 'taflx(i,j)'
-!               WRITE(*,*) taflx(i,j)
-!               WRITE(*,*) 'i'
-!               WRITE(*,*) i
-!               WRITE(*,*) 'j'
-!               WRITE(*,*) j
-!               WRITE(*,*) 'cff'
-!               WRITE(*,*) cff
-!               WRITE(*,*) 'Hadd'
-!               WRITE(*,*) Hadd
-!               WRITE(*,*) 'Hz(i,j,k)'
-!               WRITE(*,*) Hz(i,j,k)
-!               WRITE(*,*) 'cff1=taflx(i,j)'
-!               WRITE(*,*) cff1
 # else
 ! Alkalinity flux (constant) is defined in reduced_bgc.in
               IF (i.eq.iloc_alkalinity(ng)                              &
@@ -1051,17 +1035,6 @@
                cff2=cff1*1000.0_r8*dtsec*cff/Hadd !*Hz(i,j,k)/Hadd
                cff3=(1-P2Dratio(ng))*cff2
                Bio(i,k,idTA)=Bio(i,k,idTA)+cff3
-!               WRITE(*,*) 'cff2'
-!               WRITE(*,*) cff2
-!               WRITE(*,*) 'dtsec'
-!               WRITE(*,*) dtsec
-!               WRITE(*,*) ' '
-!               WRITE(*,*) 'cff2=cff1*dtsec*cff*Hz(i,j,k)/Hadd '
-!               WRITE(*,*) ' '
-!               WRITE(*,*) ' '
-# ifdef TALK_TRACERS
-               Bio(i,k,iTAin)=Bio(i,k,iTAin)+cff3
-# endif
                Bio(i,k,iTAp)=Bio(i,k,iTAp)+P2Dratio(ng)*cff2
               END IF
 #endif
