@@ -76,11 +76,11 @@
 
 ! ratio between particulate and dissolved phases
 
-    P2Dratio == 0.65d0
+    P2Dratio == 1.00d0 0.50d0 0.10d0
 
 ! dissolution rate of particles [1/day]
 
-     dissTAp == 0.015d0
+     dissTAp == 0.015d0 0.050d0 0.100d0
 
 ! fraction of TAp lost to the sediment
 
@@ -88,7 +88,7 @@
 
 ! Vertical sinking velocity for particles [m/day]
 
-        wTAp ==  5.5d0
+        wTAp ==  1.5d0 5.5d0 10.5d0
 
 ! Adding flux for particulate feedstock [unit of particle/m2/day]
 ! Used only if TALK_FILE undefined 
@@ -96,6 +96,7 @@
     alkalinity_load == 86400.0d0  ! equivalent to 1 unit of particle/m2/s in HRM2 model
 
 ! Grid points location for adding particles
+! Used only if TALK_FILE undefined
 
     iloc_alkalinity == 144
     jloc_alkalinity == 345
@@ -111,30 +112,30 @@
 ! Harmonic/biharmonic horizontal diffusion of biological tracer for
 ! nonlinear model and adjoint-based algorithms: [1:NBT,Ngrids].
 
-        TNU2 == 8*0.0d0                        ! m2/s
-        TNU4 == 8*0.0d0                        ! m4/s
+        TNU2 == 9*0.0d0                        ! m2/s
+        TNU4 == 9*0.0d0                        ! m4/s
 
-     ad_TNU2 == 8*0.0d0                        ! m2/s
-     ad_TNU4 == 8*0.0d0                        ! m4/s
+     ad_TNU2 == 9*0.0d0                        ! m2/s
+     ad_TNU4 == 9*0.0d0                        ! m4/s
 
 ! Logical switches (TRUE/FALSE) to increase/decrease horizontal diffusivity
 ! in specific areas of the application domain (like sponge areas) for the
 ! desired grid: [Ngrids]
 
-LtracerSponge == 8*F
+LtracerSponge == 9*F
 
 ! Vertical mixing coefficients for biological tracers for nonlinear
 ! model and basic state scale factor in adjoint-based algorithms:
 ! [1:NBT,Ngrids].
 
-     AKT_BAK == 8*1.0d-6                       ! m2/s
+     AKT_BAK == 9*1.0d-6                       ! m2/s
 
-  ad_AKT_fac == 8*1.0d0                        ! nondimensional
+  ad_AKT_fac == 9*1.0d0                        ! nondimensional
 
 ! Nudging/relaxation time scales, inverse scales will be computed
 ! internally: [1:NBT,Ngrids].
 
-       TNUDG == 8*360d0                        ! days
+       TNUDG == 9*360d0                        ! days
 
 ! Set horizontal and vertical advection schemes for biological tracers.
 ! A different advection scheme is allowed for each tracer. For example,
@@ -159,21 +160,23 @@ LtracerSponge == 8*F
 
    Hadvection == HSIMT    \                     ! idbio( 1), TIC
                  HSIMT    \                     ! idbio( 2), AlK
-                 MPDATA   \                     ! idbio( 3), TAp 
-                 HSIMT    \                     ! idbio( 4), dTIC
-                 HSIMT    \                     ! idbio( 5), dTA
-                 HSIMT    \                     ! idbio( 6), TAin
-                 HSIMT    \                     ! idbio( 7), TArm
-                 HSIMT                          ! idbio( 8), Oxy
+                 MPDATA   \                     ! idbio( 3), TAp
+                 MPDATA   \                     ! idbio( 4), TAp2
+                 MPDATA   \                     ! idbio( 5), TAp3
+                 HSIMT    \                     ! idbio( 6), dTIC
+                 HSIMT    \                     ! idbio( 7), dTA
+                 HSIMT    \                     ! idbio( 8), TArm
+                 HSIMT                          ! idbio( 9), Oxy
 
    Vadvection == HSIMT    \                     ! idbio( 1), TIC
                  HSIMT    \                     ! idbio( 2), AlK
                  MPDATA   \                     ! idbio( 3), TAp
-                 HSIMT    \                     ! idbio( 4), dTIC
-                 HSIMT    \                     ! idbio( 5), dTA
-                 HSIMT    \                     ! idbio( 6), TAin
-                 HSIMT    \                     ! idbio( 7), TArm
-                 HSIMT                          ! idbio( 8), Oxy
+                 MPDATA   \                     ! idbio( 4), TAp2
+                 MPDATA   \                     ! idbio( 5), TAp3
+                 HSIMT    \                     ! idbio( 6), dTIC
+                 HSIMT    \                     ! idbio( 7), dTA
+                 HSIMT    \                     ! idbio( 8), TArm
+                 HSIMT                          ! idbio( 9), Oxy
 
 ! Adjoint-based algorithms can have different horizontal and schemes
 ! for active and inert tracers.
@@ -220,11 +223,12 @@ ad_Vadvection == C4                             ! idbio(:), compact
    LBC(isTvar) ==   RadNud  RadNud  RadNud  Clo    \    ! idbio( 1), TIC 
                     RadNud  RadNud  RadNud  Clo    \    ! idbio( 2), Alk
                     Cla     Cla     Cla     Clo    \    ! idbio( 3), TAp
-                    Cla     Cla     Cla     Clo    \    ! idbio( 4), dTIC
-                    Cla     Cla     Cla     Clo    \    ! idbio( 5), dTA
-                    Cla     Cla     Cla     Clo    \    ! idbio( 6), TAin
-                    Cla     Cla     Cla     Clo    \    ! idbio( 7), TArm
-                    RadNud  RadNud  RadNud  Clo         ! idbio( 8), Oxy
+                    Cla     Cla     Cla     Clo    \    ! idbio( 4), TAp2
+                    Cla     Cla     Cla     Clo    \    ! idbio( 5), TAp3
+                    Cla     Cla     Cla     Clo    \    ! idbio( 6), dTIC
+                    Cla     Cla     Cla     Clo    \    ! idbio( 7), dTA
+                    Cla     Cla     Cla     Clo    \    ! idbio( 8), TArm
+                    RadNud  RadNud  RadNud  Clo         ! idbio( 9), Oxy
 
 ! Adjoint-based algorithms can have different lateral boundary
 ! conditions keywords.
@@ -232,29 +236,30 @@ ad_Vadvection == C4                             ! idbio(:), compact
 ad_LBC(isTvar) ==   RadNud  RadNud  RadNud  Clo    \    ! idbio( 1), TIC
                     RadNud  RadNud  RadNud  Clo    \    ! idbio( 2), Alk
                     Cla     Cla     Cla     Clo    \    ! idbio( 3), TAp
-                    Cla     Cla     Cla     Clo    \    ! idbio( 4), dTIC
-                    Cla     Cla     Cla     Clo    \    ! idbio( 5), dTA
-                    Cla     Cla     Cla     Clo    \    ! idbio( 6), TAin
-                    Cla     Cla     Cla     Clo    \    ! idbio( 7), TArm
-                    RadNud  RadNud  RadNud  Clo         ! idbio( 8), Oxy
+                    Cla     Cla     Cla     Clo    \    ! idbio( 4), TAp2
+                    Cla     Cla     Cla     Clo    \    ! idbio( 5), TAp3
+                    Cla     Cla     Cla     Clo    \    ! idbio( 6), dTIC
+                    Cla     Cla     Cla     Clo    \    ! idbio( 7), dTA
+                    Cla     Cla     Cla     Clo    \    ! idbio( 8), TArm
+                    RadNud  RadNud  RadNud  Clo         ! idbio( 9), Oxy
 
 ! Logical switches (TRUE/FALSE) to activate biological tracers point
 ! Sources/Sinks (like river runoff) and to specify which tracer variables
 ! to consider: [NBT,Ngrids] values are expected. See glossary below for
 ! details.
 
-  LtracerSrc == 8*T
+  LtracerSrc == 9*T
 
 ! Logical switches (TRUE/FALSE) to read and process biological tracer
 ! climatology fields: [NBT,Ngrids] values are expected. See glossary below
 ! for details.
 
-  LtracerCLM == 8*F
+  LtracerCLM == 9*F
 
 ! Logical switches (TRUE/FALSE) to activate nudging of biological tracers
 ! toward reanalysis fields along the boundaries
 
-  LnudgeTREA == 8*F
+  LnudgeTREA == 9*F
 
 ! Logical switches (TRUE/FALSE) to nudge the desired biological tracer
 ! climatology field. If not analytical climatology fields, users need to
@@ -262,47 +267,47 @@ ad_LBC(isTvar) ==   RadNud  RadNud  RadNud  Clo    \    ! idbio( 1), TIC
 ! climatology NetCDF file that are needed for nudging; [NBT,Ngrids]
 ! values are expected. See glossary below for details.
 
-  LnudgeTCLM == 8*F
+  LnudgeTCLM == 9*F
 
 ! Logical switches (TRUE/FALSE) to activate writing of biological fields
 ! into HISTORY output file: [1:NBT,Ngrids].
 
-Hout(idTvar) == 8*T    ! ..., TIC, ...           biological tracer
-Hout(idTsur) == 8*F    ! ..., TIC_sflux, ...     surface tracer flux
+Hout(idTvar) == 9*T    ! ..., TIC, ...           biological tracer
+Hout(idTsur) == 9*F    ! ..., TIC_sflux, ...     surface tracer flux
 
 ! Logical switches (TRUE/FALSE) to activate writing of biological fields
 ! into QUICKSAVE output file: [1:NBT,Ngrids].
 
-Qout(idTvar) == 8*T   ! ..., TIC, ...           biological tracer
-Qout(idsurT) == 8*F   ! ..., TIC_sur, ...       surface biological tracer
-Qout(idTsur) == 8*F   ! ..., TIC_sflux, ...     surface tracer flux
+Qout(idTvar) == 9*T   ! ..., TIC, ...           biological tracer
+Qout(idsurT) == 9*F   ! ..., TIC_sur, ...       surface biological tracer
+Qout(idTsur) == 9*F   ! ..., TIC_sflux, ...     surface tracer flux
 
 ! Logical switches (TRUE/FALSE) to activate writing of time-averaged fields
 ! into AVERAGE output file: [1:NBT,Ngrids].
 
-Aout(idTvar) == 8*T    ! ..., TIC, ...           biological tracer
+Aout(idTvar) == 9*T    ! ..., TIC, ...           biological tracer
 
-Aout(idTTav) == 8*F    ! ..., TIC_2, ...         quadratic <t*t> tracer terms
-Aout(idUTav) == 8*F    ! ..., u_TIC, ...         quadratic <u*t> tracer terms
-Aout(idVTav) == 8*F    ! ..., v_TIC, ...         quadratic <v*t> tracer terms
-Aout(iHUTav) == 8*F    ! ..., Huon_TIC, ...      tracer volume flux, <Huon*t>
-Aout(iHVTav) == 8*F    ! ..., Hvom_TIC, ...      tracer volume flux, <Hvom*t>
+Aout(idTTav) == 9*F    ! ..., TIC_2, ...         quadratic <t*t> tracer terms
+Aout(idUTav) == 9*F    ! ..., u_TIC, ...         quadratic <u*t> tracer terms
+Aout(idVTav) == 9*F    ! ..., v_TIC, ...         quadratic <v*t> tracer terms
+Aout(iHUTav) == 9*F    ! ..., Huon_TIC, ...      tracer volume flux, <Huon*t>
+Aout(iHVTav) == 9*F    ! ..., Hvom_TIC, ...      tracer volume flux, <Hvom*t>
 
 ! Logical switches (TRUE/FALSE) to activate writing of time-averaged,
 ! biological tracer diagnostic terms into DIAGNOSTIC output file:
 ! [1:NBT,Ngrids].
 
-Dout(iTrate) == 8*T    ! ..., TIC_rate, ...      time rate of change
-Dout(iThadv) == 8*T    ! ..., TIC_hadv, ...      horizontal total advection
-Dout(iTxadv) == 8*F    ! ..., TIC_xadv, ...      horizontal XI-advection
-Dout(iTyadv) == 8*F    ! ..., TIC_yadv, ...      horizontal ETA-advection
-Dout(iTvadv) == 8*T    ! ..., TIC_vadv, ...      vertical advection
-Dout(iThdif) == 8*T    ! ..., TIC_hdiff, ...     horizontal total diffusion
-Dout(iTxdif) == 8*F    ! ..., TIC_xdiff, ...     horizontal XI-diffusion
-Dout(iTydif) == 8*F    ! ..., TIC_ydiff, ...     horizontal ETA-diffusion
-Dout(iTsdif) == 8*T    ! ..., TIC_sdiff, ...     horizontal S-diffusion
-Dout(iTvdif) == 8*T    ! ..., TIC_vdiff, ...     vertical diffusion
-Dout(iTnudg) == 8*F    ! ..., TIC_nudg, ...      nudging effect
+Dout(iTrate) == 9*T    ! ..., TIC_rate, ...      time rate of change
+Dout(iThadv) == 9*T    ! ..., TIC_hadv, ...      horizontal total advection
+Dout(iTxadv) == 9*F    ! ..., TIC_xadv, ...      horizontal XI-advection
+Dout(iTyadv) == 9*F    ! ..., TIC_yadv, ...      horizontal ETA-advection
+Dout(iTvadv) == 9*T    ! ..., TIC_vadv, ...      vertical advection
+Dout(iThdif) == 9*T    ! ..., TIC_hdiff, ...     horizontal total diffusion
+Dout(iTxdif) == 9*F    ! ..., TIC_xdiff, ...     horizontal XI-diffusion
+Dout(iTydif) == 9*F    ! ..., TIC_ydiff, ...     horizontal ETA-diffusion
+Dout(iTsdif) == 9*T    ! ..., TIC_sdiff, ...     horizontal S-diffusion
+Dout(iTvdif) == 9*T    ! ..., TIC_vdiff, ...     vertical diffusion
+Dout(iTnudg) == 9*F    ! ..., TIC_nudg, ...      nudging effect
 
 ! Logical switches (TRUE/FALSE) to activate writing of time-averaged,
 ! biological processes diagnostics terms into DIAGNOSTIC output file [Ngrids].
@@ -324,11 +329,13 @@ Dout(iO2fx) == T        ! O2_airsea          air-sea O2 flux
 ! idbio( 1)     TIC               Total inorganic carbon               if CARBON
 ! idbio( 2)     Alk               Alkalinity                           if CARBON
 ! idbio( 3)     TAp               Added alkalinity (particulate)       if TALK_ADDITION
-! idbio( 4)     dTIC              additional TIC (OAE)                 if TALK_ADDITION
-! idbio( 5)     dTA               Additional TA (OAE)                  if TALK_ADDITION
-! idbio( 6)     TAin              Added alkalinity (dissolved)         if TALK_DIAG_DISS
-! idbio( 7)     TArm              Remineralized particulate alkalinity if TALK_DIAG_DISS
-! idbio( 8)     oxygen            Oxygen concentration                 if OXYGEN
+! idbio( 4)     TAp2              Added second alkalinity feedstock    if TALK_TWO_FEED
+! idbio( 5)     TAp3              Added third alkalinity feedstock     if TALK_THREE_FEED
+! idbio( 6)     dTIC              additional TIC (OAE)                 if TALK_ADDITION
+! idbio( 7)     dTA               Additional TA (OAE)                  if TALK_ADDITION
+! idbio( 8)     TAin              Added alkalinity (dissolved)         if TALK_DIAG_DISS
+! idbio( 9)     TArm              Remineralized particulate alkalinity if TALK_DIAG_DISS
+! idbio( 10)    oxygen            Oxygen concentration                 if OXYGEN
 !------------------------------------------------------------------------------
 !
 !  Lbiology       Switch to control the computation of a particular module

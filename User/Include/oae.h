@@ -134,9 +134,14 @@
 #  undef PCO2AIR_MAUNALOA
 #  define PCO2AIR_SABLEISLAND
 #  define TALK_ADDITION
-#  define TALK_FILE
-#  define TALK_DIAG_DISS
-#  define TALK_NONCONSERV
+#  ifdef TALK_ADDITION
+#    define TALK_FILE
+#    define TALK_DIAG_DISS
+#    undef TALK_TWO_FEED
+#    define TALK_THREE_FEED
+#    define TALK_NONCONSERV
+#    undef CHECK_OPEN_FILES
+#  endif
 # endif
 # define DIAGNOSTICS_BIO
 # define ANA_SPFLUX

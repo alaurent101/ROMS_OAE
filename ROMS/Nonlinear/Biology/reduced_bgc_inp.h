@@ -32,6 +32,9 @@
       integer :: Npts, Nval
       integer :: iTrcStr, iTrcEnd
       integer :: i, ifield, igrid, itracer, itrc, ng, nline, status
+#ifdef TALK_ADDITION
+      integer :: ntap
+#endif
 
       logical, dimension(Ngrids) :: Lbio
       logical, dimension(NBT,Ngrids) :: Ltrc
@@ -53,6 +56,15 @@
       iTrcStr=1                          ! first LBC tracer to process
       iTrcEnd=NBT                        ! last  LBC tracer to process
       nline=0                            ! LBC multi-line counter
+#ifdef TALK_ADDITION
+# if defined TALK_TWO_FEED
+      ntap=2
+# elif defined TALK_THREE_FEED
+      ntap=3
+# else
+      ntap=1
+# endif
+#endif
 !
 !-----------------------------------------------------------------------
 !  Read in the Simple BGC model parameters.
@@ -93,6 +105,7 @@
             CASE ('pCO2air')
               Npts=load_r(Nval, Rval, Ngrids, pCO2air)
 #ifdef TALK_ADDITION
+# ifndef TALK_FILE
             CASE ('iloc_alkalinity')
               Npts=load_r(Nval, Rval, Ngrids, iloc_alkalinity)
             CASE ('jloc_alkalinity')
@@ -113,9 +126,31 @@
               Npts=load_r(Nval, Rval, Ngrids, wTAp)
             CASE ('P2Dratio')
               Npts=load_r(Nval, Rval, Ngrids, P2Dratio)
+# else
+            CASE ('dissTAp')
+              Npts=load_r(Nval, Rval, ntap, Ngrids, Rbio)
+              DO ng=1,Ngrids
+                DO itrc=1,ntap
+                  dissTAp(itrc,ng)=Rbio(itrc,ng)
+                END DO
+              END DO
+            CASE ('wTAp')
+              Npts=load_r(Nval, Rval, ntap, Ngrids, Rbio)
+              DO ng=1,Ngrids
+                DO itrc=1,ntap
+                  wTAp(itrc,ng)=Rbio(itrc,ng)
+                END DO
+              END DO
+            CASE ('P2Dratio')
+              Npts=load_r(Nval, Rval, ntap, Ngrids, Rbio)
+              DO ng=1,Ngrids
+                DO itrc=1,ntap
+                  P2Dratio(itrc,ng)=Rbio(itrc,ng)
+                END DO
+              END DO
+# endif
             CASE ('sedloss')
               Npts=load_r(Nval, Rval, Ngrids, sedloss)
-
 #endif
             CASE ('TNU2')
               Npts=load_r(Nval, Rval, NBT, Ngrids, Rbio)
@@ -594,6 +629,7 @@
 # endif
 #endif
 #ifdef TALK_ADDITION
+# ifndef TALK_FILE
            WRITE (out,80) iloc_alkalinity(ng), 'iloc_alkalinity',       &
      &            'longitude (i) index for alkalinity addition'
            WRITE (out,80) jloc_alkalinity(ng), 'jloc_alkalinity',       &
@@ -618,6 +654,36 @@
      &            'sinking velocity, particulate feedstock TAp (m d-1).'
             WRITE (out,80) P2Dratio(ng), 'P2Dratio',                    &
      &            'ratio of particles in alkalinity load.'
+# else
+            WRITE (out,80) dissTAp(1,ng), 'dissTAp',                    &
+     &            'dissolution rate, particulate feedstock TAp (day-1).'
+            WRITE (out,80) wTAp(1,ng), 'wTAp',                          &
+     &            'sinking velocity, particulate feedstock TAp (m d-1).'
+            WRITE (out,80) P2Dratio(1,ng), 'P2Dratio',                  &
+     &            'ratio of particles in feedstock (TAp).'
+#  if defined TALK_TWO_FEED
+            WRITE (out,80) dissTAp(2,ng), 'dissTAp',                    & 
+     &            'dissolution rate, part. feedstock TAp2 (day-1).'
+            WRITE (out,80) wTAp(2,ng), 'wTAp',                          &
+     &            'sinking velocity, part. feedstock TAp2 (m d-1).'
+            WRITE (out,80) P2Dratio(2,ng), 'P2Dratio',                  &
+     &            'ratio of particles in Feedstock 2 (TAp2).'
+#  endif
+#  if defined TALK_THREE_FEED
+            WRITE (out,80) dissTAp(2,ng), 'dissTAp',                    &
+     &            'dissolution rate, part. feedstock TAp2 (day-1).'
+            WRITE (out,80) wTAp(2,ng), 'wTAp',                          &
+     &            'sinking velocity, part. feedstock TAp2 (m d-1).'
+            WRITE (out,80) P2Dratio(2,ng), 'P2Dratio',                  &
+     &            'ratio of particles in Feedstock 2 (TAp2).'
+            WRITE (out,80) dissTAp(3,ng), 'dissTAp',                    &
+     &            'dissolution rate, part. feedstock TAp3 (day-1).'
+            WRITE (out,80) wTAp(3,ng), 'wTAp',                          &
+     &            'sinking velocity, part. feedstock TAp3 (m d-1).'
+            WRITE (out,80) P2Dratio(3,ng), 'P2Dratio',                  &
+     &            'ratio of particles in Feedstock 3 (TAp3).'
+#  endif
+# endif
             WRITE (out,80) sedloss(ng), 'sedloss',                      &
      &            'fraction of TAp lost to the sediment.'
 #endif

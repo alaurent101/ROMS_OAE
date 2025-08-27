@@ -135,6 +135,33 @@
      &                FORCES(ng) % taflxG)
           IF (FoundError(exit_flag, NoError, __LINE__,                  &
      &                   __FILE__)) RETURN
+      CALL get_2dfld (ng, iNLM, idtype, ncFRCid(idtype,ng),             &
+     &                nFfiles(ng), FRC(1,ng), update(1),                &
+     &                LBi, UBi, LBj, UBj, 2, 1,                         &
+# ifdef MASKING
+     &                GRID(ng) % rmask,                                 &
+# endif
+     &                FORCES(ng) % tatypeG)
+          IF (FoundError(exit_flag, NoError, __LINE__,                  &
+     &                   __FILE__)) RETURN
+      CALL get_2dfld (ng, iNLM, idkmin, ncFRCid(idkmin,ng),             &
+     &                nFfiles(ng), FRC(1,ng), update(1),                &
+     &                LBi, UBi, LBj, UBj, 2, 1,                         &
+# ifdef MASKING
+     &                GRID(ng) % rmask,                                 &
+# endif
+     &                FORCES(ng) % takminG)
+          IF (FoundError(exit_flag, NoError, __LINE__,                  &
+     &                   __FILE__)) RETURN
+      CALL get_2dfld (ng, iNLM, idkmax, ncFRCid(idkmax,ng),             &
+     &                nFfiles(ng), FRC(1,ng), update(1),                &
+     &                LBi, UBi, LBj, UBj, 2, 1,                         &
+# ifdef MASKING
+     &                GRID(ng) % rmask,                                 &
+# endif
+     &                FORCES(ng) % takmaxG)
+          IF (FoundError(exit_flag, NoError, __LINE__,                  &
+     &                   __FILE__)) RETURN
 #endif
 !
 ! Copied continental runoff from roms-kate_svn version 2021/3/22

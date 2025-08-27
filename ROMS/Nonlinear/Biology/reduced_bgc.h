@@ -147,6 +147,9 @@
      &                   GRID(ng) % pn,                                 &
 # ifdef TALK_FILE
      &                   FORCES(ng) % taflx,                            &
+     &                   FORCES(ng) % tatype,                           &
+     &                   FORCES(ng) % takmin,                           &
+     &                   FORCES(ng) % takmax,                           &
 # endif
 #endif
 #if defined CARBON || defined OXYGEN
@@ -197,6 +200,9 @@
      &                         pm, pn,                                  &
 #  ifdef TALK_FILE
      &                         taflx,                                   &
+     &                         tatype,                                  &
+     &                         takmin,                                  &
+     &                         takmax,                                  &
 #  endif
 # endif
 #if defined CARBON || defined OXYGEN
@@ -222,9 +228,6 @@
       USE mod_biology
       USE mod_ncparam
       USE mod_scalars
-!#if defined TALK_ADDITION && defined TALK_FILE
-!      USE mod_forces
-!#endif
 !
       USE dateclock_mod, ONLY : caldate
 !
@@ -268,6 +271,9 @@
       real(r8), intent(in) :: pn(LBi:,LBj:)
 #   ifdef TALK_FILE
       real(r8), intent(in) :: taflx(LBi:,LBj:)
+      real(r8), intent(in) :: tatype(LBi:,LBj:)
+      real(r8), intent(in) :: takmin(LBi:,LBj:)
+      real(r8), intent(in) :: takmax(LBi:,LBj:)
 #   endif
 #  endif
 # endif
@@ -306,6 +312,9 @@
       real(r8), intent(in) :: pn(LBi:UBi,LBj:UBj)
 #   ifdef TALK_FILE
       real(r8), intent(in) :: taflx(LBi:UBi,LBj:UBj)
+      real(r8), intent(in) :: tatype(LBi:UBi,LBj:UBj)
+      real(r8), intent(in) :: takmin(LBi:UBi,LBj:UBj)
+      real(r8), intent(in) :: takmax(LBi:UBi,LBj:UBj)
 #   endif
 #  endif
 # endif
@@ -432,13 +441,15 @@
       integer, parameter :: DoNewton = 0            ! pCO2 solver
 # if defined TALK_ADDITION
       integer :: isink
+#  if defined TALK_TWO_FEED
+      integer, parameter :: Nsink = 2
+#  elif defined TALK_THREE_FEED
+      integer, parameter :: Nsink = 3
+#  else
       integer, parameter :: Nsink = 1
+#  endif
       integer, dimension(Nsink) :: idsink
       real(r8), dimension(Nsink) :: Wbio
-!#  if defined TALK_FILE
-!      integer :: Isrc, Jsrc
-!      integer :: is
-!#  endif
 # endif
 
 # if defined RW14_CO2_SC
@@ -640,12 +651,24 @@
 !  Set vertical sinking indentification.
 !
       idsink(1)=iTAp
+#  if defined TALK_TWO_FEED || defined TALK_THREE_FEED
+      idsink(2)=iTAp2
+#  endif
+#  ifdef TALK_THREE_FEED
+      idsink(3)=iTAp3
+#  endif
 
 !
 !  Set vertical sinking velocity vector in the same order as the
 !  identification vector, IDSINK.
 !
-      Wbio(1)=wTAp(ng)       ! sinking velocity of particulate feedstock (TAp)
+      Wbio(1)=wTAp(1,ng)       ! sinking velocity of particulate feedstock (TAp)
+#  if defined TALK_TWO_FEED || defined TALK_THREE_FEED
+      Wbio(2)=wTAp(2,ng)       ! sinking velocity of particulate feedstock 2 (TAp2)
+#  endif
+#  ifdef TALK_THREE_FEED
+      Wbio(3)=wTAp(3,ng)       ! sinking velocity of particulate feedstock 3 (TAp3)
+#  endif
 # endif
 
 !
@@ -993,7 +1016,7 @@
 !-----------------------------------------------------------------------
 !
                fac1=MAX(Bio(i,k,iTAp),0.0_r8)
-               cff4=dtdays*dissTAp(ng)
+               cff4=dtdays*dissTAp(1,ng)
                IF (k.eq.1) THEN
                  cff5=1.0_r8-sedloss(ng)
                ELSE
@@ -1006,6 +1029,37 @@
                Bio(i,k,iTArm)=Bio(i,k,iTArm)+cff4*cff5*                 &
      &                                       Bio(i,k,iTAp)
 # endif
+# ifdef TALK_TWO_FEED
+               fac1=MAX(Bio(i,k,iTAp2),0.0_r8)
+               cff4=dtdays*dissTAp(2,ng)
+               Bio(i,k,iTAp2)=fac1/(1+cff4)
+               Bio(i,k,idTA)=Bio(i,k,idTA)+cff4*cff5*                   &
+     &                                     Bio(i,k,iTAp2)
+#  ifdef TALK_DIAG_DISS
+               Bio(i,k,iTArm)=Bio(i,k,iTArm)+cff4*cff5*                 &
+     &                                       Bio(i,k,iTAp2)
+#  endif
+# endif
+# ifdef TALK_THREE_FEED
+               fac1=MAX(Bio(i,k,iTAp2),0.0_r8)
+               cff4=dtdays*dissTAp(2,ng)
+               Bio(i,k,iTAp2)=fac1/(1+cff4)
+               Bio(i,k,idTA)=Bio(i,k,idTA)+cff4*cff5*                   &
+     &                                     Bio(i,k,iTAp2)
+#  ifdef TALK_DIAG_DISS
+               Bio(i,k,iTArm)=Bio(i,k,iTArm)+cff4*cff5*                 &
+     &                                       Bio(i,k,iTAp2)
+#  endif
+               fac1=MAX(Bio(i,k,iTAp3),0.0_r8)
+               cff4=dtdays*dissTAp(3,ng)
+               Bio(i,k,iTAp3)=fac1/(1+cff4)
+               Bio(i,k,idTA)=Bio(i,k,idTA)+cff4*cff5*                   &
+     &                                     Bio(i,k,iTAp3)
+#  ifdef TALK_DIAG_DISS
+               Bio(i,k,iTArm)=Bio(i,k,iTArm)+cff4*cff5*                 &
+     &                                       Bio(i,k,iTAp3)
+#  endif
+# endif
 !
 !-----------------------------------------------------------------------
 !  Compute external source of alkalinity (mol/second)
@@ -1015,12 +1069,10 @@
 ! Add Alkalinity from river file
                cff1=0.0_r8
                cff=pm(i,j)*pn(i,j)
-              IF ((taflx(i,j).gt.0.0_r8)                               &
-     &          .and. k.ge.kloc_alkalinity_min(ng)                      &
-     &          .and. k.le.kloc_alkalinity_max(ng)) THEN
+              IF ((taflx(i,j).gt.0.0_r8)                                &
+     &          .and. (k.ge.takmin(i,j)) .and. (k.le.takmax(i,j))) THEN
                cff=pm(i,j)*pn(i,j)
-               Hadd=SUM(Hz(i,j,                                         &
-     &              kloc_alkalinity_min(ng):kloc_alkalinity_max(ng)))
+               Hadd=SUM(Hz(i,j,takmin(i,j):takmax(i,j)))
                cff1=taflx(i,j)
 # else
 ! Alkalinity flux (constant) is defined in reduced_bgc.in
@@ -1033,9 +1085,31 @@
                  cff1=alkalinity_load(ng)
 # endif
                cff2=cff1*1000.0_r8*dtsec*cff/Hadd !*Hz(i,j,k)/Hadd
+# ifndef TALK_FILE
                cff3=(1-P2Dratio(ng))*cff2
                Bio(i,k,idTA)=Bio(i,k,idTA)+cff3
-               Bio(i,k,iTAp)=Bio(i,k,iTAp)+P2Dratio(ng)*cff2
+               Bio(i,k,iTAp)=Bio(i,k,iTAp)+P2Dratio(1,ng)*cff2
+# else
+               cff3=(1-P2Dratio(INT(tatype(i,j)),ng))*cff2
+               Bio(i,k,idTA)=Bio(i,k,idTA)+cff3
+#  if defined TALK_TWO_FEED
+                IF (tatype(i,j).eq.1.0_r8) THEN
+               Bio(i,k,iTAp)=Bio(i,k,iTAp)+P2Dratio(1,ng)*cff2
+                ELSE IF (tatype(i,j).eq.2.0_r8) THEN
+               Bio(i,k,iTAp2)=Bio(i,k,iTAp2)+P2Dratio(2,ng)*cff2
+                END IF
+#  elif defined TALK_THREE_FEED
+                IF (tatype(i,j).eq.1.0_r8) THEN
+               Bio(i,k,iTAp)=Bio(i,k,iTAp)+P2Dratio(1,ng)*cff2
+                ELSE IF (tatype(i,j).eq.2.0_r8) THEN
+               Bio(i,k,iTAp2)=Bio(i,k,iTAp2)+P2Dratio(2,ng)*cff2
+                ELSE IF (tatype(i,j).eq.3.0_r8) THEN
+               Bio(i,k,iTAp3)=Bio(i,k,iTAp3)+P2Dratio(3,ng)*cff2
+                END IF
+#  else
+               Bio(i,k,iTAp)=Bio(i,k,iTAp)+P2Dratio(1,ng)*cff2
+#  endif
+# endif
               END IF
 #endif
             END DO
@@ -1060,12 +1134,6 @@
 !  Compute O2 transfer velocity : u10squared (u10 in m/s)
 !
 # ifdef BULK_FLUXES
-!              WRITE(*,*) 'Uwind'
-!              WRITE(*,*) Uwind(i,j)
-!              WRITE(*,*) 'Vwind'
-!              WRITE(*,*) Vwind(i,j)
-!              WRITE(*,*) 'taflx'
-!              WRITE(*,*) taflx(i,j)
             u10squ=Uwind(i,j)*Uwind(i,j)+Vwind(i,j)*Vwind(i,j)
 # else
             u10squ=cff1*SQRT((0.5_r8*(sustr(i,j)+sustr(i+1,j)))**2+     &
@@ -1578,6 +1646,20 @@
                 cff1=FC(i,0)*Hz_inv(i,1)
                 Bio(i,1,iTAp)=Bio(i,1,iTAp)+cff1
               END DO
+# if defined TALK_TWO_FEED || defined TALK_THREE_FEED
+            ELSE IF (ibio.eq.iTAp2) THEN
+              DO i=Istr,Iend
+                cff1=FC(i,0)*Hz_inv(i,1)
+                Bio(i,1,iTAp2)=Bio(i,1,iTAp2)+cff1
+              END DO
+# endif
+# if defined TALK_THREE_FEED
+            ELSE IF (ibio.eq.iTAp3) THEN
+              DO i=Istr,Iend
+                cff1=FC(i,0)*Hz_inv(i,1)
+                Bio(i,1,iTAp3)=Bio(i,1,iTAp3)+cff1
+              END DO
+# endif
             END IF
           END DO SINK_LOOP
 #endif

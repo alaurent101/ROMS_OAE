@@ -261,6 +261,9 @@
 #endif
 #if defined TALK_ADDITION && defined TALK_FILE
         integer  :: idAtrc       ! alkalinity addition rate
+        integer  :: idtype       ! feedstock type
+        integer  :: idkmin       ! minimum s-level for addition
+        integer  :: idkmax       ! maximum s-level for addition
 #endif
         integer  :: idRtra        ! river runoff mass transport
         integer  :: idRuct        ! RHS of U-momentum coupling term
@@ -1745,6 +1748,12 @@
 #if defined TALK_ADDITION && defined TALK_FILE
             CASE ('idAtrc')
               idAtrc=varid
+            CASE ('idtype')
+              idtype=varid
+            CASE ('idkmin')
+              idkmin=varid
+            CASE ('idkmax')
+              idkmax=varid
 #endif
 #ifdef DIAGNOSTICS_UV
             CASE ('idDu2d(M2pgrd)')

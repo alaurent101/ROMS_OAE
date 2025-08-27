@@ -471,6 +471,36 @@
      &                     update)
         IF (FoundError(exit_flag, NoError, __LINE__,                    &
      &                 __FILE__)) RETURN
+!
+! Feedstock type (0-3).
+!
+      CALL set_2dfld_tile (ng, tile, iNLM, idtype,                      &
+     &                     LBi, UBi, LBj, UBj,                          &
+     &                     FORCES(ng)%tatypeG,                          &
+     &                     FORCES(ng)%tatype,                           &
+     &                     update)
+        IF (FoundError(exit_flag, NoError, __LINE__,                    &
+     &                 __FILE__)) RETURN
+!
+! Minimum s-level for alkalinity release.
+!
+      CALL set_2dfld_tile (ng, tile, iNLM, idkmin,                      &
+     &                     LBi, UBi, LBj, UBj,                          &
+     &                     FORCES(ng)%takminG,                          &
+     &                     FORCES(ng)%takmin,                           &
+     &                     update)
+        IF (FoundError(exit_flag, NoError, __LINE__,                    &
+     &                 __FILE__)) RETURN
+!
+! Maximum s-level for alkalinity release (takmin < takmax).
+!
+      CALL set_2dfld_tile (ng, tile, iNLM, idkmax,                      &
+     &                     LBi, UBi, LBj, UBj,                          &
+     &                     FORCES(ng)%takmaxG,                          &
+     &                     FORCES(ng)%takmax,                           &
+     &                     update)
+        IF (FoundError(exit_flag, NoError, __LINE__,                    &
+     &                 __FILE__)) RETURN
 #  endif
 
 #  ifndef BULK_FLUXES

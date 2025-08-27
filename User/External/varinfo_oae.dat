@@ -1914,6 +1914,24 @@
   0.0d0
 
 'river_ONES'                                       ! Input
+  'river runoff TAp2 concentration'
+  'unit of TAp2 meter-3'
+  'river_TAp2, scalar, series'
+  'river_time'
+  'idRtrc(iTAp2)'
+  'nulvar'
+  0.0d0
+
+'river_ONES'                                       ! Input
+  'river runoff TAp3 concentration'
+  'unit of TAp3 meter-3'
+  'river_TAp3, scalar, series'
+  'river_time'
+  'idRtrc(iTAp3)'
+  'nulvar'
+  0.0d0
+
+'river_ONES'                                       ! Input
   'river runoff dTIC concentration'
   'unit of dTIC meter-3'
   'river_dTIC, scalar, series'
@@ -1928,15 +1946,6 @@
   'river_dTA, scalar, series'
   'river_time'
   'idRtrc(idTA)'
-  'nulvar'
-  0.0d0
-
-'river_ONES'                                       ! Input
-  'river runoff TAin concentration'
-  'unit of TAin meter-3'
-  'river_TAin, scalar, series'
-  'river_time'
-  'idRtrc(iTAin)'
   'nulvar'
   0.0d0
 
@@ -2201,6 +2210,47 @@
   'nulvar'
   0.1d0
 
+!
+!------------------------------------------------------------------------------
+!  Tracer addition forcing variables.
+!------------------------------------------------------------------------------
+!
+
+'add_dTA'                                          ! Input
+  'source addition dTA'
+  'mole second-1'                                  ! [mole/s-1]
+  'add_dTA, scalar, series'
+  'add_time'
+  'idAtrc'
+  'r2dvar'
+  1.0d0
+
+'add_type'                                         ! Input
+  'source addition type'
+  'nondimensional'                                  
+  'add_type, scalar, series'
+  'add_time'
+  'idtype'
+  'r2dvar'
+  1.0d0
+
+'add_kmin'                                         ! Input
+  'source addition minimum s-level'
+  'nondimensional'
+  'add_kmin, scalar, series'
+  'add_time'
+  'idkmin'
+  'r2dvar'
+  1.0d0
+
+'add_kmax'                                         ! Input
+  'source addition maximum s-level'
+  'nondimensional'
+  'add_kmax, scalar, series'
+  'add_time'
+  'idkmax'
+  'r2dvar'
+  1.0d0
 !
 !------------------------------------------------------------------------------
 !  Boundary layer variables.
@@ -2634,6 +2684,96 @@
   'nulvar'
   1.0d0
 
+'TAp2'                                        ! Input/Output
+  'TAp2 concentration'
+  'unit of TAp2 meter-3'
+  'TAp2, scalar, series'
+  'ocean_time'
+  'idTvar(iTAp2)'
+  'r3dvar'
+  1.0d0
+
+'TAp2_west'                                   ! Input
+  'TAp2 concentration western boundary condition'
+  'unit of TAp2 meter-3'
+  'TAp2_west, scalar, series'
+  'bry_time'
+  'idTbry(iwest,iTAp2)'
+  'nulvar'
+  1.0d0
+
+'TAp2_east'                                   ! Input
+  'TAp2 concentration eastern boundary condition'
+  'unit of TAp2 meter-3'
+  'TAp2_east, scalar, series'
+  'bry_time'
+  'idTbry(ieast,iTAp2)'
+  'nulvar'
+  1.0d0
+
+'TAp2_south'                                   ! Input
+  'TAp2 concentration southern boundary condition'
+  'unit of TAp2 meter-3'
+  'TAp2_south, scalar, series'
+  'bry_time'
+  'idTbry(isouth,iTAp2)'
+  'nulvar'
+  1.0d0
+
+'TAp2_north'                                   ! Input
+  'TAp2 concentration northern boundary condition'
+  'unit of TAp2 meter-3'
+  'TAp2_north, scalar, series'
+  'bry_time'
+  'idTbry(inorth,iTAp2)'
+  'nulvar'
+  1.0d0
+
+'TAp3'                                        ! Input/Output
+  'TAp3 concentration'
+  'unit of TAp3 meter-3'
+  'TAp3, scalar, series'
+  'ocean_time'
+  'idTvar(iTAp3)'
+  'r3dvar'
+  1.0d0
+
+'TAp3_west'                                   ! Input
+  'TAp3 concentration western boundary condition'
+  'unit of TAp3 meter-3'
+  'TAp3_west, scalar, series'
+  'bry_time'
+  'idTbry(iwest,iTAp3)'
+  'nulvar'
+  1.0d0
+
+'TAp3_east'                                   ! Input
+  'TAp3 concentration eastern boundary condition'
+  'unit of TAp3 meter-3'
+  'TAp3_east, scalar, series'
+  'bry_time'
+  'idTbry(ieast,iTAp3)'
+  'nulvar'
+  1.0d0
+
+'TAp3_south'                                   ! Input
+  'TAp3 concentration southern boundary condition'
+  'unit of TAp3 meter-3'
+  'TAp3_south, scalar, series'
+  'bry_time'
+  'idTbry(isouth,iTAp3)'
+  'nulvar'
+  1.0d0
+
+'TAp3_north'                                   ! Input
+  'TAp3 concentration northern boundary condition'
+  'unit of TAp3 meter-3'
+  'TAp3_north, scalar, series'
+  'bry_time'
+  'idTbry(inorth,iTAp3)'
+  'nulvar'
+  1.0d0
+
 'dTA'                                             ! Input/Output
   'dTA concentration'
   'unit of dTA meter-3'
@@ -2721,51 +2861,6 @@
   'dTIC_north, scalar, series'
   'bry_time'
   'idTbry(inorth,idTIC)'
-  'nulvar'
-  1.0d0
-
-'TAin'                                             ! Input/Output
-  'TAin concentration'
-  'unit of TAin meter-3'
-  'TAin, scalar, series'
-  'ocean_time'
-  'idTvar(iTAin)'
-  'r3dvar'
-  1.0d0
-
-'TAin_west'                                        ! Input
-  'TAin concentration western boundary condition'
-  'unit of TAin meter-3'
-  'TAin_west, scalar, series'
-  'bry_time'
-  'idTbry(iwest,iTAin)'
-  'nulvar'
-  1.0d0
-
-'TAin_east'                                   ! Input
-  'TAin concentration eastern boundary condition'
-  'unit of TAin meter-3'
-  'TAin_east, scalar, series'
-  'bry_time'
-  'idTbry(ieast,iTAin)'
-  'nulvar'
-  1.0d0
-
-'TAin_south'                                   ! Input
-  'TAin concentration southern boundary condition'
-  'unit of TAin meter-3'
-  'TAin_south, scalar, series'
-  'bry_time'
-  'idTbry(isouth,iTAin)'
-  'nulvar'
-  1.0d0
-
-'TAin_north'                                   ! Input
-  'TAin concentration northern boundary condition'
-  'unit of TAin meter-3'
-  'TAin_north, scalar, series'
-  'bry_time'
-  'idTbry(inorth,iTAin)'
   'nulvar'
   1.0d0
 

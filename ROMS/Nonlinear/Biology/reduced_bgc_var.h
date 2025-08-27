@@ -28,6 +28,14 @@
 # ifdef TALK_ADDITION
             CASE ('idTvar(iTAp)')
               idTvar(iTAp)=varid
+#  if defined TALK_TWO_FEED || defined TALK_THREE_FEED
+            CASE ('idTvar(iTAp2)')
+              idTvar(iTAp2)=varid
+#  endif
+#  ifdef TALK_THREE_FEED
+            CASE ('idTvar(iTAp3)')
+              idTvar(iTAp3)=varid
+#  endif
             CASE ('idTvar(idTIC)')
               idTvar(idTIC)=varid
             CASE ('idTvar(idTA)')
@@ -58,6 +66,14 @@
 #  ifdef TALK_ADDITION
             CASE ('idTads(iTAp)')
               idTads(iTAp)=varid
+#  if defined TALK_TWO_FEED || defined TALK_THREE_FEED
+            CASE ('idTads(iTAp2)')
+              idTads(iTAp2)=varid
+#  endif
+#  ifdef TALK_THREE_FEED
+            CASE ('idTads(iTAp3)')
+              idTads(iTAp3)=varid
+#  endif
             CASE ('idTads(idTIC)')
               idTads(idTIC)=varid
             CASE ('idTads(idTA')
@@ -106,6 +122,27 @@
               idTbry(isouth,iTAp)=varid
             CASE ('idTbry(inorth,iTAp)')
               idTbry(inorth,iTAp)=varid
+
+#  if defined TALK_TWO_FEED || defined TALK_THREE_FEED
+            CASE ('idTbry(iwest,iTAp2)')
+              idTbry(iwest,iTAp2)=varid
+            CASE ('idTbry(ieast,iTAp2)')
+              idTbry(ieast,iTAp2)=varid
+            CASE ('idTbry(isouth,iTAp2)')
+              idTbry(isouth,iTAp2)=varid
+            CASE ('idTbry(inorth,iTAp2)')
+              idTbry(inorth,iTAp2)=varid
+#  endif
+#  ifdef TALK_THREE_FEED
+            CASE ('idTbry(iwest,iTAp3)')
+              idTbry(iwest,iTAp3)=varid
+            CASE ('idTbry(ieast,iTAp3)')
+              idTbry(ieast,iTAp3)=varid
+            CASE ('idTbry(isouth,iTAp3)')
+              idTbry(isouth,iTAp3)=varid
+            CASE ('idTbry(inorth,iTAp3)')
+              idTbry(inorth,iTAp3)=varid
+#  endif
 
             CASE ('idTbry(iwest,idTIC)')
               idTbry(iwest,idTIC)=varid
@@ -161,6 +198,14 @@
 # ifdef TALK_ADDITION
             CASE ('idRtrc(iTAp)')
               idRtrc(iTAp)=varid
+#  if defined TALK_TWO_FEED || defined TALK_THREE_FEED
+            CASE ('idRtrc(iTAp2)')
+              idRtrc(iTAp2)=varid
+#  endif
+#  ifdef TALK_THREE_FEED
+            CASE ('idRtrc(iTAp3)')
+              idRtrc(iTAp3)=varid
+#  endif
             CASE ('idRtrc(idTIC)')
               idRtrc(idTIC)=varid
             CASE ('idRtrc(idTA)')

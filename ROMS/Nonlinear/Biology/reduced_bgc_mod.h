@@ -27,7 +27,12 @@
 !   PhyNC    Phytoplankton Nitrogen:Carbon ratio [mol_N/mol_C].        !
 !   pCO2air  CO2 partial pressure in the air [ppmv].                   !
 #ifdef TALK_ADDITION
-!   dissTAp   dissolution rate of TAp [day-1].                   !
+!   dissTAp   dissolution rate of TAp [day-1].                         !
+!   wTAp              sinking velocity for particulate feedstock (TAp) !
+!                     [meter day-1].                                   !
+!   P2Dratio   ratio of particles in added alkalinity.                 !
+!   sedloss    fraction of TAp lost to the sediment                    !
+# ifndef TALK_FILE
 !   iloc_alkalinity   longitude (i) index of the model grid cell where !
 !                     alkalinity is added                              !
 !   jloc_alkalinity   latitude (j) index of the model grid cell where  !
@@ -40,10 +45,7 @@
 !                     [unit of alkalinity/m2/day].                     !
 !   alkalinity_startload   starting day of alkalinity load             !
 !   alkalinity_endload     ending day of alkalinity load               !
-!   wTAp              sinking velocity for particulate feedstock (TAp) !
-!                     [meter day-1].                                   !
-!   P2Dratio   ratio of particles in added alkalinity.                 !
-!   sedloss    fraction of TAp lost to the sediment                    !
+# endif
 !                                                                      !
 #endif
 !                                                                      !
@@ -65,6 +67,12 @@
 #endif
 #ifdef TALK_ADDITION
       integer :: iTAp                    ! TAp
+#  if defined TALK_TWO_FEED || defined TALK_THREE_FEED
+      integer :: iTAp2                   ! TAp2
+#  endif
+#  ifdef TALK_THREE_FEED
+      integer :: iTAp3                   ! TAp3
+#  endif
       integer :: idTIC                   ! delta TIC
       integer :: idTA                    ! delta TA
 # ifdef TALK_DIAG_DISS
@@ -112,6 +120,7 @@
       real(r8), allocatable :: PhyNC(:)              ! mol_N/mol_C
       real(r8), allocatable :: pCO2air(:)            ! ppmv
 #ifdef TALK_ADDITION
+# ifndef TALK_FILE
       real(r8), allocatable :: iloc_alkalinity(:)
       real(r8), allocatable :: jloc_alkalinity(:)
       real(r8), allocatable :: kloc_alkalinity_min(:)
@@ -119,9 +128,10 @@
       real(r8), allocatable :: alkalinity_load(:)
       real(r8), allocatable :: alkalinity_startload(:)
       real(r8), allocatable :: alkalinity_endload(:)
-      real(r8), allocatable :: dissTAp(:)              ! 1/day               
-      real(r8), allocatable :: wTAp(:)                 ! m/day
-      real(r8), allocatable :: P2Dratio(:)
+# endif
+      real(r8), allocatable :: dissTAp(:,:)              ! 1/day               
+      real(r8), allocatable :: wTAp(:,:)                 ! m/day
+      real(r8), allocatable :: P2Dratio(:,:)
       real(r8), allocatable :: sedloss(:)
 #endif
 
@@ -139,6 +149,16 @@
 !  Local variable declarations
 !
       integer :: i, ic
+#ifdef TALK_ADDITION
+      integer :: ntap
+# if defined TALK_TWO_FEED
+      ntap=2
+# elif defined TALK_THREE_FEED
+      ntap=3
+# else
+      ntap=1
+# endif
+#endif
 !
 !-----------------------------------------------------------------------
 !  Determine number of biological tracers.
@@ -146,20 +166,48 @@
 !
 #if defined CARBON && defined OXYGEN
 # ifdef TALK_ADDITION
-#  ifdef TALK_DIAG_DISS
+#  if defined TALK_TWO_FEED
+#   ifdef TALK_DIAG_DISS
+      NBT=8
+#   else
       NBT=7
+#   endif
+#  elif defined TALK_THREE_FEED
+#   ifdef TALK_DIAG_DISS
+      NBT=9
+#   else
+      NBT=8
+#   endif
 #  else
+#   ifdef TALK_DIAG_DISS
+      NBT=7
+#   else
       NBT=6
+#   endif
 #  endif
 # else
       NBT=3
 # endif
 #elif defined CARBON && !defined OXYGEN
 # ifdef TALK_ADDITION
-#  ifdef TALK_DIAG_DISS
+#  if defined TALK_TWO_FEED
+#   ifdef TALK_DIAG_DISS
+      NBT=7
+#   else
       NBT=6
+#   endif
+#  elif defined TALK_THREE_FEED
+#   ifdef TALK_DIAG_DISS
+      NBT=8
+#   else
+      NBT=7
+#   endif
 #  else
+#   ifdef TALK_DIAG_DISS
+      NBT=6
+#   else
       NBT=5
+#   endif
 #  endif
 # else
       NBT=2
@@ -258,6 +306,7 @@
         Dmem(1)=Dmem(1)+REAL(Ngrids,r8)
       END IF
 #ifdef TALK_ADDITION
+# ifndef TALK_FILE
       IF (.not.allocated(iloc_alkalinity)) THEN
         allocate ( iloc_alkalinity(Ngrids) )
         Dmem(1)=Dmem(1)+REAL(Ngrids,r8)
@@ -286,17 +335,19 @@
         allocate ( alkalinity_endload(Ngrids) )
         Dmem(1)=Dmem(1)+REAL(Ngrids,r8)
       END IF
+# endif
+
       IF (.not.allocated(wTAp)) THEN
-        allocate ( wTAp(Ngrids) )
-        Dmem(1)=Dmem(1)+REAL(Ngrids,r8)
+        allocate ( wTAp(ntap,Ngrids) )
+        Dmem(1)=Dmem(1)+REAL(ntap*Ngrids,r8)
       END IF
       IF (.not.allocated(dissTAp)) THEN
-        allocate ( dissTAp(Ngrids) )
-        Dmem(1)=Dmem(1)+REAL(Ngrids,r8)
+        allocate ( dissTAp(ntap,Ngrids) )
+        Dmem(1)=Dmem(1)+REAL(ntap*Ngrids,r8)
       END IF
       IF (.not.allocated(P2Dratio)) THEN
-        allocate ( P2Dratio(Ngrids) )
-        Dmem(1)=Dmem(1)+REAL(Ngrids,r8)
+        allocate ( P2Dratio(ntap,Ngrids) )
+        Dmem(1)=Dmem(1)+REAL(ntap*Ngrids,r8)
       END IF
       IF (.not.allocated(sedloss)) THEN
         allocate ( sedloss(Ngrids) )
@@ -336,9 +387,18 @@
       ic=ic+2
 # ifdef TALK_ADDITION
       iTAp=ic+1
-      idTIC=ic+2
-      idTA=ic+3
-      ic=ic+3
+      ic=ic+1
+#  if defined TALK_TWO_FEED || defined TALK_THREE_FEED
+      iTAp2=ic+1
+      ic=ic+1
+#  endif
+#  ifdef TALK_THREE_FEED
+      iTAp3=ic+1
+      ic=ic+1
+#  endif
+      idTIC=ic+1
+      idTA=ic+2
+      ic=ic+2
 #  ifdef TALK_DIAG_DISS
       iTArm=ic+1
       ic=ic+1
