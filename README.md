@@ -36,9 +36,9 @@ P_PRODUCTION    /* Sources and sinks from primary production */
 TALK_BGC        /* BGC feedback on alkalinity */
 TALK_ADDITION   /* Turn on alkalinity addition module */
 TALK_FILE       /* Use the modified river file to add alkalinity feedstock */
-TALK_DIAG_DISS    /* Additional alkalinity addition diagnostic tracer to follow dissolved feedstock */
-TALK_TWO_FEED    /* Additional alkalinity addition tracer to allow 2 feedstocks */
-TALK_THREE_FEED  /* Additional alkalinity addition tracer to allow 3 feedstocks */
+TALK_DIAG_DISS  /* Additional alkalinity addition diagnostic tracer to follow dissolved feedstock */
+TALK_TWO_FEED   /* Additional alkalinity addition tracer to allow 2 feedstocks */
+TALK_THREE_FEED /* Additional alkalinity addition tracer to allow 3 feedstocks */
 TALK_NONCONSERV /* Background alkalinity is non conservative (not imposed from salinity) */
 RW14_OXYGEN_SC  /* Oxygen air-sea gas exchange based on Wanninkhof (2014) */
 RW14_CO2_SC     /* CO2 air-sea gas exchange based on Wanninkhof (2014) */
@@ -69,13 +69,13 @@ The reduced BGC model has 3 tracers: alkalinity, TIC and oxygen. The addition mo
 * TAp2     _Optional Particulate phase of second feedstock (TALK_TWO_FEED)_
 * TAp3     _Optional Particulate phase of third feedstock (TALK_THREE_FEED)_
 
-## River file
+## Addition file
 
-The alkalinity addition is set with a time series and is added as an extra river in the river forcing file (the last one). The i/j indices of the extra river are also set in the input file ```./User/External/reduced_bgc.in``` along with the vertical layers where the release occurs.
+The alkalinity addition is either set in reduced_bgc.in if cpp option TALK_FILE is undefined (constant addition, 1 location, 1 feedstock type) or in an additional forcing file added to the FRCNAME list in roms_oae.in if cpp option TALK_FILE is defined. In this file, for each time/location alkalinity flux is set with add_dTA, the type of feedstock (up to 3) is set with add_type and the min/max vertical layers where addition occurs are set with add_takmin and add_takmax.
 
 ## Test forcing files
 
-The model can be run for a 1-month test using the Halifax Harbour set up in July 2017 (constant addition from July 2). The forcing files are available from Zenodo and the setup is provided in the files listed above. In this example feedstock is released from Tufts Cove in the Halifax Harbour.
+The model can be run for a 1-month test using the Halifax Harbour set up in July 2017 (constant addition from July 2). The forcing files are available from Zenodo and the setup is provided in the files listed above. In this example 3 feedstocks are released at 3 locations near Tufts Cove in the Halifax Harbour.
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.16423337.svg)](https://doi.org/10.5281/zenodo.16423337)
 
