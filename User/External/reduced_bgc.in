@@ -160,7 +160,7 @@ LtracerSponge == 9*F
 
    Hadvection == HSIMT    \                     ! idbio( 1), TIC
                  HSIMT    \                     ! idbio( 2), AlK
-                 MPDATA   \                     ! idbio( 3), TAp
+                 MPDATA   \                     ! idbio( 3), TAp1
                  MPDATA   \                     ! idbio( 4), TAp2
                  MPDATA   \                     ! idbio( 5), TAp3
                  HSIMT    \                     ! idbio( 6), dTIC
@@ -170,7 +170,7 @@ LtracerSponge == 9*F
 
    Vadvection == HSIMT    \                     ! idbio( 1), TIC
                  HSIMT    \                     ! idbio( 2), AlK
-                 MPDATA   \                     ! idbio( 3), TAp
+                 MPDATA   \                     ! idbio( 3), TAp1
                  MPDATA   \                     ! idbio( 4), TAp2
                  MPDATA   \                     ! idbio( 5), TAp3
                  HSIMT    \                     ! idbio( 6), dTIC
@@ -222,7 +222,7 @@ ad_Vadvection == C4                             ! idbio(:), compact
 
    LBC(isTvar) ==   RadNud  RadNud  RadNud  Clo    \    ! idbio( 1), TIC 
                     RadNud  RadNud  RadNud  Clo    \    ! idbio( 2), Alk
-                    Cla     Cla     Cla     Clo    \    ! idbio( 3), TAp
+                    Cla     Cla     Cla     Clo    \    ! idbio( 3), TAp1
                     Cla     Cla     Cla     Clo    \    ! idbio( 4), TAp2
                     Cla     Cla     Cla     Clo    \    ! idbio( 5), TAp3
                     Cla     Cla     Cla     Clo    \    ! idbio( 6), dTIC
@@ -235,7 +235,7 @@ ad_Vadvection == C4                             ! idbio(:), compact
 
 ad_LBC(isTvar) ==   RadNud  RadNud  RadNud  Clo    \    ! idbio( 1), TIC
                     RadNud  RadNud  RadNud  Clo    \    ! idbio( 2), Alk
-                    Cla     Cla     Cla     Clo    \    ! idbio( 3), TAp
+                    Cla     Cla     Cla     Clo    \    ! idbio( 3), TAp1
                     Cla     Cla     Cla     Clo    \    ! idbio( 4), TAp2
                     Cla     Cla     Cla     Clo    \    ! idbio( 5), TAp3
                     Cla     Cla     Cla     Clo    \    ! idbio( 6), dTIC
@@ -328,14 +328,13 @@ Dout(iO2fx) == T        ! O2_airsea          air-sea O2 flux
 !
 ! idbio( 1)     TIC               Total inorganic carbon               if CARBON
 ! idbio( 2)     Alk               Alkalinity                           if CARBON
-! idbio( 3)     TAp               Added alkalinity (particulate)       if TALK_ADDITION
+! idbio( 3)     TAp1              Added alkalinity (particulate)       if TALK_ADDITION
 ! idbio( 4)     TAp2              Added second alkalinity feedstock    if TALK_TWO_FEED
 ! idbio( 5)     TAp3              Added third alkalinity feedstock     if TALK_THREE_FEED
 ! idbio( 6)     dTIC              additional TIC (OAE)                 if TALK_ADDITION
 ! idbio( 7)     dTA               Additional TA (OAE)                  if TALK_ADDITION
-! idbio( 8)     TAin              Added alkalinity (dissolved)         if TALK_DIAG_DISS
-! idbio( 9)     TArm              Remineralized particulate alkalinity if TALK_DIAG_DISS
-! idbio( 10)    oxygen            Oxygen concentration                 if OXYGEN
+! idbio( 8)     TArm              Remineralized particulate alkalinity if TALK_DIAG_DISS
+! idbio( 9)     oxygen            Oxygen concentration                 if OXYGEN
 !------------------------------------------------------------------------------
 !
 !  Lbiology       Switch to control the computation of a particular module
@@ -673,12 +672,13 @@ Dout(iO2fx) == T        ! O2_airsea          air-sea O2 flux
 !
 !                   idTvar(idbio(1))=iTIC_      Total inorganic carbon
 !                   idTvar(idbio(2))=iTAlk      Alkalinity
-!                   idTvar(idbio(3))=iTAp        Particulate feedstock
-!                   idTvar(idbio(4))=idTIC      Added Total inorganic carbon
-!                   idTvar(idbio(5))=idTA       Added Alkalinity (total)
-!                   idTvar(idbio(6))=iTAin      Added Alkalinity (dissolved)
-!                   idTvar(idbio(7))=iTArm      Added Alkalinity (remineralized from particle)
-!                   idTvar(idbio(8))=iOxyg      Oxygen concentration
+!                   idTvar(idbio(3))=iTAp1      Particulate feedstock 1
+!                   idTvar(idbio(4))=iTAp2      Particulate feedstock 2
+!                   idTvar(idbio(5))=iTAp3      Particulate feedstock 3
+!                   idTvar(idbio(6))=idTIC      Added Total inorganic carbon
+!                   idTvar(idbio(7))=idTA       Added Alkalinity (total)
+!                   idTvar(idbio(8))=iTArm      Added Alkalinity (remineralized from particle)
+!                   idTvar(idbio(9))=iOxyg      Oxygen concentration
 !
 !------------------------------------------------------------------------------
 ! Logical switches (T/F) to activate writing of fields into QUICKSAVE file.

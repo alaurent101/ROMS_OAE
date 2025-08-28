@@ -26,8 +26,8 @@
             CASE ('idTvar(iTAlk)')
               idTvar(iTAlk)=varid
 # ifdef TALK_ADDITION
-            CASE ('idTvar(iTAp)')
-              idTvar(iTAp)=varid
+            CASE ('idTvar(iTAp1)')
+              idTvar(iTAp1)=varid
 #  if defined TALK_TWO_FEED || defined TALK_THREE_FEED
             CASE ('idTvar(iTAp2)')
               idTvar(iTAp2)=varid
@@ -64,8 +64,8 @@
             CASE ('idTads(iTAlk)')
               idTads(iTAlk)=varid
 #  ifdef TALK_ADDITION
-            CASE ('idTads(iTAp)')
-              idTads(iTAp)=varid
+            CASE ('idTads(iTAp1)')
+              idTads(iTAp1)=varid
 #  if defined TALK_TWO_FEED || defined TALK_THREE_FEED
             CASE ('idTads(iTAp2)')
               idTads(iTAp2)=varid
@@ -114,14 +114,14 @@
               idTbry(inorth,iTAlk)=varid
 
 # ifdef TALK_ADDITION
-            CASE ('idTbry(iwest,iTAp)')
-              idTbry(iwest,iTAp)=varid
-            CASE ('idTbry(ieast,iTAp)')
-              idTbry(ieast,iTAp)=varid
-            CASE ('idTbry(isouth,iTAp)')
-              idTbry(isouth,iTAp)=varid
-            CASE ('idTbry(inorth,iTAp)')
-              idTbry(inorth,iTAp)=varid
+            CASE ('idTbry(iwest,iTAp1)')
+              idTbry(iwest,iTAp1)=varid
+            CASE ('idTbry(ieast,iTAp1)')
+              idTbry(ieast,iTAp1)=varid
+            CASE ('idTbry(isouth,iTAp1)')
+              idTbry(isouth,iTAp1)=varid
+            CASE ('idTbry(inorth,iTAp1)')
+              idTbry(inorth,iTAp1)=varid
 
 #  if defined TALK_TWO_FEED || defined TALK_THREE_FEED
             CASE ('idTbry(iwest,iTAp2)')
@@ -196,8 +196,8 @@
             CASE ('idRtrc(iTAlk)')
               idRtrc(iTAlk)=varid
 # ifdef TALK_ADDITION
-            CASE ('idRtrc(iTAp)')
-              idRtrc(iTAp)=varid
+            CASE ('idRtrc(iTAp1)')
+              idRtrc(iTAp1)=varid
 #  if defined TALK_TWO_FEED || defined TALK_THREE_FEED
             CASE ('idRtrc(iTAp2)')
               idRtrc(iTAp2)=varid

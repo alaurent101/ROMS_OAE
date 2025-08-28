@@ -66,7 +66,7 @@
       integer :: iOxyg                  ! Dissolved oxygen concentration
 #endif
 #ifdef TALK_ADDITION
-      integer :: iTAp                    ! TAp
+      integer :: iTAp1                   ! TAp1
 #  if defined TALK_TWO_FEED || defined TALK_THREE_FEED
       integer :: iTAp2                   ! TAp2
 #  endif
@@ -386,7 +386,7 @@
       iTAlk=ic+2
       ic=ic+2
 # ifdef TALK_ADDITION
-      iTAp=ic+1
+      iTAp1=ic+1
       ic=ic+1
 #  if defined TALK_TWO_FEED || defined TALK_THREE_FEED
       iTAp2=ic+1

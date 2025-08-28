@@ -1905,11 +1905,11 @@
   1.0d0
   
 'river_ONES'                                       ! Input
-  'river runoff TAp concentration'
-  'unit of TAp meter-3'                           
-  'river_TAp, scalar, series'
+  'river runoff TAp1 concentration'
+  'unit of TAp1 meter-3'                           
+  'river_TAp1, scalar, series'
   'river_time'
-  'idRtrc(iTAp)'
+  'idRtrc(iTAp1)'
   'nulvar'
   0.0d0
 
@@ -2639,48 +2639,48 @@
 !------------------------------------------------------------------------------
 !
 
-'TAp'                                        ! Input/Output
-  'TAp concentration'
-  'unit of TAp meter-3'                             
-  'TAp, scalar, series'
+'TAp1'                                       ! Input/Output
+  'TAp1 concentration'
+  'unit of TAp1 meter-3'                             
+  'TAp1, scalar, series'
   'ocean_time'
-  'idTvar(iTAp)'
+  'idTvar(iTAp1)'
   'r3dvar'
   1.0d0
 
-'TAp_west'                                   ! Input
-  'TAp concentration western boundary condition'
-  'unit of TAp meter-3'                             
-  'TAp_west, scalar, series'
+'TAp1_west'                                   ! Input
+  'TAp1 concentration western boundary condition'
+  'unit of TAp1 meter-3'                             
+  'TAp1_west, scalar, series'
   'bry_time'
-  'idTbry(iwest,iTAp)'
+  'idTbry(iwest,iTAp1)'
   'nulvar'
   1.0d0
 
-'TAp_east'                                   ! Input
-  'TAp concentration eastern boundary condition'
-  'unit of TAp meter-3'                             
-  'TAp_east, scalar, series'
+'TAp1_east'                                 ! Input
+  'TAp1 concentration eastern boundary condition'
+  'unit of TAp1 meter-3'                             
+  'TAp1_east, scalar, series'
   'bry_time'
-  'idTbry(ieast,iTAp)'
+  'idTbry(ieast,iTAp1)'
   'nulvar'
   1.0d0
 
-'TAp_south'                                   ! Input
-  'TAp concentration southern boundary condition'
-  'unit of TAp meter-3'                             
-  'TAp_south, scalar, series'
+'TAp1_south'                                  ! Input
+  'TAp1 concentration southern boundary condition'
+  'unit of TAp1 meter-3'                             
+  'TAp1_south, scalar, series'
   'bry_time'
-  'idTbry(isouth,iTAp)'
+  'idTbry(isouth,iTAp1)'
   'nulvar'
   1.0d0
 
-'TAp_north'                                   ! Input
-  'TAp concentration northern boundary condition'
-  'unit of TAp meter-3'                             
-  'TAp_north, scalar, series'
+'TAp1_north'                                  ! Input
+  'TAp1 concentration northern boundary condition'
+  'unit of TAp1 meter-3'                             
+  'TAp1_north, scalar, series'
   'bry_time'
-  'idTbry(inorth,iTAp)'
+  'idTbry(inorth,iTAp1)'
   'nulvar'
   1.0d0
 

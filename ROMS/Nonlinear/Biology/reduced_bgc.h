@@ -650,7 +650,7 @@
 !
 !  Set vertical sinking indentification.
 !
-      idsink(1)=iTAp
+      idsink(1)=iTAp1
 #  if defined TALK_TWO_FEED || defined TALK_THREE_FEED
       idsink(2)=iTAp2
 #  endif
@@ -662,7 +662,7 @@
 !  Set vertical sinking velocity vector in the same order as the
 !  identification vector, IDSINK.
 !
-      Wbio(1)=wTAp(1,ng)       ! sinking velocity of particulate feedstock (TAp)
+      Wbio(1)=wTAp(1,ng)       ! sinking velocity of particulate feedstock (TAp1)
 #  if defined TALK_TWO_FEED || defined TALK_THREE_FEED
       Wbio(2)=wTAp(2,ng)       ! sinking velocity of particulate feedstock 2 (TAp2)
 #  endif
@@ -1015,19 +1015,19 @@
 !         dTA_dt =  K*TAp
 !-----------------------------------------------------------------------
 !
-               fac1=MAX(Bio(i,k,iTAp),0.0_r8)
+               fac1=MAX(Bio(i,k,iTAp1),0.0_r8)
                cff4=dtdays*dissTAp(1,ng)
                IF (k.eq.1) THEN
                  cff5=1.0_r8-sedloss(ng)
                ELSE
                  cff5=1.0_r8
                END IF
-               Bio(i,k,iTAp)=fac1/(1+cff4)
+               Bio(i,k,iTAp1)=fac1/(1+cff4)
                Bio(i,k,idTA)=Bio(i,k,idTA)+cff4*cff5*                   &
-     &                                     Bio(i,k,iTAp)
+     &                                     Bio(i,k,iTAp1)
 # ifdef TALK_DIAG_DISS
                Bio(i,k,iTArm)=Bio(i,k,iTArm)+cff4*cff5*                 &
-     &                                       Bio(i,k,iTAp)
+     &                                       Bio(i,k,iTAp1)
 # endif
 # ifdef TALK_TWO_FEED
                fac1=MAX(Bio(i,k,iTAp2),0.0_r8)
@@ -1070,6 +1070,11 @@
                cff1=0.0_r8
                cff=pm(i,j)*pn(i,j)
               IF ((taflx(i,j).gt.0.0_r8)                                &
+#  if defined TALK_TWO_FEED
+     &          .and. (tatype(i,j).lt.3.0_r8)                           &
+#  elif !defined TALK_THREE_FEED
+     &          .and. (tatype(i,j).lt.2.0_r8)                           &
+#  endif
      &          .and. (k.ge.takmin(i,j)) .and. (k.le.takmax(i,j))) THEN
                cff=pm(i,j)*pn(i,j)
                Hadd=SUM(Hz(i,j,takmin(i,j):takmax(i,j)))
@@ -1088,26 +1093,26 @@
 # ifndef TALK_FILE
                cff3=(1-P2Dratio(ng))*cff2
                Bio(i,k,idTA)=Bio(i,k,idTA)+cff3
-               Bio(i,k,iTAp)=Bio(i,k,iTAp)+P2Dratio(1,ng)*cff2
+               Bio(i,k,iTAp1)=Bio(i,k,iTAp1)+P2Dratio(1,ng)*cff2
 # else
                cff3=(1-P2Dratio(INT(tatype(i,j)),ng))*cff2
                Bio(i,k,idTA)=Bio(i,k,idTA)+cff3
 #  if defined TALK_TWO_FEED
                 IF (tatype(i,j).eq.1.0_r8) THEN
-               Bio(i,k,iTAp)=Bio(i,k,iTAp)+P2Dratio(1,ng)*cff2
+               Bio(i,k,iTAp1)=Bio(i,k,iTAp1)+P2Dratio(1,ng)*cff2
                 ELSE IF (tatype(i,j).eq.2.0_r8) THEN
                Bio(i,k,iTAp2)=Bio(i,k,iTAp2)+P2Dratio(2,ng)*cff2
                 END IF
 #  elif defined TALK_THREE_FEED
                 IF (tatype(i,j).eq.1.0_r8) THEN
-               Bio(i,k,iTAp)=Bio(i,k,iTAp)+P2Dratio(1,ng)*cff2
+               Bio(i,k,iTAp1)=Bio(i,k,iTAp1)+P2Dratio(1,ng)*cff2
                 ELSE IF (tatype(i,j).eq.2.0_r8) THEN
                Bio(i,k,iTAp2)=Bio(i,k,iTAp2)+P2Dratio(2,ng)*cff2
                 ELSE IF (tatype(i,j).eq.3.0_r8) THEN
                Bio(i,k,iTAp3)=Bio(i,k,iTAp3)+P2Dratio(3,ng)*cff2
                 END IF
 #  else
-               Bio(i,k,iTAp)=Bio(i,k,iTAp)+P2Dratio(1,ng)*cff2
+               Bio(i,k,iTAp1)=Bio(i,k,iTAp1)+P2Dratio(1,ng)*cff2
 #  endif
 # endif
               END IF
@@ -1641,10 +1646,10 @@
 !  Particles reaching the seafloor stay at the bottom. Without this
 !  module, particles falls out of the system. 
 !
-            IF (ibio.eq.iTAp) THEN
+            IF (ibio.eq.iTAp1) THEN
               DO i=Istr,Iend
                 cff1=FC(i,0)*Hz_inv(i,1)
-                Bio(i,1,iTAp)=Bio(i,1,iTAp)+cff1
+                Bio(i,1,iTAp1)=Bio(i,1,iTAp1)+cff1
               END DO
 # if defined TALK_TWO_FEED || defined TALK_THREE_FEED
             ELSE IF (ibio.eq.iTAp2) THEN

@@ -649,18 +649,18 @@
      &            'alkalinity_endload',                                 &
      &            'ending time of alkalinity addition'
             WRITE (out,80) dissTAp(ng), 'dissTAp',                      &
-     &            'dissolution rate, particulate feedstock TAp (day-1).'
+     &            'dissolution rate, part. feedstock TAp1 (day-1).'
             WRITE (out,80) wTAp(ng), 'wTAp',                            &
-     &            'sinking velocity, particulate feedstock TAp (m d-1).'
+     &            'sinking velocity, part. feedstock TAp1 (m d-1).'
             WRITE (out,80) P2Dratio(ng), 'P2Dratio',                    &
      &            'ratio of particles in alkalinity load.'
 # else
             WRITE (out,80) dissTAp(1,ng), 'dissTAp',                    &
-     &            'dissolution rate, particulate feedstock TAp (day-1).'
+     &            'dissolution rate, part. feedstock TAp1 (day-1).'
             WRITE (out,80) wTAp(1,ng), 'wTAp',                          &
-     &            'sinking velocity, particulate feedstock TAp (m d-1).'
+     &            'sinking velocity, part. feedstock TAp1 (m d-1).'
             WRITE (out,80) P2Dratio(1,ng), 'P2Dratio',                  &
-     &            'ratio of particles in feedstock (TAp).'
+     &            'ratio of particles in feedstock (TAp1).'
 #  if defined TALK_TWO_FEED
             WRITE (out,80) dissTAp(2,ng), 'dissTAp',                    & 
      &            'dissolution rate, part. feedstock TAp2 (day-1).'
