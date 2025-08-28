@@ -85,9 +85,6 @@
       USE mod_param
       USE mod_scalars
       USE mod_sources
-!# if defined TALK_ADDITION && defined TALK_FILE
-!      USE mod_biology
-!# endif
 !
       USE bc_3d_mod, ONLY : bc_w3d_tile
 # ifdef DISTRIBUTE
@@ -175,16 +172,9 @@
           DO is=1,Nsrc(ng)
             ii=SOURCES(ng)%Isrc(is)
             jj=SOURCES(ng)%Jsrc(is)
-!#  if defined TALK_ADDITION && defined TALK_FILE
-!            IF (((IstrR.le.ii).and.(ii.le.IendR)).and.                  &
-!     &          ((JstrR.le.jj).and.(jj.le.JendR)).and.                  &
-!     &          (j.eq.jj).and.((ii.ne.iloc_alkalinity(ng)).and.         &
-!     &             (jj.ne.jloc_alkalinity(ng)))) THEN
-!#  else
             IF (((IstrR.le.ii).and.(ii.le.IendR)).and.                  &
      &          ((JstrR.le.jj).and.(jj.le.JendR)).and.                  &
      &          (j.eq.jj)) THEN
-!#  endif
               DO k=1,N(ng)
                 W(ii,jj,k)=W(ii,jj,k-1)-                                &
      &                     (Huon(ii+1,jj,k)-Huon(ii,jj,k)+              &

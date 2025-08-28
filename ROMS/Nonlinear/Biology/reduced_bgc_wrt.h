@@ -107,22 +107,8 @@
      &                      alkalinity_endload(ng), (/0/), (/0/),        &
      &                      ncid = ncid)
       IF (FoundError(exit_flag, NoError, __LINE__, MyFile)) RETURN
+# endif
 
-      CALL netcdf_put_fvar (ng, model, ncname, 'dissTAp',                &
-     &                      dissTAp(ng), (/0/), (/0/),                   &
-     &                      ncid = ncid)
-      IF (FoundError(exit_flag, NoError, __LINE__, MyFile)) RETURN
-      
-      CALL netcdf_put_fvar (ng, model, ncname, 'wTAp',                   &  
-     &                      wTAp(ng), (/0/), (/0/),                      &
-     &                      ncid = ncid)
-      IF (FoundError(exit_flag, NoError, __LINE__, MyFile)) RETURN
-
-      CALL netcdf_put_fvar (ng, model, ncname, 'P2Dratio',               &  
-     &                      P2Dratio(ng), (/0/), (/0/),                  &
-     &                      ncid = ncid)
-      IF (FoundError(exit_flag, NoError, __LINE__, MyFile)) RETURN
-# else
       CALL netcdf_put_fvar (ng, model, ncname, 'dissTAp',                &
      &                      dissTAp(:,ng), (/0/), (/0/),                 &
      &                      ncid = ncid)
@@ -137,7 +123,7 @@
      &                      P2Dratio(:,ng), (/0/), (/0/),                &
      &                      ncid = ncid)
       IF (FoundError(exit_flag, NoError, __LINE__, MyFile)) RETURN
-# endif
+
       CALL netcdf_put_fvar (ng, model, ncname, 'sedloss',                &
      &                      sedloss(ng), (/0/), (/0/),                   &
      &                      ncid = ncid)

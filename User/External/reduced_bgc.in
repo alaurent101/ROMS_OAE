@@ -93,7 +93,7 @@
 ! Adding flux for particulate feedstock [unit of particle/m2/day]
 ! Used only if TALK_FILE undefined 
 
-    alkalinity_load == 86400.0d0  ! equivalent to 1 unit of particle/m2/s in HRM2 model
+    alkalinity_load == 10.0d0  ! mol/s
 
 ! Grid points location for adding particles
 ! Used only if TALK_FILE undefined
@@ -106,8 +106,8 @@
 ! Starting and ending day for adding particles
 ! Used only if TALK_FILE undefined
 
-    alkalinity_startload == 15981.50000000
-    alkalinity_endload   == 15981.75000000
+    alkalinity_startload == 13697.0
+    alkalinity_endload   == 14696.0
 
 ! Harmonic/biharmonic horizontal diffusion of biological tracer for
 ! nonlinear model and adjoint-based algorithms: [1:NBT,Ngrids].

@@ -132,8 +132,8 @@
       IF (FoundError(exit_flag, NoError, __LINE__, MyFile)) RETURN
 
       Vinfo( 1)='alkalinity_load'
-      Vinfo( 2)='alkalinity added to the grid cell per day'
-      Vinfo( 3)='unit of alkalinity/m2/day' 
+      Vinfo( 2)='alkalinity added to the grid cell'
+      Vinfo( 3)='mol/second' 
       status=def_var(ng, model, ncid, varid, NF_TYPE,                   &
      &               1, (/0/), Aval, Vinfo, ncname,                     &
      &               SetParAccess = .FALSE.)

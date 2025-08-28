@@ -1065,10 +1065,10 @@
 !  Compute external source of alkalinity (mol/second)
 !-----------------------------------------------------------------------
 !
+               cff1=0.0_r8
+               cff=0.0_r8
 # ifdef TALK_FILE
 ! Add Alkalinity from river file
-               cff1=0.0_r8
-               cff=pm(i,j)*pn(i,j)
               IF ((taflx(i,j).gt.0.0_r8)                                &
 #  if defined TALK_TWO_FEED
      &          .and. (tatype(i,j).lt.3.0_r8)                           &
@@ -1087,11 +1087,12 @@
      &          .and. k.le.kloc_alkalinity_max(ng)                      &
      &          .and. tdays(ng) .ge. alkalinity_startload(ng)           &
      &          .and. tdays(ng) .le. alkalinity_endload(ng)) THEN
+                 cff=pm(i,j)*pn(i,j)
                  cff1=alkalinity_load(ng)
 # endif
                cff2=cff1*1000.0_r8*dtsec*cff/Hadd !*Hz(i,j,k)/Hadd
 # ifndef TALK_FILE
-               cff3=(1-P2Dratio(ng))*cff2
+               cff3=(1-P2Dratio(1,ng))*cff2
                Bio(i,k,idTA)=Bio(i,k,idTA)+cff3
                Bio(i,k,iTAp1)=Bio(i,k,iTAp1)+P2Dratio(1,ng)*cff2
 # else

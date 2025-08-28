@@ -120,13 +120,7 @@
               Npts=load_r(Nval, Rval, Ngrids, alkalinity_startload)
             CASE ('alkalinity_endload')
               Npts=load_r(Nval, Rval, Ngrids, alkalinity_endload)
-            CASE ('dissTAp')
-              Npts=load_r(Nval, Rval, Ngrids, dissTAp)
-            CASE ('wTAp')
-              Npts=load_r(Nval, Rval, Ngrids, wTAp)
-            CASE ('P2Dratio')
-              Npts=load_r(Nval, Rval, Ngrids, P2Dratio)
-# else
+# endif
             CASE ('dissTAp')
               Npts=load_r(Nval, Rval, ntap, Ngrids, Rbio)
               DO ng=1,Ngrids
@@ -148,7 +142,6 @@
                   P2Dratio(itrc,ng)=Rbio(itrc,ng)
                 END DO
               END DO
-# endif
             CASE ('sedloss')
               Npts=load_r(Nval, Rval, Ngrids, sedloss)
 #endif
@@ -641,19 +634,19 @@
      &                   'kloc_alkalinity_max',                         &
      &            'maximum vertical (k) index for alkalinity addition'
            WRITE (out,80) alkalinity_load(ng), 'alkalinity_load',       &
-     &            'alkalinity flux (unit of alkalinity/m2/day).'
+     &            'alkalinity flux (mol/second).'
            WRITE (out,80) alkalinity_startload(ng),                     &
      &            'alkalinity_startload',                               &
      &            'starting time of alkalinity addition'
            WRITE (out,80) alkalinity_endload(ng),                       &
      &            'alkalinity_endload',                                 &
      &            'ending time of alkalinity addition'
-            WRITE (out,80) dissTAp(ng), 'dissTAp',                      &
+            WRITE (out,80) dissTAp(1,ng), 'dissTAp',                    &
      &            'dissolution rate, part. feedstock TAp1 (day-1).'
-            WRITE (out,80) wTAp(ng), 'wTAp',                            &
+            WRITE (out,80) wTAp(1,ng), 'wTAp',                          &
      &            'sinking velocity, part. feedstock TAp1 (m d-1).'
-            WRITE (out,80) P2Dratio(ng), 'P2Dratio',                    &
-     &            'ratio of particles in alkalinity load.'
+            WRITE (out,80) P2Dratio(1,ng), 'P2Dratio',                  &
+     &            'ratio of particles in feedstock (TAp1).'
 # else
             WRITE (out,80) dissTAp(1,ng), 'dissTAp',                    &
      &            'dissolution rate, part. feedstock TAp1 (day-1).'

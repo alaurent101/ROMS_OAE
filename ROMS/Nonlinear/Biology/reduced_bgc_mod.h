@@ -42,7 +42,7 @@
 !   kloc_alkalinity_max   maximum vertical (k) index of the model grid !
 !                     cell where alkalinity is added                   !
 !   alkalinity_load   alkalinity added to the grid cell per day        !
-!                     [unit of alkalinity/m2/day].                     !
+!                     [mol/second].                                    !
 !   alkalinity_startload   starting day of alkalinity load             !
 !   alkalinity_endload     ending day of alkalinity load               !
 # endif
