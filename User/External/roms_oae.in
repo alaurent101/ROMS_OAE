@@ -73,7 +73,7 @@
 ! Input variable information file name.  This file needs to be processed
 ! first so all information arrays can be initialized properly.
 
-     VARNAME = varinfo_oae.dat
+     VARNAME = varinfo_oae.dat !varinfo_oae.dat
 
 ! Number of nested grids.
 
@@ -106,8 +106,8 @@ GridsInLayer =  1
 ! shared-memory configurations used to determine tile horizontal range
 ! indices (Istr,Iend) and (Jstr,Jend), [1:Ngrids].
 
-      NtileI == 8                                  ! I-direction partition
-      NtileJ == 8                                  ! J-direction partition
+      NtileI == 16                                  ! I-direction partition
+      NtileJ == 20                                  ! J-direction partition
 
 ! Set horizontal and vertical advection schemes for active and inert
 ! tracers. A different advection scheme is allowed for each tracer.
@@ -467,6 +467,12 @@ LtracerSponge == F F                            ! temperature, salinity, inert
 ! Changed LtracerSrc from F F to T T 2021/2/15
   LtracerSrc == T T                        ! temperature, salinity, inert
 
+! Logical switches (TRUE/FALSE) to activate tracers addition for OAE
+! and to specify which tracer variables to consider:
+! [1:NAT+NPT,Ngrids].  See glossary below for details.
+
+  LtracerAdd == F F
+
 ! Logical switches (TRUE/FALSE) to read and process climatology fields.
 ! See glossary below for details.
 
@@ -621,6 +627,7 @@ Hout(idWdis) == F       ! Wave_dissip        wave dissipation
 
 ! Added continental runoff 2021/3/23
 Hout(idRunoff) == F     ! Runoff             Continental runoff
+Hout(idAtrc) == T       ! TA addition        Alkalinity addition
 Hout(idPair) == F       ! Pair               surface air pressure
 Hout(idTair) == F       ! Tair               surface air temperature
 Hout(idUair) == F       ! Uair               surface U-wind component
@@ -726,6 +733,8 @@ Qout(idWpbt) == F       ! Pwave_bot          wave bottom period
 Qout(idWorb) == F       ! Ub_swan            wave bottom orbital velocity
 Qout(idWdis) == F       ! Wave_dissip        wave dissipation
 
+Qout(idAtrc) == T       ! TA addition        Alkalinity addition
+
 Qout(idPair) == F       ! Pair               surface air pressure
 Qout(idTair) == F       ! Tair               surface air temperature
 Qout(idUair) == F       ! Uair               surface U-wind component
@@ -801,6 +810,7 @@ Aout(idV3Sd) == F       ! v_stokes           3D V-Stokes velocity
 
 ! Added continental runoff 2021/3/23
 Aout(idRunoff) == T     ! Runoff             Continental runoff
+Aout(idAtrc) == T       ! TA addition        Alkalinity addition
 Aout(idPair) == F       ! Pair               surface air pressure
 Aout(idTair) == F       ! Tair               surface air temperature
 Aout(idUair) == F       ! Uair               surface U-wind component
@@ -959,9 +969,9 @@ Dout(iTnudg) == F F     ! temp_nudg, ...     nudging effect
 
     NBCFILES == 4                          ! number of boundary files
 
-     BRYNAME == bc_H2_LaurentEtAl2025_PHY_201707.nc         \
+     BRYNAME == bc_H2_LaurentEtAl2025_PHY_201707.nc \
                 bc_H2_LaurentEtAl2025_PHY_201707_TAfromS.nc \
-                bc_H2_LaurentEtAl2025_PHY_201707_TICeq.nc   \
+                bc_H2_LaurentEtAl2025_PHY_201707_TICeq.nc \
                 bc_H2_LaurentEtAl2025_BGC_201707.nc
 
 ! Input climatology file names. The USER has the option to separate the
@@ -987,7 +997,7 @@ Dout(iTnudg) == F F     ! temp_nudg, ...     nudging effect
 
 ! Input Sources/Sinks forcing (like river runoff) file name.
 
-     SSFNAME == river_LaurentEtAl2025_201707_H2_JulAug2017_TC.nc
+     SSFNAME == river_LaurentEtAl2025_201707_H2.nc
 
 ! Input tidal forcing file name.
 
@@ -1011,16 +1021,17 @@ Dout(iTnudg) == F F     ! temp_nudg, ...     nudging effect
 ! continuation (\) or a vertical bar (|) symbol after each entry, except
 ! the last one.
 
-     NFFILES == 8                          ! number of unique forcing files
+     NFFILES == 9                          ! number of unique forcing files
 
-     FRCNAME == ERA5_Pair_201707.nc          \
+     FRCNAME == h2_addition_LaurentEtAl2025_cst_3locs.nc    \
                 ERA5_Uwind_201707.nc         \
                 ERA5_Vwind_201707.nc         \
                 ERA5_Tair_201707.nc          \
                 ERA5_Qair_201707.nc          \
                 ERA5_swrad_201707.nc         \
                 ERA5_lwrad_down_201707.nc    \
-                ERA5_rain_201707.nc
+                ERA5_rain_201707.nc          \
+                ERA5_Pair_201707.nc
 
 ! Output NetCDF file names, [1:Ngrids].
 
@@ -1043,7 +1054,7 @@ Dout(iTnudg) == F F     ! temp_nudg, ...     nudging effect
      APARNAM =  ROMS/External/s4dvar.in
      SPOSNAM =  ROMS/External/stations.in
      FPOSNAM =  ROMS/External/floats.in
-     BPARNAM =  reduced_bgc.in 
+     BPARNAM =  reduced_bgc.in
      SPARNAM =  ROMS/External/sediment.in
      USRNAME =  ROMS/External/MyFile.dat
 
