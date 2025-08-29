@@ -71,7 +71,29 @@ The reduced BGC model has 3 tracers: alkalinity, TIC and oxygen. The addition mo
 
 ## Addition file
 
-The alkalinity addition is either set in reduced_bgc.in if cpp option TALK_FILE is undefined (constant addition, 1 location, 1 feedstock type) or in an additional forcing file added to the FRCNAME list in roms_oae.in if cpp option TALK_FILE is defined. In this file, for each time/location alkalinity flux is set with add_dTA, the type of feedstock (up to 3) is set with add_type and the min/max vertical layers where addition occurs are set with add_kmin and add_kmax. A python script is provided in ```./User/External/roms_addition_file.py``` to create the addition file (test case).
+The alkalinity addition is either set in reduced_bgc.in if cpp option TALK_FILE is undefined (constant addition, 1 location, 1 feedstock type) or in an additional forcing file added to the FRCNAME list in roms_oae.in if cpp option TALK_FILE is defined. In this file, for each time/location alkalinity flux is set with add_dTA, the type of feedstock (up to 3) is set with add_type and the min/max vertical layers where addition occurs are set with add_kmin and add_kmax.
+
+A python script is provided in ```./User/External/roms_addition_file.py``` to create the addition file (test case).
+
+The addition file structure is as follows:
+```
+    Dimensions:
+        add_time
+        eta_rho
+        xi_rho
+        source
+    Coordinates:
+        add_time      [add_time]
+        lon_rho       [eta_rho, xi_rho]
+        lat_rho       [eta_rho, xi_rho]
+    Data variables:
+        add_dTA       [add_time, eta_rho, xi_rho]
+        add_Xposition [source]
+        add_Eposition [source]
+        add_type      [add_time, eta_rho, xi_rho]
+        add_kmin      [add_time, eta_rho, xi_rho]
+        add_kmax      [add_time, eta_rho, xi_rho]
+``` 
 
 ## Test forcing files
 
