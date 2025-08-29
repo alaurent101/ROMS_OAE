@@ -75,7 +75,7 @@ The alkalinity addition is either set in reduced_bgc.in if cpp option TALK_FILE 
 
 ## Test forcing files
 
-The model can be run for a 1-month test using the Halifax Harbour set up in July 2017 (constant addition from July 2). The forcing files are available from Zenodo and the setup is provided in the files listed above. In this example 3 feedstocks are released at the 3 locations used in Laurent et al (2025)..
+The model can be run for a 1-month test using the Halifax Harbour set up in July 2017 (constant addition from July 2). The forcing files are available from Zenodo and the setup is provided in the files listed above. In this example 3 feedstocks are released at the 3 locations used in Laurent et al (2025).
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.????????.svg)](https://doi.org/10.5281/zenodo.????????)
 
