@@ -23,6 +23,7 @@ __author__ = "Arnaud Laurent"
 __email__ = "arnaud.laurent@dal.ca"
 
 ## Script setup ###############
+# Location of grid file and output file
 path2input = './'
 grfile = 'h2_LaurentEtAl2025.nc'
 # 3 sites:    MC   TC   HC
