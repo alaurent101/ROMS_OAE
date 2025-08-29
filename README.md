@@ -71,13 +71,13 @@ The reduced BGC model has 3 tracers: alkalinity, TIC and oxygen. The addition mo
 
 ## Addition file
 
-The alkalinity addition is either set in reduced_bgc.in if cpp option TALK_FILE is undefined (constant addition, 1 location, 1 feedstock type) or in an additional forcing file added to the FRCNAME list in roms_oae.in if cpp option TALK_FILE is defined. In this file, for each time/location alkalinity flux is set with add_dTA, the type of feedstock (up to 3) is set with add_type and the min/max vertical layers where addition occurs are set with add_takmin and add_takmax.
+The alkalinity addition is either set in reduced_bgc.in if cpp option TALK_FILE is undefined (constant addition, 1 location, 1 feedstock type) or in an additional forcing file added to the FRCNAME list in roms_oae.in if cpp option TALK_FILE is defined. In this file, for each time/location alkalinity flux is set with add_dTA, the type of feedstock (up to 3) is set with add_type and the min/max vertical layers where addition occurs are set with add_kmin and add_kmax. A python script is provided in ```./User/External/roms_addition_file.py``` to create the addition file (test case).
 
 ## Test forcing files
 
-The model can be run for a 1-month test using the Halifax Harbour set up in July 2017 (constant addition from July 2). The forcing files are available from Zenodo and the setup is provided in the files listed above. In this example 3 feedstocks are released at 3 locations near Tufts Cove in the Halifax Harbour.
+The model can be run for a 1-month test using the Halifax Harbour set up in July 2017 (constant addition from July 2). The forcing files are available from Zenodo and the setup is provided in the files listed above. In this example 3 feedstocks are released at the 3 locations used in Laurent et al (2025)..
 
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.16423337.svg)](https://doi.org/10.5281/zenodo.16423337)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.????????.svg)](https://doi.org/10.5281/zenodo.????????)
 
 ## References
 
