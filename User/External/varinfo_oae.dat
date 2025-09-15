@@ -2106,7 +2106,7 @@
   'river runoff alkalinity'
   'millimole meter-3'                       ! [millimole/m3]
   'river_alkalinity, scalar, series'
-  'alkalinity_time'
+  'river_time'
   'idRtrc(iTAlk)'
   'nulvar'
   1.0d0
