@@ -481,7 +481,6 @@
       real(r8), parameter :: D9 = 0.012976532_r8
       real(r8), parameter :: D10 = -50.053077642_r8
       real(r8), parameter :: D11 = 48569.391919959_r8
-      real(r8), parameter :: D11 = 0.1665_r8
 # elif defined PCO2AIR_SABLEISLAND
       real(r8) :: fyear
       real(r8), parameter :: D0 = 72134.344240476_r8       ! coefficients to calculate
