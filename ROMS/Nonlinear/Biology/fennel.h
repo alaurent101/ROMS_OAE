@@ -995,8 +995,8 @@
      &               MAX(MinVal,Bio(i,k,iPO4_))
 # else
                 fac1=dtdays*t_PPmax
-                cff4=fac1*K_NO3_Ps(ng)*inhNH4/(1.0_r8+cff2)*Bio(i,k,iPhyt)
-                cff5=fac1*K_NH4_Ps(ng)/(1.0_r8+cff1)*Bio(i,k,iPhyt)
+                cff4=fac1*K_NO3_Ps(ng)*inhNH4/(1.0_r8+cff2)*Bio(i,k,iSPhy)
+                cff5=fac1*K_NH4_Ps(ng)/(1.0_r8+cff1)*Bio(i,k,iSPhy)
 # endif
                 Bio(i,k,iNO3_)=Bio(i,k,iNO3_)/(1.0_r8+cff4)
                 Bio(i,k,iNH4_)=Bio(i,k,iNH4_)/(1.0_r8+cff5)
