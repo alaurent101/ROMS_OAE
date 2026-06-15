@@ -609,7 +609,9 @@
 !  Set time-stepping according to the number of iterations.
 !
       dtdays=dt(ng)*sec2day/REAL(BioIter(ng),r8)
+#ifdef TALK_ADDITION
       dtsec=dt(ng)/REAL(BioIter(ng),r8)
+#endif
 #ifdef DIAGNOSTICS_BIO
 !
 !  A factor to account for the number of iterations in accumulating
