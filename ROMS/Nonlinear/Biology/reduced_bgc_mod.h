@@ -88,14 +88,10 @@
 
       integer  :: iCfxc                       ! air-sea CO2 flux (control)
       integer  :: ipCO2c                      ! partial pressure of CO2 (control)
-# ifdef TALK_ADDITION
+!# ifdef TALK_ADDITION
       integer  :: iCfxa                       ! air-sea CO2 flux (addition)
       integer  :: ipCO2a                      ! partial pressure of CO2 (addition)
-!#  endif
-!# else
-!      integer  :: iCOfx                       ! air-sea CO2 flux
-!      integer  :: ipCO2                       ! partial pressure of CO2
-# endif
+!# endif
       integer  :: iO2fx                       ! air-sea O2 flux
 #endif
 !
