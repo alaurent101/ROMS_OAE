@@ -1400,15 +1400,19 @@
             ELSE
 # endif
               cff2=SOC0*cff5+SOC1*cff5**2+SOC2*cff5**3+SOC3*            &
-     &             lonr(i,j)+SOC4*latr(i,j)+SOC5*Bio(i,1,isalt)+        &
-     &             SOC6*Bio(i,1,isalt)**2+SOC7*Bio(i,1,isalt)**3+       &
-     &             SOC8*Bio(i,1,itemp)+SOC9*Bio(i,1,itemp)**2+          &
-     &             SOC10*Bio(i,1,itemp)**3+SOC11*Bio(i,N(ng),isalt)+    &
-     &             SOC12*Bio(i,N(ng),isalt)**2+SOC13*                   &
-     &             Bio(i,N(ng),isalt)**3+SOC14*Bio(i,N(ng),itemp)+      &
-     &             SOC15*Bio(i,N(ng),itemp)**2+SOC16*                   &
-     &             Bio(i,N(ng),itemp)**3+SOC17
-                   cff2=MIN(MAX(cff2,0.0_r8),30.0_r8)
+# if defined SOC_H2 || defined SOC_H3 || defined SOC_H23
+     &           (lonr(i,j)+360_r8)+SOC4*latr(i,j)+SOC5*Bio(i,1,isalt)+ &
+# else
+     &           lonr(i,j)+SOC4*latr(i,j)+SOC5*Bio(i,1,isalt)+          &
+# endif
+     &           SOC6*Bio(i,1,isalt)**2+SOC7*Bio(i,1,isalt)**3+         &
+     &           SOC8*Bio(i,1,itemp)+SOC9*Bio(i,1,itemp)**2+            &
+     &           SOC10*Bio(i,1,itemp)**3+SOC11*Bio(i,N(ng),isalt)+      &
+     &           SOC12*Bio(i,N(ng),isalt)**2+SOC13*                     &
+     &           Bio(i,N(ng),isalt)**3+SOC14*Bio(i,N(ng),itemp)+        &
+     &           SOC15*Bio(i,N(ng),itemp)**2+SOC16*                     &
+     &           Bio(i,N(ng),itemp)**3+SOC17
+                 cff2=MIN(MAX(cff2,0.0_r8),30.0_r8)
               cff1=cff2*Hz_inv(i,1)*dtdays
 # if defined SOC_H2 || defined SOC_H3 || defined SOC_H23
             ELSE
