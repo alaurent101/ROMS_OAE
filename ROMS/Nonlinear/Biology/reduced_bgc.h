@@ -1363,7 +1363,7 @@
 !
           DO i=Istr,Iend
             cff5=ABS(z_w(i,j,0))
-#if defined SOC_HRM23 || defined SOC_H2 || defined SOC_H23
+#if defined SOC_HRM23 || defined SOC_H2  || defined SOC_H3 || defined SOC_H23
 # if defined SOC_HRM23
             IF (((ng .eq. 1) .and. (i .lt. 51) .and. (j .gt. 247))      &
      &               .or. (ng .eq. 2)) THEN
